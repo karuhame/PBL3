@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-03-03T06:07:31.745Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="1n5dQsJFlbcNNk2WDj1m" version="21.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2023-03-03T06:08:44.315Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="qvudMk_w-bprqR5jb9fj" version="21.0.1" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
     <mxGraphModel dx="2900" dy="1482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -455,14 +455,22 @@
         <mxCell id="OYzzeN5ULdKvlw55GdCJ-29" value="Tên tài khoản&amp;nbsp; &amp;nbsp; &amp;nbsp; FK&lt;br&gt;Phân quyền&lt;br&gt;Harshed pasword" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=21;rounded=1;" vertex="1" parent="OYzzeN5ULdKvlw55GdCJ-28">
           <mxGeometry y="30" width="200" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="OYzzeN5ULdKvlw55GdCJ-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.003;entryY=0.158;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="OYzzeN5ULdKvlw55GdCJ-29" target="Ig6kXCbABRUn3pfWQGyZ-10">
+        <mxCell id="OYzzeN5ULdKvlw55GdCJ-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.003;entryY=0.158;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="OYzzeN5ULdKvlw55GdCJ-29" target="Ig6kXCbABRUn3pfWQGyZ-10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="OYzzeN5ULdKvlw55GdCJ-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.016;entryY=0.335;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="OYzzeN5ULdKvlw55GdCJ-29" target="Ig6kXCbABRUn3pfWQGyZ-20">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="OYzzeN5ULdKvlw55GdCJ-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.016;entryY=0.335;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="Ig6kXCbABRUn3pfWQGyZ-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="1440" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="450" y="1438" />
+              <mxPoint x="450" y="1438" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="OYzzeN5ULdKvlw55GdCJ-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.002;entryY=0.186;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="OYzzeN5ULdKvlw55GdCJ-29" target="Ig6kXCbABRUn3pfWQGyZ-18">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="OYzzeN5ULdKvlw55GdCJ-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.002;entryY=0.186;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.003;exitY=0.357;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="OYzzeN5ULdKvlw55GdCJ-29" target="Ig6kXCbABRUn3pfWQGyZ-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="430" y="1400" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="OYzzeN5ULdKvlw55GdCJ-34" value="" style="endArrow=none;html=1;rounded=0;entryX=-0.002;entryY=0.283;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.002;exitY=0.211;exitDx=0;exitDy=0;exitPerimeter=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="Ig6kXCbABRUn3pfWQGyZ-26" target="Ig6kXCbABRUn3pfWQGyZ-18">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
