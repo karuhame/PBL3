@@ -1,0 +1,673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PBL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ACCOUNT_ID" />
+          </Key>
+          <Property Name="ACCOUNT_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="ACCOUNT_NAME" Type="varchar" MaxLength="20" />
+          <Property Name="ACCOUNT_PASSWORD" Type="varchar" MaxLength="20" />
+          <Property Name="ACCOUNT_ROLE" Type="int" />
+        </EntityType>
+        <EntityType Name="AccountInfo">
+          <Key>
+            <PropertyRef Name="ACCOUNT_ID" />
+          </Key>
+          <Property Name="ACCOUNT_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="28" />
+          <Property Name="ACCOUNT_CCCD" Type="nchar" MaxLength="20" />
+          <Property Name="ACCOUNT_BIRTHDAY" Type="datetime" />
+          <Property Name="ACCOUNT_GENDER" Type="bit" />
+          <Property Name="ACCOUNT_HEIGHT" Type="float" />
+          <Property Name="ACCOUNT_WEIGHT" Type="float" />
+          <Property Name="ACCOUNT_PHONE" Type="nchar" MaxLength="10" />
+          <Property Name="ACCOUNT_EMAIL" Type="varchar" MaxLength="28" />
+        </EntityType>
+        <EntityType Name="BienLai">
+          <Key>
+            <PropertyRef Name="BIENLAI_ID" />
+          </Key>
+          <Property Name="BIENLAI_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="BIENLAI_PAYMENT" Type="int" />
+          <Property Name="LOP_ID" Type="nchar" MaxLength="5" />
+          <Property Name="ACCOUNT_ID" Type="nchar" MaxLength="5" />
+          <Property Name="BIENLAI_START" Type="datetime" />
+          <Property Name="BIENLAI_END" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LoaiGoi">
+          <Key>
+            <PropertyRef Name="GOI_ID" />
+          </Key>
+          <Property Name="GOI_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="GOI_NUMBERSESSION" Type="int" />
+        </EntityType>
+        <EntityType Name="Lop">
+          <Key>
+            <PropertyRef Name="LOP_ID" />
+          </Key>
+          <Property Name="LOP_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="LOP_STAFFID" Type="nchar" MaxLength="5" />
+          <Property Name="LOP_CUSTOMERID" Type="nchar" MaxLength="5" />
+          <Property Name="PHIENTAP_ID" Type="nchar" MaxLength="5" />
+          <Property Name="GOI_ID" Type="nchar" MaxLength="5" />
+          <Property Name="LOP_START" Type="datetime" />
+          <Property Name="LOP_END" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PhienTap">
+          <Key>
+            <PropertyRef Name="PHIENTAP_ID" />
+          </Key>
+          <Property Name="PHIENTAP_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="PHIENTAP_DAY" Type="date" />
+          <Property Name="PHIENTAP_START" Type="int" />
+          <Property Name="PHIENTAP_END" Type="int" />
+        </EntityType>
+        <EntityType Name="QuanLyLop">
+          <Key>
+            <PropertyRef Name="QUANLYLOP_ID" />
+          </Key>
+          <Property Name="QUANLYLOP_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="ACCOUNT_ID" Type="nchar" MaxLength="5" />
+          <Property Name="LOP_ID" Type="nchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="QuanLyThietBi">
+          <Key>
+            <PropertyRef Name="QUANLYTHIETBI_ID" />
+          </Key>
+          <Property Name="QUANLYTHIETBI_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="ACCOUNT_ID" Type="nchar" MaxLength="5" />
+          <Property Name="THIETBI_ID" Type="nchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ThietBi">
+          <Key>
+            <PropertyRef Name="THIETBI_ID" />
+          </Key>
+          <Property Name="THIETBI_ID" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="THIETBI_NAME" Type="nvarchar(max)" />
+          <Property Name="THIETBI_STATUS" Type="int" />
+          <Property Name="THIETBI_NUM" Type="int" />
+        </EntityType>
+        <Association Name="FK__AccountIn__ACCOU__398D8EEE">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="AccountInfo" Type="Self.AccountInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="AccountInfo">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BienLai__ACCOUNT__4D94879B">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="BienLai" Type="Self.BienLai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="BienLai">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BienLai__LOP_ID__4CA06362">
+          <End Role="Lop" Type="Self.Lop" Multiplicity="0..1" />
+          <End Role="BienLai" Type="Self.BienLai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lop">
+              <PropertyRef Name="LOP_ID" />
+            </Principal>
+            <Dependent Role="BienLai">
+              <PropertyRef Name="LOP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lop__GOI_ID__45F365D3">
+          <End Role="LoaiGoi" Type="Self.LoaiGoi" Multiplicity="0..1" />
+          <End Role="Lop" Type="Self.Lop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiGoi">
+              <PropertyRef Name="GOI_ID" />
+            </Principal>
+            <Dependent Role="Lop">
+              <PropertyRef Name="GOI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lop__PHIENTAP_ID__46E78A0C">
+          <End Role="PhienTap" Type="Self.PhienTap" Multiplicity="0..1" />
+          <End Role="Lop" Type="Self.Lop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhienTap">
+              <PropertyRef Name="PHIENTAP_ID" />
+            </Principal>
+            <Dependent Role="Lop">
+              <PropertyRef Name="PHIENTAP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyLop__ACCOU__4AB81AF0">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="QuanLyLop" Type="Self.QuanLyLop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="QuanLyLop">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyLop__LOP_I__49C3F6B7">
+          <End Role="Lop" Type="Self.Lop" Multiplicity="0..1" />
+          <End Role="QuanLyLop" Type="Self.QuanLyLop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lop">
+              <PropertyRef Name="LOP_ID" />
+            </Principal>
+            <Dependent Role="QuanLyLop">
+              <PropertyRef Name="LOP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyThi__ACCOU__3E52440B">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="QuanLyThietBi" Type="Self.QuanLyThietBi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="QuanLyThietBi">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyThi__THIET__3F466844">
+          <End Role="ThietBi" Type="Self.ThietBi" Multiplicity="0..1" />
+          <End Role="QuanLyThietBi" Type="Self.QuanLyThietBi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThietBi">
+              <PropertyRef Name="THIETBI_ID" />
+            </Principal>
+            <Dependent Role="QuanLyThietBi">
+              <PropertyRef Name="THIETBI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PBL3ModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountInfo" EntityType="Self.AccountInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BienLai" EntityType="Self.BienLai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoaiGoi" EntityType="Self.LoaiGoi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lop" EntityType="Self.Lop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhienTap" EntityType="Self.PhienTap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuanLyLop" EntityType="Self.QuanLyLop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuanLyThietBi" EntityType="Self.QuanLyThietBi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThietBi" EntityType="Self.ThietBi" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AccountIn__ACCOU__398D8EEE" Association="Self.FK__AccountIn__ACCOU__398D8EEE">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountInfo" EntitySet="AccountInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BienLai__ACCOUNT__4D94879B" Association="Self.FK__BienLai__ACCOUNT__4D94879B">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="BienLai" EntitySet="BienLai" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BienLai__LOP_ID__4CA06362" Association="Self.FK__BienLai__LOP_ID__4CA06362">
+            <End Role="Lop" EntitySet="Lop" />
+            <End Role="BienLai" EntitySet="BienLai" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lop__GOI_ID__45F365D3" Association="Self.FK__Lop__GOI_ID__45F365D3">
+            <End Role="LoaiGoi" EntitySet="LoaiGoi" />
+            <End Role="Lop" EntitySet="Lop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lop__PHIENTAP_ID__46E78A0C" Association="Self.FK__Lop__PHIENTAP_ID__46E78A0C">
+            <End Role="PhienTap" EntitySet="PhienTap" />
+            <End Role="Lop" EntitySet="Lop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyLop__ACCOU__4AB81AF0" Association="Self.FK__QuanLyLop__ACCOU__4AB81AF0">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="QuanLyLop" EntitySet="QuanLyLop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyLop__LOP_I__49C3F6B7" Association="Self.FK__QuanLyLop__LOP_I__49C3F6B7">
+            <End Role="Lop" EntitySet="Lop" />
+            <End Role="QuanLyLop" EntitySet="QuanLyLop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyThi__ACCOU__3E52440B" Association="Self.FK__QuanLyThi__ACCOU__3E52440B">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="QuanLyThietBi" EntitySet="QuanLyThietBi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyThi__THIET__3F466844" Association="Self.FK__QuanLyThi__THIET__3F466844">
+            <End Role="ThietBi" EntitySet="ThietBi" />
+            <End Role="QuanLyThietBi" EntitySet="QuanLyThietBi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PBL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ACCOUNT_ID" />
+          </Key>
+          <Property Name="ACCOUNT_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ACCOUNT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ACCOUNT_PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ACCOUNT_ROLE" Type="Int32" />
+          <NavigationProperty Name="AccountInfo" Relationship="Self.FK__AccountIn__ACCOU__398D8EEE" FromRole="Account" ToRole="AccountInfo" />
+          <NavigationProperty Name="BienLais" Relationship="Self.FK__BienLai__ACCOUNT__4D94879B" FromRole="Account" ToRole="BienLai" />
+          <NavigationProperty Name="QuanLyLops" Relationship="Self.FK__QuanLyLop__ACCOU__4AB81AF0" FromRole="Account" ToRole="QuanLyLop" />
+          <NavigationProperty Name="QuanLyThietBis" Relationship="Self.FK__QuanLyThi__ACCOU__3E52440B" FromRole="Account" ToRole="QuanLyThietBi" />
+        </EntityType>
+        <EntityType Name="AccountInfo">
+          <Key>
+            <PropertyRef Name="ACCOUNT_ID" />
+          </Key>
+          <Property Name="ACCOUNT_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="28" FixedLength="false" Unicode="true" />
+          <Property Name="ACCOUNT_CCCD" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ACCOUNT_BIRTHDAY" Type="DateTime" Precision="3" />
+          <Property Name="ACCOUNT_GENDER" Type="Boolean" />
+          <Property Name="ACCOUNT_HEIGHT" Type="Double" />
+          <Property Name="ACCOUNT_WEIGHT" Type="Double" />
+          <Property Name="ACCOUNT_PHONE" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ACCOUNT_EMAIL" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__AccountIn__ACCOU__398D8EEE" FromRole="AccountInfo" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="BienLai">
+          <Key>
+            <PropertyRef Name="BIENLAI_ID" />
+          </Key>
+          <Property Name="BIENLAI_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="BIENLAI_PAYMENT" Type="Int32" />
+          <Property Name="LOP_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="ACCOUNT_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="BIENLAI_START" Type="DateTime" Precision="3" />
+          <Property Name="BIENLAI_END" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__BienLai__ACCOUNT__4D94879B" FromRole="BienLai" ToRole="Account" />
+          <NavigationProperty Name="Lop" Relationship="Self.FK__BienLai__LOP_ID__4CA06362" FromRole="BienLai" ToRole="Lop" />
+        </EntityType>
+        <EntityType Name="LoaiGoi">
+          <Key>
+            <PropertyRef Name="GOI_ID" />
+          </Key>
+          <Property Name="GOI_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GOI_NUMBERSESSION" Type="Int32" />
+          <NavigationProperty Name="Lops" Relationship="Self.FK__Lop__GOI_ID__45F365D3" FromRole="LoaiGoi" ToRole="Lop" />
+        </EntityType>
+        <EntityType Name="Lop">
+          <Key>
+            <PropertyRef Name="LOP_ID" />
+          </Key>
+          <Property Name="LOP_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LOP_STAFFID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="LOP_CUSTOMERID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="PHIENTAP_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="GOI_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="LOP_START" Type="DateTime" Precision="3" />
+          <Property Name="LOP_END" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BienLais" Relationship="Self.FK__BienLai__LOP_ID__4CA06362" FromRole="Lop" ToRole="BienLai" />
+          <NavigationProperty Name="LoaiGoi" Relationship="Self.FK__Lop__GOI_ID__45F365D3" FromRole="Lop" ToRole="LoaiGoi" />
+          <NavigationProperty Name="PhienTap" Relationship="Self.FK__Lop__PHIENTAP_ID__46E78A0C" FromRole="Lop" ToRole="PhienTap" />
+          <NavigationProperty Name="QuanLyLops" Relationship="Self.FK__QuanLyLop__LOP_I__49C3F6B7" FromRole="Lop" ToRole="QuanLyLop" />
+        </EntityType>
+        <EntityType Name="PhienTap">
+          <Key>
+            <PropertyRef Name="PHIENTAP_ID" />
+          </Key>
+          <Property Name="PHIENTAP_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PHIENTAP_DAY" Type="DateTime" Precision="0" />
+          <Property Name="PHIENTAP_START" Type="Int32" />
+          <Property Name="PHIENTAP_END" Type="Int32" />
+          <NavigationProperty Name="Lops" Relationship="Self.FK__Lop__PHIENTAP_ID__46E78A0C" FromRole="PhienTap" ToRole="Lop" />
+        </EntityType>
+        <EntityType Name="QuanLyLop">
+          <Key>
+            <PropertyRef Name="QUANLYLOP_ID" />
+          </Key>
+          <Property Name="QUANLYLOP_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ACCOUNT_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="LOP_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__QuanLyLop__ACCOU__4AB81AF0" FromRole="QuanLyLop" ToRole="Account" />
+          <NavigationProperty Name="Lop" Relationship="Self.FK__QuanLyLop__LOP_I__49C3F6B7" FromRole="QuanLyLop" ToRole="Lop" />
+        </EntityType>
+        <EntityType Name="QuanLyThietBi">
+          <Key>
+            <PropertyRef Name="QUANLYTHIETBI_ID" />
+          </Key>
+          <Property Name="QUANLYTHIETBI_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ACCOUNT_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="THIETBI_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__QuanLyThi__ACCOU__3E52440B" FromRole="QuanLyThietBi" ToRole="Account" />
+          <NavigationProperty Name="ThietBi" Relationship="Self.FK__QuanLyThi__THIET__3F466844" FromRole="QuanLyThietBi" ToRole="ThietBi" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ThietBi">
+          <Key>
+            <PropertyRef Name="THIETBI_ID" />
+          </Key>
+          <Property Name="THIETBI_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="THIETBI_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="THIETBI_STATUS" Type="Int32" />
+          <Property Name="THIETBI_NUM" Type="Int32" />
+          <NavigationProperty Name="QuanLyThietBis" Relationship="Self.FK__QuanLyThi__THIET__3F466844" FromRole="ThietBi" ToRole="QuanLyThietBi" />
+        </EntityType>
+        <Association Name="FK__AccountIn__ACCOU__398D8EEE">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="AccountInfo" Type="Self.AccountInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="AccountInfo">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BienLai__ACCOUNT__4D94879B">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="BienLai" Type="Self.BienLai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="BienLai">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyLop__ACCOU__4AB81AF0">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="QuanLyLop" Type="Self.QuanLyLop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="QuanLyLop">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyThi__ACCOU__3E52440B">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="QuanLyThietBi" Type="Self.QuanLyThietBi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Principal>
+            <Dependent Role="QuanLyThietBi">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BienLai__LOP_ID__4CA06362">
+          <End Role="Lop" Type="Self.Lop" Multiplicity="0..1" />
+          <End Role="BienLai" Type="Self.BienLai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lop">
+              <PropertyRef Name="LOP_ID" />
+            </Principal>
+            <Dependent Role="BienLai">
+              <PropertyRef Name="LOP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lop__GOI_ID__45F365D3">
+          <End Role="LoaiGoi" Type="Self.LoaiGoi" Multiplicity="0..1" />
+          <End Role="Lop" Type="Self.Lop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiGoi">
+              <PropertyRef Name="GOI_ID" />
+            </Principal>
+            <Dependent Role="Lop">
+              <PropertyRef Name="GOI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lop__PHIENTAP_ID__46E78A0C">
+          <End Role="PhienTap" Type="Self.PhienTap" Multiplicity="0..1" />
+          <End Role="Lop" Type="Self.Lop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhienTap">
+              <PropertyRef Name="PHIENTAP_ID" />
+            </Principal>
+            <Dependent Role="Lop">
+              <PropertyRef Name="PHIENTAP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyLop__LOP_I__49C3F6B7">
+          <End Role="Lop" Type="Self.Lop" Multiplicity="0..1" />
+          <End Role="QuanLyLop" Type="Self.QuanLyLop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lop">
+              <PropertyRef Name="LOP_ID" />
+            </Principal>
+            <Dependent Role="QuanLyLop">
+              <PropertyRef Name="LOP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuanLyThi__THIET__3F466844">
+          <End Role="ThietBi" Type="Self.ThietBi" Multiplicity="0..1" />
+          <End Role="QuanLyThietBi" Type="Self.QuanLyThietBi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThietBi">
+              <PropertyRef Name="THIETBI_ID" />
+            </Principal>
+            <Dependent Role="QuanLyThietBi">
+              <PropertyRef Name="THIETBI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PBL3Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AccountInfoes" EntityType="Self.AccountInfo" />
+          <EntitySet Name="BienLais" EntityType="Self.BienLai" />
+          <EntitySet Name="LoaiGois" EntityType="Self.LoaiGoi" />
+          <EntitySet Name="Lops" EntityType="Self.Lop" />
+          <EntitySet Name="PhienTaps" EntityType="Self.PhienTap" />
+          <EntitySet Name="QuanLyLops" EntityType="Self.QuanLyLop" />
+          <EntitySet Name="QuanLyThietBis" EntityType="Self.QuanLyThietBi" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="ThietBis" EntityType="Self.ThietBi" />
+          <AssociationSet Name="FK__AccountIn__ACCOU__398D8EEE" Association="Self.FK__AccountIn__ACCOU__398D8EEE">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="AccountInfo" EntitySet="AccountInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BienLai__ACCOUNT__4D94879B" Association="Self.FK__BienLai__ACCOUNT__4D94879B">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="BienLai" EntitySet="BienLais" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyLop__ACCOU__4AB81AF0" Association="Self.FK__QuanLyLop__ACCOU__4AB81AF0">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="QuanLyLop" EntitySet="QuanLyLops" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyThi__ACCOU__3E52440B" Association="Self.FK__QuanLyThi__ACCOU__3E52440B">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="QuanLyThietBi" EntitySet="QuanLyThietBis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BienLai__LOP_ID__4CA06362" Association="Self.FK__BienLai__LOP_ID__4CA06362">
+            <End Role="Lop" EntitySet="Lops" />
+            <End Role="BienLai" EntitySet="BienLais" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lop__GOI_ID__45F365D3" Association="Self.FK__Lop__GOI_ID__45F365D3">
+            <End Role="LoaiGoi" EntitySet="LoaiGois" />
+            <End Role="Lop" EntitySet="Lops" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lop__PHIENTAP_ID__46E78A0C" Association="Self.FK__Lop__PHIENTAP_ID__46E78A0C">
+            <End Role="PhienTap" EntitySet="PhienTaps" />
+            <End Role="Lop" EntitySet="Lops" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyLop__LOP_I__49C3F6B7" Association="Self.FK__QuanLyLop__LOP_I__49C3F6B7">
+            <End Role="Lop" EntitySet="Lops" />
+            <End Role="QuanLyLop" EntitySet="QuanLyLops" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuanLyThi__THIET__3F466844" Association="Self.FK__QuanLyThi__THIET__3F466844">
+            <End Role="ThietBi" EntitySet="ThietBis" />
+            <End Role="QuanLyThietBi" EntitySet="QuanLyThietBis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PBL3ModelStoreContainer" CdmEntityContainer="PBL3Entities1">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="PBL3Model.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="ACCOUNT_NAME" ColumnName="ACCOUNT_NAME" />
+                <ScalarProperty Name="ACCOUNT_PASSWORD" ColumnName="ACCOUNT_PASSWORD" />
+                <ScalarProperty Name="ACCOUNT_ROLE" ColumnName="ACCOUNT_ROLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountInfoes">
+            <EntityTypeMapping TypeName="PBL3Model.AccountInfo">
+              <MappingFragment StoreEntitySet="AccountInfo">
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="ACCOUNT_CCCD" ColumnName="ACCOUNT_CCCD" />
+                <ScalarProperty Name="ACCOUNT_BIRTHDAY" ColumnName="ACCOUNT_BIRTHDAY" />
+                <ScalarProperty Name="ACCOUNT_GENDER" ColumnName="ACCOUNT_GENDER" />
+                <ScalarProperty Name="ACCOUNT_HEIGHT" ColumnName="ACCOUNT_HEIGHT" />
+                <ScalarProperty Name="ACCOUNT_WEIGHT" ColumnName="ACCOUNT_WEIGHT" />
+                <ScalarProperty Name="ACCOUNT_PHONE" ColumnName="ACCOUNT_PHONE" />
+                <ScalarProperty Name="ACCOUNT_EMAIL" ColumnName="ACCOUNT_EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BienLais">
+            <EntityTypeMapping TypeName="PBL3Model.BienLai">
+              <MappingFragment StoreEntitySet="BienLai">
+                <ScalarProperty Name="BIENLAI_ID" ColumnName="BIENLAI_ID" />
+                <ScalarProperty Name="BIENLAI_PAYMENT" ColumnName="BIENLAI_PAYMENT" />
+                <ScalarProperty Name="LOP_ID" ColumnName="LOP_ID" />
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="BIENLAI_START" ColumnName="BIENLAI_START" />
+                <ScalarProperty Name="BIENLAI_END" ColumnName="BIENLAI_END" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoaiGois">
+            <EntityTypeMapping TypeName="PBL3Model.LoaiGoi">
+              <MappingFragment StoreEntitySet="LoaiGoi">
+                <ScalarProperty Name="GOI_ID" ColumnName="GOI_ID" />
+                <ScalarProperty Name="GOI_NUMBERSESSION" ColumnName="GOI_NUMBERSESSION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lops">
+            <EntityTypeMapping TypeName="PBL3Model.Lop">
+              <MappingFragment StoreEntitySet="Lop">
+                <ScalarProperty Name="LOP_ID" ColumnName="LOP_ID" />
+                <ScalarProperty Name="LOP_STAFFID" ColumnName="LOP_STAFFID" />
+                <ScalarProperty Name="LOP_CUSTOMERID" ColumnName="LOP_CUSTOMERID" />
+                <ScalarProperty Name="PHIENTAP_ID" ColumnName="PHIENTAP_ID" />
+                <ScalarProperty Name="GOI_ID" ColumnName="GOI_ID" />
+                <ScalarProperty Name="LOP_START" ColumnName="LOP_START" />
+                <ScalarProperty Name="LOP_END" ColumnName="LOP_END" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhienTaps">
+            <EntityTypeMapping TypeName="PBL3Model.PhienTap">
+              <MappingFragment StoreEntitySet="PhienTap">
+                <ScalarProperty Name="PHIENTAP_ID" ColumnName="PHIENTAP_ID" />
+                <ScalarProperty Name="PHIENTAP_DAY" ColumnName="PHIENTAP_DAY" />
+                <ScalarProperty Name="PHIENTAP_START" ColumnName="PHIENTAP_START" />
+                <ScalarProperty Name="PHIENTAP_END" ColumnName="PHIENTAP_END" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuanLyLops">
+            <EntityTypeMapping TypeName="PBL3Model.QuanLyLop">
+              <MappingFragment StoreEntitySet="QuanLyLop">
+                <ScalarProperty Name="QUANLYLOP_ID" ColumnName="QUANLYLOP_ID" />
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="LOP_ID" ColumnName="LOP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuanLyThietBis">
+            <EntityTypeMapping TypeName="PBL3Model.QuanLyThietBi">
+              <MappingFragment StoreEntitySet="QuanLyThietBi">
+                <ScalarProperty Name="QUANLYTHIETBI_ID" ColumnName="QUANLYTHIETBI_ID" />
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="THIETBI_ID" ColumnName="THIETBI_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PBL3Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThietBis">
+            <EntityTypeMapping TypeName="PBL3Model.ThietBi">
+              <MappingFragment StoreEntitySet="ThietBi">
+                <ScalarProperty Name="THIETBI_ID" ColumnName="THIETBI_ID" />
+                <ScalarProperty Name="THIETBI_NAME" ColumnName="THIETBI_NAME" />
+                <ScalarProperty Name="THIETBI_STATUS" ColumnName="THIETBI_STATUS" />
+                <ScalarProperty Name="THIETBI_NUM" ColumnName="THIETBI_NUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
