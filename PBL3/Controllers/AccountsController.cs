@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using PBL3.Models;
 
 namespace PBL3.Controllers
@@ -15,10 +17,66 @@ namespace PBL3.Controllers
         private PBL3Entities db = new PBL3Entities();
 
         // GET: Accounts
-        public ActionResult Index()
+
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.SortOrder = sortOrder;
+
+           
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
             var accounts = db.Accounts.Include(a => a.AccountInfo);
-            return View(accounts.ToList());
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                accounts = accounts.Where(s => s.ACCOUNT_NAME.Contains(searchString)) ;
+
+            }
+
+            switch (sortOrder)
+            {
+                case "name_asc":
+                    accounts = accounts.OrderBy(s => s.ACCOUNT_NAME);
+                    break;
+                case "name_desc":
+                    accounts= accounts.OrderByDescending(s => s.ACCOUNT_NAME);
+                    break;
+                
+                case "password_asc":
+                    accounts = accounts.OrderBy(s => s.ACCOUNT_PASSWORD);
+                   break;
+                case "password_desc":
+                    accounts = accounts.OrderByDescending(s => s.ACCOUNT_PASSWORD);
+                    break;
+
+                case "role_asc":
+                    accounts = accounts.OrderBy(s => s.ACCOUNT_ROLE);
+                    break;
+                case "role_desc":
+                    accounts = accounts.OrderByDescending(s => s.ACCOUNT_ROLE);
+                    break;
+
+                case "ID_asc":
+                    accounts = accounts.OrderBy(s => s.ACCOUNT_ID);
+                    break;
+                case "ID_desc":
+                    accounts = accounts.OrderByDescending(s => s.ACCOUNT_ID);
+                    break;
+
+                default:  
+                    accounts = accounts.OrderBy(s => s.ACCOUNT_NAME);
+                break;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(accounts.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Accounts/Details/5
