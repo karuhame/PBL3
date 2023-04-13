@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountInfoesController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\BienLaisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuanLyThietBisController.cs" />
     <Compile Include="Controllers\ThietBisController.cs" />
@@ -257,6 +258,11 @@
     <Content Include="Views\AccountInfoes\Details.cshtml" />
     <Content Include="Views\AccountInfoes\Edit.cshtml" />
     <Content Include="Views\AccountInfoes\Index.cshtml" />
+    <Content Include="Views\BienLais\Create.cshtml" />
+    <Content Include="Views\BienLais\Delete.cshtml" />
+    <Content Include="Views\BienLais\Details.cshtml" />
+    <Content Include="Views\BienLais\Edit.cshtml" />
+    <Content Include="Views\BienLais\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

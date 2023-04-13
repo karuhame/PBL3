@@ -6,19 +6,98 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using Microsoft.Ajax.Utilities;
 using PBL3.Models;
 
 namespace PBL3.Controllers
 {
+    //public static string strSearch;
     public class ThietBisController : Controller
     {
         private PBL3Entities db = new PBL3Entities();
-
+        
         // GET: ThietBis
-        public ActionResult Index()
+        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy)
+
         {
-            return View(db.ThietBis.ToList());
+            //ViewBag.strSearch = strSearch;
+
+            ViewBag.SortOrder = SortOrder;
+            ViewBag.SortBy = SortBy;
+            ViewBag.CurrentFilter = strSearchThietBi;
+
+            var obj = db.ThietBis.ToList();
+
+            //Tìm kiếm
+            if (!String.IsNullOrEmpty(strSearchThietBi))
+            {
+                obj = obj.Where(p => p.THIETBI_NAME.Contains(strSearchThietBi)
+                                     || p.THIETBI_STATUS.ToString() == strSearchThietBi
+                                     || p.THIETBI_NUM.ToString() == strSearchThietBi).ToList();
+            }
+           
+            //Sắp xếp
+            switch (SortBy)
+            {
+                case "THIETBI_NAME":
+                    {
+                        switch (SortOrder)
+                        {
+                            case "Asc":
+                                {
+                                    obj = obj.OrderBy(p => p.THIETBI_NAME).ToList();
+                                    break;
+                                }
+                            default:
+                                {
+                                    obj = obj.OrderByDescending(p => p.THIETBI_NAME).ToList();
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case "THIETBI_STATUS":
+                    {
+                        switch (SortOrder)
+                        {
+                            case "Asc":
+                                {
+                                    obj = obj.OrderBy(p => p.THIETBI_STATUS).ToList();
+                                    break;
+                                }
+                            default:
+                                {
+                                    obj = obj.OrderByDescending(p => p.THIETBI_STATUS).ToList();
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case "THIETBI_NUM":
+                    {
+                        switch (SortOrder)
+                        {
+                            case "Asc":
+                                {
+                                    obj = obj.OrderBy(p => p.THIETBI_NUM).ToList();
+                                    break;
+                                }
+                            default:
+                                {
+                                    obj = obj.OrderByDescending(p => p.THIETBI_NUM).ToList();
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+
+            }
+                  
+            
+            return View(obj);
         }
+        
 
         // GET: ThietBis/Details/5
         public ActionResult Details(string id)
@@ -114,6 +193,8 @@ namespace PBL3.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {

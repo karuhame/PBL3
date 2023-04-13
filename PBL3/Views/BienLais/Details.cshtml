@@ -1,0 +1,59 @@
+﻿@model PBL3.Models.BienLai
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BienLai</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BIENLAI_PAYMENT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BIENLAI_PAYMENT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BIENLAI_START)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BIENLAI_START)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BIENLAI_END)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BIENLAI_END)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.ACCOUNT_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.ACCOUNT_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lop.LOP_STAFFID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lop.LOP_STAFFID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BIENLAI_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

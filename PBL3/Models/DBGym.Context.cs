@@ -24,7 +24,12 @@ namespace PBL3.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
+        internal object Where(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AccountInfo> AccountInfoes { get; set; }
         public virtual DbSet<BienLai> BienLais { get; set; }
