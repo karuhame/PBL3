@@ -74,7 +74,7 @@ namespace PBL3.Controllers
                     accounts = accounts.OrderBy(s => s.ACCOUNT_NAME);
                 break;
             }
-            int pageSize = 3;
+            int pageSize = 2;
             int pageNumber = (page ?? 1);
             return View(accounts.ToPagedList(pageNumber, pageSize));
         }

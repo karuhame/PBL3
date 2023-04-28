@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\bachkhoa\PBL3\quanlythuvien\Soucre\PBL3\Models\DBGym.edmx'. 
+﻿// T4 code generation is enabled for model 'F:\bachkhoa\PBL3\PBL3\PBL3\Models\DBGym.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f0cfb893d5e24a2091108e801101b0b0" Name="Diagram1">
+      <Diagram DiagramId="f0cfb893d5e24a2091108e801101b0b0" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="PBL3Model.Account" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3Model.AccountInfo" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3Model.BienLai" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3Model.LoaiGoi" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="PBL3Model.Lop" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PBL3Model.Lop" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3Model.PhienTap" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3Model.QuanLyLop" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3Model.QuanLyThietBi" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />

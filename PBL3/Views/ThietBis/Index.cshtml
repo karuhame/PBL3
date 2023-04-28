@@ -1,4 +1,7 @@
-﻿@model IEnumerable<PBL3.Models.ThietBi>
+﻿
+@model PagedList.IPagedList<PBL3.Models.ThietBi>
+@using PagedList
+@using PagedList.Mvc
 
 @{
     ViewBag.Title = "Index";
@@ -17,7 +20,7 @@
 @using (Html.BeginForm("Index", "ThietBis", FormMethod.Get))
 {
     <p>
-        Search: @Html.TextBox("strSearchThietBi")
+        Search: @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
         <input class="btn btn-default" type="submit" value="Filter" /> |
         <a href="~/ThietBis/Index">Back to list</a>
     </p>
@@ -66,3 +69,8 @@
     }
 
 </table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
+

@@ -7,7 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using System.Web.UI;
 using Microsoft.Ajax.Utilities;
+using PagedList;
 using PBL3.Models;
 
 namespace PBL3.Controllers
@@ -18,7 +20,7 @@ namespace PBL3.Controllers
         private PBL3Entities db = new PBL3Entities();
         
         // GET: ThietBis
-        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy)
+        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy, int? page)
 
         {
             //ViewBag.strSearch = strSearch;
@@ -93,9 +95,11 @@ namespace PBL3.Controllers
                     }
 
             }
-                  
-            
-            return View(obj);
+
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
+            return View(obj.ToPagedList(pageNumber, pageSize));
+           
         }
         
 

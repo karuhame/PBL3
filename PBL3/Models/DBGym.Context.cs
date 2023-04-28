@@ -13,10 +13,10 @@ namespace PBL3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PBL3Entities : DbContext
+    public partial class PBL3Entities1 : DbContext
     {
-        public PBL3Entities()
-            : base("name=PBL3Entities")
+        public PBL3Entities1()
+            : base("name=PBL3Entities1")
         {
         }
     
@@ -24,12 +24,7 @@ namespace PBL3.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-
-        internal object Where(Func<object, bool> value)
-        {
-            throw new NotImplementedException();
-        }
-
+    
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AccountInfo> AccountInfoes { get; set; }
         public virtual DbSet<BienLai> BienLais { get; set; }

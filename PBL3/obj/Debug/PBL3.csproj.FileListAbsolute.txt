@@ -164,3 +164,7 @@ F:\bachkhoa\PBL3\PBL3\PBL3\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatfor
 F:\bachkhoa\PBL3\PBL3\PBL3\obj\Debug\PBL3.csproj.AssemblyReference.cache
 F:\bachkhoa\PBL3\PBL3\PBL3\obj\Debug\PBL3.csproj.CoreCompileInputs.cache
 F:\bachkhoa\PBL3\PBL3\PBL3\obj\Debug\PBL3.csproj.CopyComplete
+F:\bachkhoa\PBL3\PBL3\PBL3\bin\PagedList.dll
+F:\bachkhoa\PBL3\PBL3\PBL3\bin\PagedList.Mvc.dll
+F:\bachkhoa\PBL3\PBL3\PBL3\bin\PagedList.xml
+F:\bachkhoa\PBL3\PBL3\PBL3\bin\PagedList.Mvc.xml
