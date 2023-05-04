@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PBL3.Models.LoaiGoi>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GOI_TYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GOI_FEE)
+
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GOI_TYPE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GOI_FEE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.GOI_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.GOI_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.GOI_ID })
+        </td>
+    </tr>
+}
+
+</table>

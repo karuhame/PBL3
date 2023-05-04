@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PBL3.Models.AccountInfo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.USER_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_CCCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_BIRTHDAY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_GENDER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_HEIGHT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_WEIGHT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_PHONE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCOUNT_EMAIL)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.USER_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_CCCD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_BIRTHDAY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_GENDER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_HEIGHT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_WEIGHT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_PHONE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_EMAIL)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ACCOUNT_NAME }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ACCOUNT_NAME }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ACCOUNT_NAME })
+        </td>
+    </tr>
+}
+
+</table>
