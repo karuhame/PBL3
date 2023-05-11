@@ -1,0 +1,43 @@
+﻿@model PBL3.Models.PhienTap
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PhienTap</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PHIENTAP_DAY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHIENTAP_DAY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHIENTAP_START)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHIENTAP_START)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHIENTAP_END)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHIENTAP_END)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PHIENTAP_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

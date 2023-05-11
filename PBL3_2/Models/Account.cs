@@ -19,8 +19,7 @@ namespace PBL3_2.Models
         [StringLength(20)]
         public string ACCOUNT_PASSWORD { get; set; }
 
-        public string ACCOUNT_CONFIRMEDPASSWORD { get; set; }
-        public int? ACCOUNT_ROLE { get; set; }
+        public string ACCOUNT_ROLE { get; set; }
         public virtual AccountInfo AccountInfo { get; set; }
         public virtual ICollection<Lop> Lops { get; set; }
         public virtual ICollection<BienLai> BienLais { get; set;}

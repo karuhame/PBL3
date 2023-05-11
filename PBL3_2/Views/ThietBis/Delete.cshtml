@@ -1,0 +1,50 @@
+﻿@model PBL3.Models.ThietBi
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ThietBi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.THIETBI_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THIETBI_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THIETBI_STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THIETBI_STATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THIETBI_NUM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THIETBI_NUM)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
