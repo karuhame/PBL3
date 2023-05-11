@@ -14,6 +14,10 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
 
+        public ActionResult DanhSach()
+        {
+            return View();
+        }
         // GET: Accounts
         public ActionResult Index()
         {
