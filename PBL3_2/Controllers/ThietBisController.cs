@@ -104,6 +104,7 @@ namespace PBL3_2.Controllers
 
 
         // GET: ThietBis/Details/5
+        
         public ActionResult Details(string id)
         {
             if (id == null)
