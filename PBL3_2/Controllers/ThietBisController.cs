@@ -96,7 +96,7 @@ namespace PBL3_2.Controllers
 
             }
 
-            int pageSize = 2;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(obj.ToPagedList(pageNumber, pageSize));
 
