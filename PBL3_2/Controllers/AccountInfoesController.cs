@@ -266,7 +266,7 @@ namespace PBL3_2.Controllers
             if (Retype_Account_password != account_password)
             {
                 ModelState.AddModelError("", "Mật khẩu không khớp");
-                return View(newAccount);
+                return View("Them");
             }
 
             var tmp = db.AccountInfos.Where(p => p.ACCOUNT_NAME == dc.ACCOUNT_NAME).ToList().Count();    
@@ -362,10 +362,10 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Account account = db.Accounts.Find(id);
-            if (account != null)
+            var account = db.Accounts.Where(p => p.ACCOUNT_NAME == id).ToList().Count();
+            if (account > 0)
             {
-                db.Accounts.Remove(account);
+                db.Accounts.RemoveRange(db.Accounts.Where(p => p.ACCOUNT_NAME == id).ToList());
                 db.SaveChanges();
             }
 
