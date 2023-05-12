@@ -1,5 +1,5 @@
 ﻿
-@model PagedList.IPagedList<PBL3.Models.ThietBi>
+@model PagedList.IPagedList<PBL3_2.Models.ThietBi>
 @using PagedList
 @using PagedList.Mvc
 
@@ -61,9 +61,9 @@
                 @Html.DisplayFor(modelItem => item.THIETBI_NUM)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.THIETBI_ID.Trim() }) |
-                @Html.ActionLink("Details", "Details", new { id = item.THIETBI_ID.Trim() }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.THIETBI_ID.Trim() })
+                @Html.ActionLink("Edit", "Edit", new { id = item.THIETBI_ID}) |
+                @Html.ActionLink("Details", "Details", new { id = item.THIETBI_ID}) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.THIETBI_ID })
             </td>
         </tr>
     }

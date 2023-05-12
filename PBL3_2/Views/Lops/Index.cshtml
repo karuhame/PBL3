@@ -1,28 +1,63 @@
-﻿@model IEnumerable<PBL3.Models.Lop>
+﻿@model IEnumerable<PBL3_2.Models.Lop>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-q
-<h2>Index</h2>
+
+<h2>Danh sách lớp tập</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table">
     <tr>
+        <th>
+            Loại lớp
+        </th>
+        <th>
+            Phí tập (1 buổi)
+        </th>
+        <th>
+            @* Hiển thị tên của giáo viên *@
+            Tên huấn luyện viên
+
+        </th>
+        <th>
+            
+            Số buổi
+        </th>
+        <th>
+            Thời khóa biểu
+
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.LOP_START)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LOP_END)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_TYPE)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Accounts.FirstOrDefault().AccountInfo.USER_NAME)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
+        </td>
+        <td>
+            T2,T3,T4
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.LOP_START)
         </td>
@@ -31,7 +66,6 @@ q
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new {id = item.LOP_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LOP_ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.LOP_ID })
         </td>
     </tr>

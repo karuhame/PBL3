@@ -1,13 +1,11 @@
-﻿@model PBL3.Models.ThietBi
+﻿@model PBL3_2.Models.ThietBi
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 <h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -54,7 +52,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

@@ -1,4 +1,4 @@
-﻿@model PBL3.Models.AccountInfo
+﻿@model PBL3_2.Models.AccountInfo
 
 @{
     ViewBag.Title = "Edit";
@@ -6,7 +6,6 @@
 }
 
 <h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -16,7 +15,7 @@
         <h4>AccountInfo</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ACCOUNT_ID)
+        @Html.HiddenFor(model => model.ACCOUNT_NAME)
 
         <div class="form-group">
             @Html.LabelFor(model => model.USER_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -95,7 +94,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

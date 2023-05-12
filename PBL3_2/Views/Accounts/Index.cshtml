@@ -1,10 +1,7 @@
-@model PagedList.IPagedList<PBL3.Models.Account>
-@using PagedList
-@using PagedList.Mvc
+﻿@model IEnumerable<PBL3_2.Models.Account>
 
 @{
-    ViewBag.Title = "Accounts List";
-
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,59 +10,37 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-
-
-@using (Html.BeginForm("Index", "Accounts", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("searchString")
-        <input type="submit" value="Search" />
-    </p>
-}
-<table class="table table-bordered">
-
+<table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Account_Name", "Index", new { sortOrder = ViewBag.SortOrder == "name_asc" ? "name_desc" : "name_asc", currentFilter = ViewBag.CurrentFilter })
+            @Html.DisplayNameFor(model => model.AccountInfo.USER_NAME)
         </th>
         <th>
-            @Html.ActionLink("Account_Password", "Index", new { sortOrder = ViewBag.SortOrder == "password_asc" ? "password_desc" : "password_asc", currentFilter = ViewBag.CurrentFilter })
+            @Html.DisplayNameFor(model => model.ACCOUNT_PASSWORD)
         </th>
         <th>
-            @Html.ActionLink("Account_Role", "Index", new { sortOrder = ViewBag.SortOrder == "role_asc" ? "role_desc" : "role_asc", currentFilter = ViewBag.CurrentFilter })
+            @Html.DisplayNameFor(model => model.ACCOUNT_ROLE)
         </th>
-        @*<th>
-            @Html.ActionLink("Account_ID", "Index", new { sortOrder = ViewBag.SortOrder == "ID_asc" ? "ID_desc" : "ID_asc", currentFilter = ViewBag.CurrentFilter })
-        </th>*@
+        <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ACCOUNT_NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ACCOUNT_PASSWORD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ACCOUNT_ROLE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountInfo.USER_NAME)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ACCOUNT_ID.Trim() }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ACCOUNT_ID.Trim() }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ACCOUNT_ID.Trim() })
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountInfo.USER_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_PASSWORD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCOUNT_ROLE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ACCOUNT_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ACCOUNT_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ACCOUNT_ID })
+        </td>
+    </tr>
+}
 
 </table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
-

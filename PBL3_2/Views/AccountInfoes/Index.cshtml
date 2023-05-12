@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PBL3.Models.AccountInfo>
+﻿@model IEnumerable<PBL3_2.Models.AccountInfo>
 
 @{
     ViewBag.Title = "Index";
@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")    
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
@@ -35,9 +35,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ACCOUNT_EMAIL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Account.ACCOUNT_NAME)
         </th>
         <th></th>
     </tr>
@@ -69,12 +66,9 @@
             @Html.DisplayFor(modelItem => item.ACCOUNT_EMAIL)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ACCOUNT_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ACCOUNT_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ACCOUNT_ID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ACCOUNT_NAME }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ACCOUNT_NAME }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ACCOUNT_NAME })
         </td>
     </tr>
 }

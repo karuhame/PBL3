@@ -59,6 +59,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -128,11 +134,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BBL\BBLQLLop.cs" />
+    <Compile Include="Controllers\AccountInfoesController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\BienLaisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaiGoisController.cs" />
     <Compile Include="Controllers\LopsController.cs" />
     <Compile Include="Controllers\PhienTapsController.cs" />
+    <Compile Include="Controllers\ThietBisController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -351,6 +360,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -474,7 +484,49 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Shared\_MainMenu.cshtml" />
-    <Content Include="Views\Accounts\DanhSach.cshtml" />
+    <Content Include="Views\AccountInfoes\Create.cshtml" />
+    <Content Include="Views\AccountInfoes\Delete.cshtml" />
+    <Content Include="Views\AccountInfoes\Details.cshtml" />
+    <Content Include="Views\AccountInfoes\Edit.cshtml" />
+    <Content Include="Views\AccountInfoes\Index.cshtml" />
+    <Content Include="Views\BienLais\Create.cshtml" />
+    <Content Include="Views\BienLais\Delete.cshtml" />
+    <Content Include="Views\BienLais\Details.cshtml" />
+    <Content Include="Views\BienLais\Edit.cshtml" />
+    <Content Include="Views\BienLais\Index.cshtml" />
+    <Content Include="Views\LoaiGois\Create.cshtml" />
+    <Content Include="Views\LoaiGois\Delete.cshtml" />
+    <Content Include="Views\LoaiGois\Details.cshtml" />
+    <Content Include="Views\LoaiGois\Edit.cshtml" />
+    <Content Include="Views\LoaiGois\Index.cshtml" />
+    <Content Include="Views\Lops\Create.cshtml" />
+    <Content Include="Views\Lops\Delete.cshtml" />
+    <Content Include="Views\Lops\Details.cshtml" />
+    <Content Include="Views\Lops\Edit.cshtml" />
+    <Content Include="Views\Lops\Index.cshtml" />
+    <Content Include="Views\Lops\Join.cshtml" />
+    <Content Include="Views\PhienTaps\Create.cshtml" />
+    <Content Include="Views\PhienTaps\Delete.cshtml" />
+    <Content Include="Views\PhienTaps\Details.cshtml" />
+    <Content Include="Views\PhienTaps\Edit.cshtml" />
+    <Content Include="Views\PhienTaps\Index.cshtml" />
+    <Content Include="Views\QuanLyThietBis\Create.cshtml" />
+    <Content Include="Views\QuanLyThietBis\Delete.cshtml" />
+    <Content Include="Views\QuanLyThietBis\Details.cshtml" />
+    <Content Include="Views\QuanLyThietBis\Edit.cshtml" />
+    <Content Include="Views\QuanLyThietBis\Index.cshtml" />
+    <Content Include="Views\ThietBis\Create.cshtml" />
+    <Content Include="Views\ThietBis\Delete.cshtml" />
+    <Content Include="Views\ThietBis\Details.cshtml" />
+    <Content Include="Views\ThietBis\Edit.cshtml" />
+    <Content Include="Views\ThietBis\Index.cshtml" />
+    <Content Include="Views\Accounts\Create.cshtml" />
+    <Content Include="Views\Accounts\Delete.cshtml" />
+    <Content Include="Views\Accounts\Details.cshtml" />
+    <Content Include="Views\Accounts\Edit.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

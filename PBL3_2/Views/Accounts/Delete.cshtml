@@ -1,4 +1,4 @@
-﻿@model PBL3.Models.Account
+﻿@model PBL3_2.Models.Account
 
 @{
     ViewBag.Title = "Delete";
@@ -13,11 +13,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ACCOUNT_NAME)
+            @Html.DisplayNameFor(model => model.AccountInfo.USER_NAME)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ACCOUNT_NAME)
+            @Html.DisplayFor(model => model.AccountInfo.USER_NAME)
         </dd>
 
         <dt>
@@ -34,14 +34,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.ACCOUNT_ROLE)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AccountInfo.USER_NAME)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccountInfo.USER_NAME)
         </dd>
 
     </dl>

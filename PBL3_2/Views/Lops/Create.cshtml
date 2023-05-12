@@ -1,5 +1,4 @@
-﻿@model PBL3.Models.Lop
-
+﻿@model PBL3_2.Models.Lop
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,42 +7,53 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Lop</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.LOP_START, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LOP_START, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LOP_START, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LOP_END, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LOP_END, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LOP_END, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <h4>Lop</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+<div class="form-group">
+    <label class="control-label col-md-2">Loại gói</label>
+    <div class="col-md-4">
+        @Html.DropDownList("loai", ViewBag.loai as SelectList)
+    </div>
+</div>  
+    <div class="form-group">
+        <label class="control-label col-md-2">Bắt đầu</label>
+        <div class="col-md-4">
+            <input class="form-control" name="LOP_START" type="date" />
+            @Html.ValidationMessageFor(model => model.LOP_START, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Kết thúc</label>
+        <div class="col-md-4">
+            <input class="form-control" name="LOP_END" type="date" />
+            @Html.ValidationMessageFor(model => model.LOP_END, "", new { @class = "text-danger" })  
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Số buổi</label>
+        <div class="col-md-4">
+            <input class="form-control" name="LOP_NUMBERSESSION" type="number" />
+            @Html.ValidationMessageFor(model => model.LOP_NUMBERSESSION, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
