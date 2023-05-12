@@ -129,7 +129,7 @@ namespace PBL3_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "THIETBI_ID,THIETBI_NAME,THIETBI_STATUS,THIETBI_NUM")] ThietBi thietBi)
+        public ActionResult Create([Bind(Include = "THIETBI_NAME,THIETBI_STATUS,THIETBI_NUM")] ThietBi thietBi)
         {
             if (ModelState.IsValid)
             {
