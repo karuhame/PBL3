@@ -23,6 +23,7 @@ namespace PBL3_2.Controllers
         public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy, int? page)
 
         {
+
             //ViewBag.strSearch = strSearch;
 
             ViewBag.SortOrder = SortOrder;
