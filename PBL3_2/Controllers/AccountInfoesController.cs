@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using PBL3_2.BBL;
 using PBL3_2.Models;
 
 namespace PBL3_2.Controllers
@@ -229,6 +230,64 @@ namespace PBL3_2.Controllers
             return View(accountInfo);
         }
 
+        public ActionResult Them()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult Them2(string account_name, string account_password, string Retype_Account_password,
+         DateTime account_birthday, string User_name, string Account_CCCD, Boolean GioiTinh, double Account_Height,
+         double Account_Weight, string Account_phone, string Account_email)
+        {
+            Account da = new Account()
+            {
+                ACCOUNT_NAME = account_name,
+                ACCOUNT_PASSWORD = account_password
+            };
+
+            AccountInfo dc = new AccountInfo()
+            {
+                ACCOUNT_CCCD = Account_CCCD,
+                ACCOUNT_BIRTHDAY = account_birthday,
+                ACCOUNT_NAME = account_name,
+                ACCOUNT_EMAIL = Account_email,
+                ACCOUNT_GENDER = GioiTinh,
+                ACCOUNT_HEIGHT = Account_Height,
+                ACCOUNT_PHONE = Account_phone,
+                ACCOUNT_WEIGHT = Account_Weight,
+                USER_NAME = User_name
+            };
+
+            AccounsAccountInfo newAccount = new AccounsAccountInfo();
+            newAccount.Account = da;
+            newAccount.AccountInfo = dc;
+            if (Retype_Account_password != account_password)
+            {
+                ModelState.AddModelError("", "Mật khẩu không khớp");
+                return View(newAccount);
+            }
+
+            var tmp = db.AccountInfos.Where(p => p.ACCOUNT_NAME == dc.ACCOUNT_NAME).ToList().Count();    
+            if (tmp > 0)
+            {
+                ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+                return View(newAccount);
+            }
+            else
+            {
+                db.AccountInfos.Add(dc);
+                db.SaveChanges();
+                db.Accounts.Add(da);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
+
+
+
         // GET: AccountInfoes/Create
         public ActionResult Create()
         {
@@ -303,9 +362,21 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            Account account = db.Accounts.Find(id);
+            if (account != null)
+            {
+                db.Accounts.Remove(account);
+                db.SaveChanges();
+            }
+
             AccountInfo accountInfo = db.AccountInfos.Find(id);
-            db.AccountInfos.Remove(accountInfo);
-            db.SaveChanges();
+            if (accountInfo != null)
+            {
+                db.AccountInfos.Remove(accountInfo);
+                db.SaveChanges();
+            }
+          
+            
             return RedirectToAction("Index");
         }
 

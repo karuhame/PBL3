@@ -1,0 +1,84 @@
+﻿@model PBL3_2.BBL.AccounsAccountInfo
+
+@{
+    ViewBag.Title = "Them2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <div asp-validation-summary = "All" class = "text-danger"></div>
+    <div class="page-section features" style="margin: 150px 0px">
+        <div class="container">
+            <h1>Thêm máy tính mới</h1>
+            <br />
+            <br />
+            <form action="~/AccountInfoes/Them2" method="post">
+                <div class="form-group">
+                    <label for="email">Tên đăng nhập:</label>
+                    <input type="text" class="form-control" name="Account_name">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Mật khẩu:</label>
+                    <input type="password" class="form-control" name="Account_password">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Nhập lại mật khẩu:</label>
+                    <input type="password" class="form-control" name="Retype_Account_password">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Họ và tên:</label>
+                    <input type="text" class="form-control" name="User_name">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">CCCD:</label>
+                    <input type="text" class="form-control" name="Account_CCCD">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Sinh nhật:</label>
+                    <input type="date" class="form-control" name="Account_birthday">
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Giới tính</label>
+                    <div class="col-md-10">
+                        <select name="GioiTinh" class="form-control">
+                            <option value=True>Giới tính Nam</option>
+                            <option value=False>Giới tính Nữ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Chiều cao(cm):</label>
+                    <input type="number" class="form-control" name="Account_Height">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Cân nặng(kg):</label>
+                    <input type="number" class="form-control" name="Account_Weight">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">SĐT:</label>
+                    <input type="text" class="form-control" name="Account_phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Email:</label>
+                    <input type="text" class="form-control" name="Account_email">
+                </div>
+
+
+
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>
