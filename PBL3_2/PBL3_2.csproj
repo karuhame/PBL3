@@ -494,11 +494,6 @@
     <Content Include="Views\BienLais\Details.cshtml" />
     <Content Include="Views\BienLais\Edit.cshtml" />
     <Content Include="Views\BienLais\Index.cshtml" />
-    <Content Include="Views\LoaiGois\Create.cshtml" />
-    <Content Include="Views\LoaiGois\Delete.cshtml" />
-    <Content Include="Views\LoaiGois\Details.cshtml" />
-    <Content Include="Views\LoaiGois\Edit.cshtml" />
-    <Content Include="Views\LoaiGois\Index.cshtml" />
     <Content Include="Views\Lops\Create.cshtml" />
     <Content Include="Views\Lops\Delete.cshtml" />
     <Content Include="Views\Lops\Details.cshtml" />
@@ -527,6 +522,11 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\LoaiGois\Create.cshtml" />
+    <Content Include="Views\LoaiGois\Delete.cshtml" />
+    <Content Include="Views\LoaiGois\Details.cshtml" />
+    <Content Include="Views\LoaiGois\Edit.cshtml" />
+    <Content Include="Views\LoaiGois\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
