@@ -6,26 +6,39 @@
 }
 
 <h2>Index</h2>
-
+<!--
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+    -->
+<div>
+    <form action="~/BienLais/Index">
+        <input type="text" name="Tenbienlai"/>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BIENLAI_PAYMENT)
+            Người đóng tiền
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BIENLAI_START)
+            Số tiền đóng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BIENLAI_END)
+            Ngày bắt đầu gói tập
+        </th>
+        <th>
+            Ngày kết thúc gói tập
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
         </td>

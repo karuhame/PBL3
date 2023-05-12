@@ -15,9 +15,10 @@ namespace PBL3_2.Controllers
         private DBGym db = new DBGym();
 
         // GET: BienLais
-        public ActionResult Index()
+        public ActionResult Index(string tenbienlai="")
         {
-            return View(db.BienLais.ToList());
+            if(tenbienlai=="") return View(db.BienLais.ToList());
+            else return View(db.BienLais.ToList());
         }
 
         // GET: BienLais/Details/5
