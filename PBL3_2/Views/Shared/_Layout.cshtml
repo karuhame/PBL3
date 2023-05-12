@@ -60,11 +60,25 @@
 </head>
 
 <body>
+
+   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <div class="container">
+        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link", style = "color: black;" })</li>
+                <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link", style = "color: black;" })</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link", style = "color: black;" })</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+    </nav>
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <!-- Start Header Top Area -->
-    <div class="header-top-area" >
+    <div class="header-top-area">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
