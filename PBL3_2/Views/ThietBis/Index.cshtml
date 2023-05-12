@@ -20,8 +20,8 @@
 @using (Html.BeginForm("Index", "ThietBis", FormMethod.Get))
 {
     <p>
-        Search: @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
-        <input class="btn btn-default" type="submit" value="Filter" /> |
+        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+        <button type="submit" class="btn btn-primary">Search</button> |
         <a href="~/ThietBis/Index">Back to list</a>
     </p>
 }
