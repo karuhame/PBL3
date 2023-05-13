@@ -13,13 +13,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PHIENTAP_DAY)
+            @Html.DisplayNameFor(model => model.PHIENTAP_DATE)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PHIENTAP_START)
+            @Html.DisplayNameFor(model => model.PHIENTAP_startt)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PHIENTAP_END)
+            @Html.DisplayNameFor(model => model.PHIENTAP_endd)
         </th>
         <th></th>
     </tr>
@@ -27,13 +27,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.PHIENTAP_DAY)
+            @Html.DisplayFor(modelItem => item.PHIENTAP_DATE)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PHIENTAP_START)
+            @Html.DisplayFor(modelItem => item.PHIENTAP_startt)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PHIENTAP_END)
+            @Html.DisplayFor(modelItem => item.PHIENTAP_endd)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PHIENTAP_ID }) |

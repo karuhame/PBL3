@@ -21,6 +21,8 @@ namespace PBL3_2.Models
         public int GOI_ID { get; set; }
 
         public virtual Account Staff { get; set; }
+
+        public string LOP_STATUS { get; set; }
         
 
 
