@@ -21,6 +21,10 @@ namespace PBL3_2.Models
 
         public int? PHIENTAP_END { get; set; }
 
+
+        public int PHIENTAP_DATE { get; set; }
+        public DateTime PHIENTAP_startt { get; set; }
+        public DateTime PHIENTAP_endd { get; set; }
         public int LOP_ID { get; set; }
         [ForeignKey("LOP_ID")]
         public virtual Lop Lop { get; set; }

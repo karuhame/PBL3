@@ -20,11 +20,13 @@ namespace PBL3_2.Models
         public string ACCOUNT_PASSWORD { get; set; }
 
         public string ACCOUNT_ROLE { get; set; }
+        public List<PhienTap>[] Lich { get; set; }
         public virtual AccountInfo AccountInfo { get; set; }
         public virtual ICollection<Lop> Lops { get; set; }
         public virtual ICollection<BienLai> BienLais { get; set;}
         public Account()
         {
+            this.Lich = new List<PhienTap>[7];
             this.Lops = new HashSet<Lop>();
             this.BienLais= new HashSet<BienLai>();
         }

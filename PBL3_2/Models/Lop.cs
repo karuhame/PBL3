@@ -18,6 +18,9 @@ namespace PBL3_2.Models
         public DateTime? LOP_END { get; set; }
 
         public int? LOP_NUMBERSESSION { get; set; }
+
+        // Xem đã được xác nhận chưa {Accepted, Wating}
+        public string LOP_STATUS { get; set; }
         public int GOI_ID { get; set; }
 
         public virtual Account Staff { get; set; }

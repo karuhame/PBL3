@@ -26,24 +26,22 @@ namespace PBL3_2.Controllers
             return View(db.Lops.ToList());
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AdminView(List<Lop> list, int id, string sub)
-        {   
-                
-            if(sub == "Accept")
+        public ActionResult ConfirmLop(int id, string sub)
+        {
+
+            if (sub == "Accept")
             {
                 db.Lops.Find(id).LOP_STATUS = "Accepted";
-                
+
                 db.SaveChanges();
 
             }
-            else if(sub == "Delete")
+            else if (sub == "Delete")
             {
                 db.Lops.Remove(db.Lops.Find(id));
                 db.SaveChanges();
             }
-            return View();
+            return RedirectToAction("AdminLopView", db.Lops.ToList());
         }
 
 

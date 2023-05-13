@@ -45,10 +45,20 @@ namespace PBL3_2.Controllers
         {
             Lop temp = db.Lops.Find(ID);
             ViewData["lop"] = temp;
-           
+
+            ViewBag.TKB = new SelectList( new SelectListItem[]
+           {
+               new SelectListItem(){ Text = "Thứ hai", Value = "0"},
+               new SelectListItem(){ Text = "Thứ ba", Value = "1"},
+               new SelectListItem(){ Text = "Thứ tư", Value = "2"},
+               new SelectListItem(){ Text = "Thứ năm", Value = "3"},
+               new SelectListItem(){ Text = "Thứ sáu", Value = "4"},
+               new SelectListItem(){ Text = "Thứ bảy", Value = "5"},
+               new SelectListItem(){ Text = "Chủ nhật", Value = "6"}
+           }, "Value", "Text");
             //ViewData["soBuoi"] = lop.LOP_NUMBERSESSION;
-          
-            //ViewBag.soBuoi = 2;
+
+           //ViewBag.soBuoi = 2;
 
             return View();
         }
@@ -59,7 +69,7 @@ namespace PBL3_2.Controllers
         //Truyền vào List<phienTaps> rồi add vào LopID tương ứng    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(List<PhienTap> phienTaps, string sub, int ID)
+        public ActionResult Create(List<PhienTap> phienTaps,string Date, string sub, int ID)
         {
             if(sub == "Create")
             {
