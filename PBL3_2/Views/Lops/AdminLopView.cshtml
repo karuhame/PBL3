@@ -1,0 +1,114 @@
+﻿@model IEnumerable<PBL3_2.Models.Lop>
+
+@{
+    ViewBag.Title = "AdminLopView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AdminLopView</h2>
+
+<h2>Danh sách lớp tập</h2>
+
+<table class="table table">
+    <tr>
+        <th>
+            Loại lớp
+        </th>
+        <th>
+            Phí tập (1 buổi)
+        </th>
+        <th>
+            @* Hiển thị tên của giáo viên *@
+            Tên huấn luyện viên
+
+        </th>
+        <th>
+
+            Số buổi
+        </th>
+        <th>
+            Thời khóa biểu
+
+        </th>
+        <th>
+            Bắt đầu
+        </th>
+        <th>
+            Kết thúc
+        </th>
+        <th>
+            Tình trạng
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_TYPE)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
+            </td>
+            <td>
+                @{
+                    string x = "";
+                    foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
+                    {
+                        switch (i.PHIENTAP_DATE)
+                        {
+                            case 0:
+                                x += " T2";
+                                break;
+                            case 1:
+                                x += " T3";
+                                break;
+                            case 2:
+                                x += " T4";
+                                break;
+                            case 3:
+                                x += " T5";
+                                break;
+                            case 4:
+                                x += " T6";
+                                break;
+                            case 5:
+                                x += " T7";
+                                break;
+                            case 6:
+                                x += " CN";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                @x
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LOP_START)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LOP_END)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LOP_STATUS)
+            </td>
+            <td>
+                @Html.ActionLink("Confirm", "ConfirmLop", new { id = item.LOP_ID, sub = "Accept" })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "ConfirmLop", new { id = item.LOP_ID, sub = "Delete" })
+            </td>
+        </tr>
+    }
+
+</table>
