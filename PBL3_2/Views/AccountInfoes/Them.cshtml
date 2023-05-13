@@ -8,9 +8,39 @@
 <main>
     <div class="page-section features" style="margin: 150px 0px">
         <div class="container">
-            <h1>Thêm máy tính mới</h1>
-            <br />
-            <br />
+            <a href="~/AccountInfoes/Index" class="back-home-link">Quay lại trang chủ</a>
+            <style>
+                .back-home-link {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #4CAF50;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    float: right; /* canh lề phải */
+                    margin-top: 500 px;
+                }
+
+                .back-home-link:hover {
+                     background-color: #3e8e41;
+                }
+            </style>
+
+            <h1 class="page-heading">Thêm tài khoản</h1>
+
+            <style>
+                .page-heading {
+                    font-size: 36px;
+                    color: #2c3e50;
+                    text-align: center;
+                    border-bottom: 2px solid #2c3e50;
+                    padding-bottom: 40px;
+                }
+            </style>
+        
+
+
+
             <form action="~/AccountInfoes/Them2" method="post">
                 <div class="form-group">
                     <label for="email">Tên đăng nhập:</label>
@@ -41,8 +71,6 @@
                     <label for="pwd">Sinh nhật:</label>
                     <input type="date" class="form-control" name="Account_birthday">
                 </div>
-
-
 
                 <div class="form-group">
                     <label class="control-label col-md-2">Giới tính</label>

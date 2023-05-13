@@ -8,93 +8,99 @@
 
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="container">
 
+    <h2>Danh sách</h2>
 
-@using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))
-{
     <p>
-        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
-        <button type="submit" class="btn btn-primary">Search</button> |
-        <a href="~/ThietBis/Index">Back to list</a>
+        @Html.ActionLink("Tạo mới tài khoản", "Them")
+        @Html.ActionLink("Phân quyền tài khoản", "Them")
+
     </p>
-}
 
 
-<table class="table table-borde red">
+    @using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))
+    {
+        <p>
+            @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+            <button type="submit" class="btn btn-primary">Search</button> |
+            <a href="~/ThietBis/Index">Back to list</a>
+        </p>
+    }
 
-    <tr>
-        <th>
-            @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
+
+    <table class="table table-borde red">
+
+        <tr>
+            <th>
+                @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
 
 
-            @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
-            @Html.ActionLink("Tên đăng nhập", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+                @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
+                @Html.ActionLink("Tên đăng nhập", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
 
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
-            @Html.ActionLink("Tên người dùng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Sinh nhật", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Giới tính", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_GENDER", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Chiều cao(cm)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_HEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Cân nặng(kg)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_WEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("SĐT", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Email", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_EMAIL", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("CCCD", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_CCCD", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th></th>
-    </tr>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ACCOUNT_NAME</td>
-                <td>@item.USER_NAME</td>
-                <td> @string.Format("{0:dd-MM-yyyy}", item.ACCOUNT_BIRTHDAY) </td>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
+                @Html.ActionLink("Tên người dùng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Sinh nhật", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Giới tính", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_GENDER", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Chiều cao(cm)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_HEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Cân nặng(kg)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_WEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("SĐT", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Email", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_EMAIL", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("CCCD", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_CCCD", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th></th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ACCOUNT_NAME</td>
+                    <td>@item.USER_NAME</td>
+                    <td> @string.Format("{0:dd-MM-yyyy}", item.ACCOUNT_BIRTHDAY) </td>
 
-                @if (item.ACCOUNT_GENDER == true)
-                {
-                    <td>Nam</td>
-                }
-                else
-                {
-                    <td>Nữ</td>
-                }
-                <td>@item.ACCOUNT_HEIGHT</td>
-                <td>@item.ACCOUNT_WEIGHT</td>
-                <td>@item.ACCOUNT_PHONE</td>
-                <td>@item.ACCOUNT_EMAIL</td>
-                <td>@item.ACCOUNT_CCCD</td>
-                <td>
-                    @Html.ActionLink("Cập nhật", "Edit", new { id = item.ACCOUNT_NAME }) |
-                    @Html.ActionLink("Chi tiết", "Details", new { id = item.ACCOUNT_NAME }) |
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.ACCOUNT_NAME })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @if (item.ACCOUNT_GENDER == true)
+                    {
+                        <td>Nam</td>
+                    }
+                    else
+                    {
+                        <td>Nữ</td>
+                    }
+                    <td>@item.ACCOUNT_HEIGHT</td>
+                    <td>@item.ACCOUNT_WEIGHT</td>
+                    <td>@item.ACCOUNT_PHONE</td>
+                    <td>@item.ACCOUNT_EMAIL</td>
+                    <td>@item.ACCOUNT_CCCD</td>
+                    <td>
+                        @Html.ActionLink("Cập nhật", "Edit", new { id = item.ACCOUNT_NAME }) |
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ACCOUNT_NAME }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.ACCOUNT_NAME })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
 
+</div>
