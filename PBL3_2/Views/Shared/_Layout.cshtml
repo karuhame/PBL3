@@ -69,7 +69,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="logo-area">
-                        <h3 style="color:white; font-size=100px;" >We go Jim</h3>
+                        <h3 style="color:white;">We go Jim</h3>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -219,9 +219,23 @@
         </div>
     </div>
     <!-- Mobile Menu end -->
-
-
-    @RenderPage("_MainMenu.cshtml")
+    @{
+        ViewBag.MainMenu = "_MainMenu.cshtml";
+        System.Security.Principal.IPrincipal CurUser = PBL3_2.BBL.PhanQuyen.GetCurrentUser();
+        if (Roles.IsUserInRole(CurUser.Identity.Name, "Admin"))
+        {
+            ViewBag.MainMenu = "_MainMenu.cshtml";
+        }
+        else if (Roles.IsUserInRole(CurUser.Identity.Name,"Nhan Vien"))
+        {
+            ViewBag.MainMenu = "_MainMenuForNhanVien.cshtml";
+        }
+        else if (Roles.IsUserInRole(CurUser.Identity.Name, "Khach Hang"))
+        {
+            ViewBag.MainMenu = "_MainMenuForKhachHang.cshtml";
+        }
+    }
+    @RenderPage((string)ViewBag.MainMenu)
 
     @RenderBody()
     <!-- Start Footer area-->
