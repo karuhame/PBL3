@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity;
+@using PBL3_2.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework
+
+
+<!DOCTYPE html>
 <html class="no-js" lang="">
 
 <head>
@@ -13,7 +21,7 @@
     <!-- Google Fonts
         ============================================ -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-    <!-- Bootstrap CSS  
+    <!-- Bootstrap CSS
         ============================================ -->
     <link rel="stylesheet" href="~/Assets/css/bootstrap.min.css">
     <!-- Bootstrap CSS
@@ -221,18 +229,24 @@
     <!-- Mobile Menu end -->
     @{
         ViewBag.MainMenu = "_MainMenu.cshtml";
-        System.Security.Principal.IPrincipal CurUser = PBL3_2.BBL.PhanQuyen.GetCurrentUser();
-        if (Roles.IsUserInRole(CurUser.Identity.Name, "Admin"))
-        {
-            ViewBag.MainMenu = "_MainMenu.cshtml";
-        }
-        else if (Roles.IsUserInRole(CurUser.Identity.Name,"Nhan Vien"))
-        {
-            ViewBag.MainMenu = "_MainMenuForNhanVien.cshtml";
-        }
-        else if (Roles.IsUserInRole(CurUser.Identity.Name, "Khach Hang"))
-        {
-            ViewBag.MainMenu = "_MainMenuForKhachHang.cshtml";
+        if (User.Identity.IsAuthenticated) { // da dang nhap chua 
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+            
+
+            if (currentRole == "Admin")
+            {
+                ViewBag.MainMenu = "_MainMenu.cshtml";
+            }
+            else if (currentRole == "Nhan Vien")
+            {
+                ViewBag.MainMenu = "_MainMenuForNhanVien.cshtml";
+            }
+            else if (currentRole == "Khach Hang")
+            {
+                ViewBag.MainMenu = "_MainMenuForKhachHang.cshtml";
+            }
         }
     }
     @RenderPage((string)ViewBag.MainMenu)
