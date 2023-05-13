@@ -20,7 +20,7 @@ namespace PBL3_2.Controllers
         private DBGym db = new DBGym();
 
         // GET: ThietBis
-        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy, int? page)
+        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy)
         {
 
             //ViewBag.strSearch = strSearch;
@@ -34,9 +34,7 @@ namespace PBL3_2.Controllers
             //Tìm kiếm
             if (!String.IsNullOrEmpty(strSearchThietBi))
             {
-                obj = obj.Where(p => p.THIETBI_NAME.Contains(strSearchThietBi)
-                                     || p.THIETBI_STATUS.ToString() == strSearchThietBi
-                                     || p.THIETBI_NUM.ToString() == strSearchThietBi).ToList();
+                obj = obj.Where(p => p.THIETBI_NAME.Contains(strSearchThietBi)).ToList();
             }
 
             //Sắp xếp
@@ -97,7 +95,7 @@ namespace PBL3_2.Controllers
             }
 
             int pageSize = 5;
-            int pageNumber = (page ?? 1);
+            int pageNumber = 1;
             return View(obj.ToPagedList(pageNumber, pageSize));
 
         }
