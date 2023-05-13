@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<PBL3_2.Models.AccountInfo>
+@model PagedList.IPagedList<PBL3_2.Models.AccountInfo>
 @using PagedList
 @using PagedList.Mvc
 
@@ -15,8 +15,6 @@
 
     <p>
         @Html.ActionLink("Tạo mới tài khoản", "Them")
-        @Html.ActionLink("Phân quyền tài khoản", "Them")
-
     </p>
 
 
@@ -25,7 +23,7 @@
         <p>
             @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
             <button type="submit" class="btn btn-primary">Search</button> |
-            <a href="~/ThietBis/Index">Back to list</a>
+            @*<a href="~/ThietBis/Index">Back to list</a>*@
         </p>
     }
 
