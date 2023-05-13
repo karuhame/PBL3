@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PBL3_2.Models;
 
 namespace PBL3_2.Controllers
@@ -19,10 +20,36 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
 
+            
+        public ActionResult AdminLopView()
+        {
+            return View(db.Lops.ToList());
+        }
+
+        public ActionResult ConfirmLop(int id, string sub)
+        {
+
+            if (sub == "Accept")
+            {
+                db.Lops.Find(id).LOP_STATUS = "Accepted";
+
+                db.SaveChanges();
+
+            }
+            else if (sub == "Delete")
+            {
+                db.Lops.Remove(db.Lops.Find(id));
+                db.SaveChanges();
+            }
+            return RedirectToAction("AdminLopView", db.Lops.ToList());
+        }
+
+
+
         // GET: Lops
         public ActionResult Index()
         {
-            return View(db.Lops.ToList());
+            return View(db.Lops.Where(P => P.LOP_STATUS == "Accepted").ToList());
         }
 
         // GET: Lops/Details/5
@@ -57,6 +84,9 @@ namespace PBL3_2.Controllers
             {
 
                 //Thêm mới vào trong lớp
+                var lop = db.Lops.Find(Convert.ToInt32(sub));
+                var userId = User.Identity.GetUserId();
+                lop.Accounts.Add(db.Accounts.Find(Convert.ToInt32(userId)));
                 return View("Index");
 
             }
@@ -82,10 +112,9 @@ namespace PBL3_2.Controllers
             {
                 lop.GOI_ID = Convert.ToInt32(loai);
                 db.Lops.Add(lop);
+                lop.LOP_STATUS = "Waiting";  
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
-               
-
             }
 
             return View(lop);
