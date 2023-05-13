@@ -18,13 +18,37 @@ namespace PBL3_2.Controllers
         // GET: BienLais
         public ActionResult Index(string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
         {
-            if (TenNguoiTraTien != "") ViewBag.TenNguoiTraTien = TenNguoiTraTien;
-            else ViewBag.TenNguoiTraTien = TenNguoiTraTien;
+            ViewBag.TenNguoiTraTien = TenNguoiTraTien;
             ViewBag.SortBy = SortBy;
             ViewBag.SortOrder = SortOrder;
 
+            // Search 
             List<BienLai> l = db.BienLais.ToList();
             if (TenNguoiTraTien != "") l = db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien)).ToList();
+
+
+            // Sort 
+            if(SortBy==1)
+            {
+                if (SortOrder == 1) l.OrderBy(p => p.Account.ACCOUNT_NAME);
+                else if (SortOrder == 2) l.OrderByDescending(p => p.Account.ACCOUNT_NAME);
+            }
+            else if(SortBy==2)
+            {
+                if (SortOrder == 1) l.OrderBy(p => p.BIENLAI_PAYMENT);
+                else if (SortOrder == 2) l.OrderByDescending(p => p.BIENLAI_PAYMENT);
+            }
+            else if(SortBy==3)
+            {
+                if (SortOrder == 1) l.OrderBy(p => p.BIENLAI_START);
+                else if (SortOrder == 2) l.OrderByDescending(p => p.BIENLAI_END);
+            }
+            else if (SortBy == 4)
+            {
+                if (SortOrder == 1) l.OrderBy(p => p.BIENLAI_END);
+                else if (SortOrder == 2) l.OrderByDescending(p => p.BIENLAI_END);
+            }
+
             return View(l);
         }
 

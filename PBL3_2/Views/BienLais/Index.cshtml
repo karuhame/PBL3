@@ -22,16 +22,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Người đóng tiền", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
+            @Html.ActionLink("Người đóng tiền", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
-            @Html.ActionLink("Số tiền đóng", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 2, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
+            @Html.ActionLink("Số tiền đóng", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 2, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
-            @Html.ActionLink("Ngày bắt đầu gói tập", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 3, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
+            @Html.ActionLink("Ngày bắt đầu gói tập", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 3, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
-            @Html.ActionLink("Ngày kết thúc gói tập", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 4, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
+            @Html.ActionLink("Ngày kết thúc gói tập", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 4, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th></th>
     </tr>
