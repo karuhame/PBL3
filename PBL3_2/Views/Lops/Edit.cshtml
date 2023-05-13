@@ -1,4 +1,4 @@
-﻿@model PBL3_2.Models.Lop
+@model PBL3_2.Models.Lop
 
 @{
     ViewBag.Title = "Edit";
@@ -24,13 +24,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PHIENTAP_DAY)
+                @Html.DisplayFor(modelItem => item.PHIENTAP_DATE)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PHIENTAP_START)
+                @Html.DisplayFor(modelItem => item.PHIENTAP_startt)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PHIENTAP_END)
+                @Html.DisplayFor(modelItem => item.PHIENTAP_endd)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", "PhienTaps", new { id = item.PHIENTAP_ID }) |
