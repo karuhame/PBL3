@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -236,7 +236,6 @@ namespace PBL3_2.Controllers
         }
 
         [HttpPost]
-
         public ActionResult Them2(string account_name, string account_password, string Retype_Account_password,
          DateTime account_birthday, string User_name, string Account_CCCD, Boolean GioiTinh, double Account_Height,
          double Account_Weight, string Account_phone, string Account_email)
@@ -246,7 +245,7 @@ namespace PBL3_2.Controllers
                 ACCOUNT_NAME = account_name,
                 ACCOUNT_PASSWORD = account_password
             };
-
+            da.ACCOUNT_ROLE = "Khach Hang";
             AccountInfo dc = new AccountInfo()
             {
                 ACCOUNT_CCCD = Account_CCCD,
@@ -266,14 +265,14 @@ namespace PBL3_2.Controllers
             if (Retype_Account_password != account_password)
             {
                 ModelState.AddModelError("", "Mật khẩu không khớp");
-                return View("Them");
+                return View();
             }
 
             var tmp = db.AccountInfos.Where(p => p.ACCOUNT_NAME == dc.ACCOUNT_NAME).ToList().Count();    
             if (tmp > 0)
             {
                 ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
-                return View(newAccount);
+                return View();
             }
             else
             {
@@ -285,33 +284,55 @@ namespace PBL3_2.Controllers
             }
         }
 
+        //[HttpPost]
+        //public ActionResult Them3(AccounsAccountInfo p) 
+        //{
+        //    Account da = new Account()
+        //    {
+        //        ACCOUNT_NAME = p.AccountInfo.ACCOUNT_NAME,
+        //        ACCOUNT_PASSWORD = p.Account.ACCOUNT_PASSWORD
+        //    };
+
+        //    AccountInfo dc = new AccountInfo()
+        //    {
+        //        ACCOUNT_CCCD = p.AccountInfo.ACCOUNT_CCCD,
+        //        ACCOUNT_BIRTHDAY = p.AccountInfo.ACCOUNT_BIRTHDAY,
+        //        ACCOUNT_NAME = p.AccountInfo.ACCOUNT_NAME,
+        //        ACCOUNT_EMAIL = p.AccountInfo.ACCOUNT_EMAIL,
+        //        ACCOUNT_GENDER = p.AccountInfo.ACCOUNT_GENDER,
+        //        ACCOUNT_HEIGHT = p.AccountInfo.ACCOUNT_HEIGHT,
+        //        ACCOUNT_PHONE = p.AccountInfo.ACCOUNT_PHONE,
+        //        ACCOUNT_WEIGHT = p.AccountInfo.ACCOUNT_HEIGHT,
+        //        USER_NAME = p.AccountInfo.USER_NAME
+        //    };
+
+        //    AccounsAccountInfo newAccount = new AccounsAccountInfo();
+        //    newAccount.Account = da;
+        //    newAccount.AccountInfo = dc;
+        //    if (p.retypePassword != p.Account.ACCOUNT_PASSWORD)
+        //    {
+        //        ModelState.AddModelError("", "Mật khẩu không khớp");
+        //        return View(p);
+        //    }
+
+        //    var tmp = db.AccountInfos.Where(x => x.ACCOUNT_NAME == dc.ACCOUNT_NAME).ToList().Count();
+        //    if (tmp > 0)
+        //    {
+        //        ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+        //        return View(p);
+        //    }
+        //    else
+        //    {
+        //        db.AccountInfos.Add(dc);
+        //        db.SaveChanges();
+        //        db.Accounts.Add(da);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //}
 
 
-
-        // GET: AccountInfoes/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AccountInfoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ACCOUNT_NAME,USER_NAME,ACCOUNT_CCCD,ACCOUNT_BIRTHDAY,ACCOUNT_GENDER,ACCOUNT_HEIGHT,ACCOUNT_WEIGHT,ACCOUNT_PHONE,ACCOUNT_EMAIL")] AccountInfo accountInfo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.AccountInfos.Add(accountInfo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(accountInfo);
-        }
-
-        // GET: AccountInfoes/Edit/5
+       
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -388,7 +409,7 @@ namespace PBL3_2.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult XemDanhSachKhachHang(string strSearchThietBi,int? page)
+        public ActionResult XemDanhSachKhachHang(string strSearchThietBi, int? page)
 
         {
 
@@ -413,13 +434,12 @@ namespace PBL3_2.Controllers
                                      || p.AccountInfo.ACCOUNT_CCCD.ToString() == strSearchThietBi).ToList();
             }
 
-       
+
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(obj.ToPagedList(pageNumber, pageSize));
 
         }
-
     }
 }
