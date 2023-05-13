@@ -13,10 +13,10 @@ namespace PBL3_2.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ACCOUNT_ID { get; set; }
 
-        [StringLength(20)]
+        [StringLength(200)]
         public string ACCOUNT_NAME { get; set; }
          
-        [StringLength(20)]
+        [StringLength(200)]
         public string ACCOUNT_PASSWORD { get; set; }
 
         public string ACCOUNT_ROLE { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -230,15 +231,29 @@ namespace PBL3_2.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var userId = User.Identity.GetUserId();
+            var result = await UserManager.ChangePasswordAsync(userId, model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                var user = await UserManager.FindByIdAsync(userId);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+                var db = new DBGym();
+
+                var account = db.Accounts.FirstOrDefault(a => a.ACCOUNT_NAME == user.UserName);
+                if (account != null)
+                {
+                    account.ACCOUNT_PASSWORD = user.PasswordHash;
+                    db.Entry(account).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                }
+
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+
+
+
             }
             AddErrors(result);
             return View(model);

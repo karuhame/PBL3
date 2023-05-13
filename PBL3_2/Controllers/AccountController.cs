@@ -157,17 +157,49 @@ namespace PBL3_2.Controllers
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+
+
+
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "Khach Hang");
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //
+                    var Newuser = await UserManager.FindByNameAsync(model.UserName);
+                    if (Newuser != null)
+                    {
 
+                        DBGym db = new DBGym();
+                        var accountInfo = new AccountInfo
+                        {
+                            ACCOUNT_NAME = user.UserName,
+                            USER_NAME = user.UserName,
+                            ACCOUNT_EMAIL = user.Email
+                        };
+                        db.AccountInfos.Add(accountInfo);
+                        db.SaveChanges();
+
+                        var account = new Account
+                        {
+                            ACCOUNT_PASSWORD = Newuser.PasswordHash,
+                            AccountInfo = accountInfo,
+                            ACCOUNT_ROLE = "0"
+                        };
+
+                        db.Accounts.Add(account);
+                        db.SaveChanges();
+
+
+
+                        // Add the Account entity to the DbContext and save changes
+
+                        await db.SaveChangesAsync();
+
+
+                    }
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -399,6 +431,7 @@ namespace PBL3_2.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
+
         public ActionResult Test()
         {
             var userId = User.Identity.GetUserId();
