@@ -388,5 +388,38 @@ namespace PBL3_2.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult XemDanhSachKhachHang(string strSearchThietBi,int? page)
+
+        {
+
+            //ViewBag.strSearch = strSearch;
+
+            ViewBag.CurrentFilter = strSearchThietBi;
+
+            var obj = db.Accounts.Where(p => p.ACCOUNT_ROLE == "Khach Hang").ToList();
+
+
+            //Tìm iếm
+            if (!String.IsNullOrEmpty(strSearchThietBi))
+            {
+                obj = obj.Where(p => p.AccountInfo.ACCOUNT_NAME.Contains(strSearchThietBi)
+                                     || p.AccountInfo.USER_NAME.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_BIRTHDAY.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_GENDER.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_HEIGHT.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_WEIGHT.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_PHONE.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_EMAIL.ToString() == strSearchThietBi
+                                     || p.AccountInfo.ACCOUNT_CCCD.ToString() == strSearchThietBi).ToList();
+            }
+
+       
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(obj.ToPagedList(pageNumber, pageSize));
+
+        }
+
     }
 }
