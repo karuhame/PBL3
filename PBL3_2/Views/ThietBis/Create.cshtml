@@ -22,7 +22,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.THIETBI_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class = "control-label col-md-2" for="THIETBI_NAME">Tên thiết bị</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.THIETBI_NAME, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -31,7 +31,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.THIETBI_STATUS, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="THIETBI_STATUS">Số thiết bị hỏng</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.THIETBI_STATUS, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.THIETBI_STATUS, "", new { @class = "text-danger" })
@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.THIETBI_NUM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="THIETBI_NUM">Số lượng thiết bị</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.THIETBI_NUM, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.THIETBI_NUM, "", new { @class = "text-danger" })
