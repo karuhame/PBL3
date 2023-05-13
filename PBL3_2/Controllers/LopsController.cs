@@ -32,8 +32,12 @@ namespace PBL3_2.Controllers
             if (sub == "Accept")
             {
                 db.Lops.Find(id).LOP_STATUS = "Accepted";
-
+                
                 db.SaveChanges();
+
+
+                // Add Bien Lai vao CSDL 
+                
 
             }
             else if (sub == "Delete")

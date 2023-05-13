@@ -15,12 +15,16 @@ namespace PBL3_2.Controllers
     public class BienLaisController : Controller
     {
         private DBGym db = new DBGym();
-
         // GET: BienLais
-        public ActionResult Index(string TenNguoiTraTien="",int SortBy=0,int SortOrder=0)
+        public ActionResult Index(string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
         {
+            if (TenNguoiTraTien != "") ViewBag.TenNguoiTraTien = TenNguoiTraTien;
+            else ViewBag.TenNguoiTraTien = TenNguoiTraTien;
+            ViewBag.SortBy = SortBy;
+            ViewBag.SortOrder = SortOrder;
+
             List<BienLai> l = db.BienLais.ToList();
-            if(TenNguoiTraTien!="") l = db.BienLais.Where(p=>p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien)).ToList() ;
+            if (TenNguoiTraTien != "") l = db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien)).ToList();
             return View(l);
         }
 

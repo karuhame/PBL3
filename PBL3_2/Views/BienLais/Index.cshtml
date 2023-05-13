@@ -18,43 +18,45 @@
         <a href="~/BienLais/Index">Back to list</a>
     </form>
 </div>
+
 <table class="table">
     <tr>
         <th>
-            Người đóng tiền
+            @Html.ActionLink("Người đóng tiền", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
         </th>
         <th>
-            Số tiền đóng
+            @Html.ActionLink("Số tiền đóng", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 2, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
         </th>
         <th>
-            Ngày bắt đầu gói tập
+            @Html.ActionLink("Ngày bắt đầu gói tập", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 3, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
         </th>
         <th>
-            Ngày kết thúc gói tập
+            @Html.ActionLink("Ngày kết thúc gói tập", "Index", "BienLais", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 4, SortOrder = ((int)ViewBag.SortOrder == 0) ? 1 : 2 })
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BIENLAI_START)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BIENLAI_END)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BIENLAI_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BIENLAI_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BIENLAI_ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENLAI_START)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENLAI_END)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
+            </td>
+        </tr>
+    }
 
 </table>
