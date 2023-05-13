@@ -1,14 +1,4 @@
 ﻿<!-- Main Menu area start-->
-@{
-    <h1>Menu cua admin</h1>
-    System.Security.Principal.IPrincipal CurUser = PBL3_2.BBL.PhanQuyen.GetCurrentUser();
-    <h1>@CurUser.Identity.Name</h1>
-    <h1>@CurUser.Identity.Name</h1>
-    <h1>@Roles.IsUserInRole(CurUser.Identity.Name, "Nhan Vien")</h1>
-    <h1>@Roles.IsUserInRole(CurUser.Identity.Name, "Admin")</h1>
-    <h1>@Roles.IsUserInRole(CurUser.Identity.Name, "Khach Hang")</h1>
-
-}
 <div class="main-menu-area mg-tb-40">
     <div class="container">
         <div class="row">
