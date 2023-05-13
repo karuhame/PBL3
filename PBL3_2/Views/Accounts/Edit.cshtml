@@ -1,4 +1,4 @@
-﻿@model PBL3_2.Models.Account
+@model PBL3_2.Models.Account
 
 @{
     ViewBag.Title = "Edit";
@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ACCOUNT_NAME, "ACCOUNT_NAME", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ACCOUNT_NAME", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ACCOUNT_NAME", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_NAME, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ACCOUNT_PASSWORD, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ACCOUNT_PASSWORD, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ACCOUNT_PASSWORD, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_PASSWORD, "", new { @class = "text-danger" })
             </div>
         </div>
