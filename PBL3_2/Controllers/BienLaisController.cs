@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PBL3_2.Models;
+using PagedList;
+using System.Data.SqlClient;
 
 namespace PBL3_2.Controllers
 {
@@ -15,10 +17,11 @@ namespace PBL3_2.Controllers
         private DBGym db = new DBGym();
 
         // GET: BienLais
-        public ActionResult Index(string tenbienlai="")
+        public ActionResult Index(string TenNguoiTraTien="",int SortBy=0,int SortOrder=0)
         {
-            if(tenbienlai=="") return View(db.BienLais.ToList());
-            else return View(db.BienLais.ToList());
+            List<BienLai> l = db.BienLais.ToList();
+            if(TenNguoiTraTien!="") l = db.BienLais.Where(p=>p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien)).ToList() ;
+            return View(l);
         }
 
         // GET: BienLais/Details/5
