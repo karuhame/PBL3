@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PBL3_2.BBL;
 using PBL3_2.Models;
 
 namespace PBL3_2.Controllers
@@ -32,12 +33,8 @@ namespace PBL3_2.Controllers
             if (sub == "Accept")
             {
                 db.Lops.Find(id).LOP_STATUS = "Accepted";
-                
+
                 db.SaveChanges();
-
-
-                // Add Bien Lai vao CSDL 
-                
 
             }
             else if (sub == "Delete")
@@ -53,7 +50,8 @@ namespace PBL3_2.Controllers
         // GET: Lops
         public ActionResult Index()
         {
-            return View(db.Lops.Where(P => P.LOP_STATUS == "Accepted").ToList());
+            List<Lop> list = db.Lops.ToList();
+            return View(list);
         }
 
         // GET: Lops/Details/5
@@ -190,5 +188,27 @@ namespace PBL3_2.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult AddPT(int ID_LOP)
+        {
+            var lop = db.Lops.Find(ID_LOP);
+            List<Account> accounts = new List<Account>();
+
+            BBLQLLop bbl = new BBLQLLop();
+            accounts = bbl.FindPT(lop.PhienTaps.ToList());
+            ViewBag.ID_LOP = ID_LOP;
+            return View(accounts);
+
+        }
+
+        public ActionResult ChoosePT(int ID_LOP, int id)
+        {
+            var lop = db.Lops.Find(ID_LOP);
+            lop.Staff = db.Accounts.Find(id);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
+ 
