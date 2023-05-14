@@ -44,6 +44,13 @@ namespace PBL3_2.BBL
                 int cnt = phienTapList.Count();
                 foreach(PhienTap phien in phienTapList)
                 {
+                    if(acc.Lich[phien.PHIENTAP_DATE] == null)
+                    {
+                        cnt--;
+                        
+                    }
+                    else
+                    {
                     // Phiên tập day chuyển lại thành int
                         foreach(PhienTap item in acc.Lich[phien.PHIENTAP_DATE])
                         {
@@ -59,8 +66,10 @@ namespace PBL3_2.BBL
                                 break;
                             }
                         }
+
+                    }
                 }
-                if(cnt != 0)
+                if(cnt == 0)    
                 {
                     list.Add(acc);
                 }
@@ -70,21 +79,23 @@ namespace PBL3_2.BBL
             return list;
         }
 
-        public void ConfirmLop(string sub, int id)
-        {
-            if (sub == "Accept")
-            {
-                db.Lops.Find(id).LOP_STATUS = "Accepted";
 
-                db.SaveChanges();
 
-            }
-            else if (sub == "Delete")
-            {
-                db.Lops.Remove(db.Lops.Find(id));
-                db.SaveChanges();
-            }
-        }
+        //public void ConfirmLop(string sub, int id)
+        //{
+        //    if (sub == "Accept")
+        //    {
+        //        db.Lops.Find(id).LOP_STATUS = "Accepted";
+
+        //        db.SaveChanges();
+
+        //    }
+        //    else if (sub == "Delete")
+        //    {
+        //        db.Lops.Remove(db.Lops.Find(id));
+        //        db.SaveChanges();
+        //    }
+        //}
 
 
     }
