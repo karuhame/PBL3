@@ -10,7 +10,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table">
     <tr>
         <th>
             Loại lớp
@@ -24,10 +24,15 @@
 
         </th>
         <th>
+            
             Số buổi
         </th>
         <th>
+            Trạng thái
+        </th>
+        <th>
             Thời khóa biểu
+
         </th>
         <th>
             Bắt đầu 
@@ -47,14 +52,50 @@
             @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Accounts.FirstOrDefault().AccountInfo.USER_NAME)
+            @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
         </td>
 
         <td>
             @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
         </td>
         <td>
-            T2,T3,T4
+            @Html.DisplayFor(modelItem => item.LOP_STATUS)
+
+        </td>
+        <td>
+            @{
+                string x = "";
+                foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
+                {
+                    switch (i.PHIENTAP_DATE)
+                    {
+                        case 0:
+                            x += " T2";
+                            break;
+                        case 1:
+                            x += " T3";
+                            break;
+                        case 2:
+                            x += " T4";
+                            break;
+                        case 3:
+                            x += " T5";
+                            break;
+                        case 4:
+                            x += " T6";
+                            break;
+                        case 5:
+                            x += " T7";
+                            break;
+                        case 6:
+                            x += " CN";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            @x
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LOP_START)
