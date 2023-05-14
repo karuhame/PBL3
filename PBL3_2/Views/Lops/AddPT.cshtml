@@ -1,0 +1,45 @@
+﻿@model ICollection<PBL3_2.Models.Account>
+
+@{
+    ViewBag.Title = "AddPT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chọn huấn luyện viên </h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Họ và tên
+        </th>
+        <th>
+            Giới tính
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountInfo.USER_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountInfo.ACCOUNT_GENDER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountInfo.ACCOUNT_PHONE)
+            </td>
+            <td>
+                <button>
+                    @Html.ActionLink("Chọn", "ChoosePT", new { id = item.ACCOUNT_ID, ID_LOP = ViewBag.ID_LOP})
+
+                </button>
+
+            </td>
+        </tr>
+    }
+
+</table>
