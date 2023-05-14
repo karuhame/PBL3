@@ -84,7 +84,7 @@ namespace PBL3_2.Controllers
                         phienTaps[i].LOP_ID = ID;
                     }
                     db.SaveChanges();
-                    return RedirectToAction("Edit","Lops", new {id = ID});
+                    return RedirectToAction("AddPT","Lops", new {ID_LOP = ID});
                 }
 
                 return View(phienTaps);
