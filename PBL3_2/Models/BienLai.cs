@@ -20,7 +20,31 @@ namespace PBL3_2.Models
 
         public DateTime? BIENLAI_END { get; set; }
 
+        public int ACCOUNT_ID { get; set; }
         public virtual Lop Lop { get; set; }
+
+        [ForeignKey("ACCOUNT_ID")]
         public virtual Account Account { get; set; }
+
+        public static void CreateBienLai(int ID_LOP, int ID_ACC)
+        {
+            using (DBGym db = new DBGym())
+            {
+                var lop = db.Lops.Find(ID_LOP);
+                var acc = db.Accounts.Find(ID_ACC);
+
+                BienLai bl = new BienLai()
+                {
+                    ACCOUNT_ID = ID_ACC,
+                    BIENLAI_START = lop.LOP_START,
+                    BIENLAI_END = lop.LOP_END,
+                    BIENLAI_PAYMENT = lop.LOP_NUMBERSESSION * lop.LoaiGoi.GOI_FEE
+
+
+                };
+                db.BienLais.Add(bl);
+                db.SaveChanges();
+            }
+        }
     }
 }

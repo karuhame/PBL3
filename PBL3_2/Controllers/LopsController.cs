@@ -26,6 +26,7 @@ namespace PBL3_2.Controllers
     //Tính năng cần làm:
     //- Trong trường hợp bận, vắng thì làm sao
     //- Tính ngày hết hạn 
+    //- Tạo biên lai
 
     public class LopsController : Controller
     {
@@ -41,7 +42,8 @@ namespace PBL3_2.Controllers
         {
 
             var lop = db.Lops.Find(id);
-            lop.ConfirmCreate(sub);
+            var user = Account.GetUserByNameIdentity(User.Identity.Name);
+            lop.ConfirmCreate(sub, user.ACCOUNT_ID);
             return RedirectToAction("AdminLopView", db.Lops.ToList());
         }
 
@@ -125,6 +127,7 @@ namespace PBL3_2.Controllers
                 lop.GOI_ID = Convert.ToInt32(loai);
                 lop.AddNewLop();
                 lop.LOP_STATUS = "Waiting";
+                lop.Accounts.Add(Account.GetUserByNameIdentity(User.Identity.GetUserName()));
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
             }

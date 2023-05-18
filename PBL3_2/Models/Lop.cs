@@ -40,13 +40,14 @@ namespace PBL3_2.Models
             this.Accounts= new HashSet<Account>();
         }
 
-        public void ConfirmCreate(string sub)
+        public void ConfirmCreate(string sub, int acc_id)
         {
             DBGym db = new DBGym();
 
             if (sub == "Accept")
             {
                 this.LOP_STATUS = "Accepted";
+                BienLai.CreateBienLai(this.LOP_ID, acc_id);
             }
             else if (sub == "Delete")
             {
