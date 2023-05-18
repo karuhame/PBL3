@@ -30,5 +30,13 @@ namespace PBL3_2.Models
             this.Lops = new HashSet<Lop>();
             this.BienLais= new HashSet<BienLai>();
         }
+
+        public static Account GetUserByNameIdentity(string name)
+        {
+            using(DBGym db = new DBGym())
+            {
+                 return db.Accounts.Where(p =>p.ACCOUNT_NAME== name).FirstOrDefault();
+            }
+        }
     }
 }

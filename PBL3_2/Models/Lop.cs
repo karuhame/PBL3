@@ -58,7 +58,7 @@ namespace PBL3_2.Models
         public void AddNewClient(int ID)
         {
             DBGym db = new DBGym();
-            this.Accounts.Add(db.Accounts.Find(ID);
+            this.Accounts.Add(db.Accounts.Find(ID));
             db.SaveChanges();
         }
 
@@ -68,5 +68,6 @@ namespace PBL3_2.Models
             db.Lops.Add(this);
             db.SaveChanges();
         }
+   
     }
 }

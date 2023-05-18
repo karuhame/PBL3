@@ -50,6 +50,16 @@ namespace PBL3_2.Controllers
         // GET: Lops
         public ActionResult Index()
         {
+            
+            //!!
+
+            var userName = User.Identity.GetUserName();
+            Account user = Account.GetUserByNameIdentity(userName);
+
+            if(user.ACCOUNT_ROLE != "2")
+            {
+                return View(user.Lops.ToList());
+            }
             return View(db.Lops.ToList());
         }
 
