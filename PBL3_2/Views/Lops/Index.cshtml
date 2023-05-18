@@ -5,7 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Danh sách lớp tập</h2>
+<h2>Danh sách lớp tập hiện tại</h2>
+
+
+@{ 
+    if(ViewBag.userRole == "2")
+    {
+        <a href="~/Lops/AdminLopView">Danh sách lớp chờ xác nhận</a>
+    }
+}
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -67,6 +76,11 @@
                 string x = "";
                 foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
                 {
+                    x += i.PHIENTAP_startt.Hour.ToString();
+                    x += ":";
+                    x += i.PHIENTAP_startt.Minute.ToString();
+                    x += "-";
+
                     switch (i.PHIENTAP_DATE)
                     {
                         case 0:
@@ -93,6 +107,8 @@
                         default:
                             break;
                     }
+
+                    x += "; ";
                 }
             }
             @x
@@ -103,10 +119,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.LOP_END)
         </td>
-        <td>
+        @*<td>
             @Html.ActionLink("Edit", "Edit", new {id = item.LOP_ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.LOP_ID })
-        </td>
+        </td>*@
     </tr>
 }
 

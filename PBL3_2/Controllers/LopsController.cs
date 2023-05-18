@@ -55,6 +55,7 @@ namespace PBL3_2.Controllers
 
             var userName = User.Identity.GetUserName();
             Account user = Account.GetUserByNameIdentity(userName);
+            ViewBag.userRole = user.ACCOUNT_ROLE;
 
             if(user.ACCOUNT_ROLE != "2")
             {
@@ -96,8 +97,8 @@ namespace PBL3_2.Controllers
 
                 //Thêm mới vào trong lớp
                 var lop = db.Lops.Find(Convert.ToInt32(sub));
-                var userId = User.Identity.GetUserId();
-                lop.AddNewClient(Convert.ToInt32(userId));
+                Account user = Account.GetUserByNameIdentity(User.Identity.GetUserName());
+                lop.AddNewClient(user.ACCOUNT_ID);
                 return View("Index");
 
             }
