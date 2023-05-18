@@ -17,6 +17,16 @@ namespace PBL3_2.Controllers
     //Create: Tạo lớp mới -> chọn số lượng phiên tập => PhienTaps/Create -> chọn PT
     //Edit: Hiển thị ra danh sách các phiên tập
     //Del: Xóa lớp
+
+    //Admin: Xem danh sách tất cả các lớp/ Xem danh sách của các lớp cần Confirm
+    //User: Xem danh sách lớp tập của bản thân -> tham gia vào lớp mới -> trở về danh sách lớp tập 
+    //Nhân viên: Xem danh sách lớp mà bản thân dạy-> xem thông tin của những học viên trong lớp đó
+    //
+    
+    //Tính năng cần làm:
+    //- Trong trường hợp bận, vắng thì làm sao
+    //- Tính ngày hết hạn 
+
     public class LopsController : Controller
     {
         private DBGym db = new DBGym();
@@ -24,24 +34,14 @@ namespace PBL3_2.Controllers
             
         public ActionResult AdminLopView()
         {
-            return View(db.Lops.ToList());
+            return View(db.Lops.Where(p=> p.LOP_STATUS == "Waiting").ToList());
         }
 
         public ActionResult ConfirmLop(int id, string sub)
         {
 
-            if (sub == "Accept")
-            {
-                db.Lops.Find(id).LOP_STATUS = "Accepted";
-
-                db.SaveChanges();
-
-            }
-            else if (sub == "Delete")
-            {
-                db.Lops.Remove(db.Lops.Find(id));
-                db.SaveChanges();
-            }
+            var lop = db.Lops.Find(id);
+            lop.ConfirmCreate(sub);
             return RedirectToAction("AdminLopView", db.Lops.ToList());
         }
 
@@ -50,8 +50,7 @@ namespace PBL3_2.Controllers
         // GET: Lops
         public ActionResult Index()
         {
-            List<Lop> list = db.Lops.ToList();
-            return View(list);
+            return View(db.Lops.ToList());
         }
 
         // GET: Lops/Details/5
@@ -88,7 +87,7 @@ namespace PBL3_2.Controllers
                 //Thêm mới vào trong lớp
                 var lop = db.Lops.Find(Convert.ToInt32(sub));
                 var userId = User.Identity.GetUserId();
-                lop.Accounts.Add(db.Accounts.Find(Convert.ToInt32(userId)));
+                lop.AddNewClient(Convert.ToInt32(userId));
                 return View("Index");
 
             }
@@ -113,8 +112,8 @@ namespace PBL3_2.Controllers
             if (ModelState.IsValid)
             {
                 lop.GOI_ID = Convert.ToInt32(loai);
-                db.Lops.Add(lop);
-                lop.LOP_STATUS = "Waiting";  
+                lop.AddNewLop();
+                lop.LOP_STATUS = "Waiting";
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
             }

@@ -718,6 +718,8 @@
     <Content Include="Views\AccountInfoes\Them2.cshtml" />
     <Content Include="Views\Shared\_MainMenuForNhanVien.cshtml" />
     <Content Include="Views\Shared\_MainMenuForKhachHang.cshtml" />
+    <Content Include="Views\Lops\AddPT.cshtml" />
+    <Content Include="Views\Lops\AdminLopView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

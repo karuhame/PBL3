@@ -39,5 +39,34 @@ namespace PBL3_2.Models
             this.BienLais= new HashSet<BienLai>();
             this.Accounts= new HashSet<Account>();
         }
+
+        public void ConfirmCreate(string sub)
+        {
+            DBGym db = new DBGym();
+
+            if (sub == "Accept")
+            {
+                this.LOP_STATUS = "Accepted";
+            }
+            else if (sub == "Delete")
+            {
+                db.Lops.Remove(this);
+            }
+            db.SaveChanges();
+        }
+
+        public void AddNewClient(int ID)
+        {
+            DBGym db = new DBGym();
+            this.Accounts.Add(db.Accounts.Find(ID);
+            db.SaveChanges();
+        }
+
+        public void AddNewLop()
+        {
+            DBGym db = new DBGym();
+            db.Lops.Add(this);
+            db.SaveChanges();
+        }
     }
 }
