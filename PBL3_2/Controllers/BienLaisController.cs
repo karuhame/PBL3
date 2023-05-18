@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using PBL3_2.Models;
 using PagedList;
 using System.Data.SqlClient;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace PBL3_2.Controllers
 {
@@ -22,8 +24,23 @@ namespace PBL3_2.Controllers
             ViewBag.SortBy = SortBy;
             ViewBag.SortOrder = SortOrder;
 
-            // Search 
+            // Lap danh sach bien lai 
             List<BienLai> l = db.BienLais.ToList();
+            if (User.Identity.IsAuthenticated) // da dang nhap chua 
+            { 
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var currentUser = userManager.FindById(User.Identity.GetUserId());
+                var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+                var ID = User.Identity.GetUserId();
+
+                if (currentRole == "Khach Hang" || currentRole == "Nhan Vien")
+                {
+                    l = db.BienLais.Where(p =>
+                     p.Account.ACCOUNT_ID.ToString() == ID ).ToList();
+                }
+
+            }
+            // Search 
             if (TenNguoiTraTien != "") l = db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien)).ToList();
 
 

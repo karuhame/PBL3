@@ -129,6 +129,19 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "THIETBI_NAME,THIETBI_STATUS,THIETBI_NUM")] ThietBi thietBi)
         {
+            // Xu ly exception
+            if (ModelState.IsValid && thietBi.THIETBI_STATUS > thietBi.THIETBI_NUM)
+            {
+                ModelState.AddModelError("", "So luong thiet bi hong khong duoc vuot qua tong so luong thiet bi");
+                return View(thietBi);
+            }
+            if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_NUM == null)
+            {
+                ModelState.AddModelError("", "So luong thiet bi chua xac dinh");
+                return View(thietBi);
+            }
+            // 
+
             if (ModelState.IsValid)
             {
                 db.ThietBis.Add(thietBi);
@@ -161,6 +174,19 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "THIETBI_ID,THIETBI_NAME,THIETBI_STATUS,THIETBI_NUM")] ThietBi thietBi)
         {
+            // Xu ly exception
+            if (ModelState.IsValid && thietBi.THIETBI_STATUS > thietBi.THIETBI_NUM)
+            {
+                ModelState.AddModelError("", "So luong thiet bi hong khong duoc vuot qua tong so luong thiet bi");
+                return View(thietBi);
+            }
+            if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_NUM == null)
+            {
+                ModelState.AddModelError("", "So luong thiet bi chua xac dinh");
+                return View(thietBi);
+            }
+            //
+
             if (ModelState.IsValid)
             {
                 db.Entry(thietBi).State = EntityState.Modified;
