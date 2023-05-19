@@ -7,58 +7,57 @@
 }
 
 
-<div class="container">
-    <h2>Create</h2>
+
+<h2>Create</h2>
 
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>ThietBi</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>ThietBi</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-            <div class="form-group">
-                <label class="control-label col-md-2" for="THIETBI_NAME">Tên thiết bị</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.THIETBI_NAME, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="form-group">
+            <label class="control-label col-md-2" for="THIETBI_NAME">Tên thiết bị</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.THIETBI_NAME, new { htmlAttributes = new { @class = "form-control" } })
 
-                    @Html.ValidationMessageFor(model => model.THIETBI_NAME, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2" for="THIETBI_STATUS">Số thiết bị hỏng</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.THIETBI_STATUS, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.THIETBI_STATUS, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2" for="THIETBI_NUM">Số lượng thiết bị</label>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.THIETBI_NUM, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.THIETBI_NUM, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+                @Html.ValidationMessageFor(model => model.THIETBI_NAME, "", new { @class = "text-danger" })
             </div>
         </div>
-    }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <label class="control-label col-md-2" for="THIETBI_STATUS">Số thiết bị hỏng</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.THIETBI_STATUS, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.THIETBI_STATUS, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="THIETBI_NUM">Số lượng thiết bị</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.THIETBI_NUM, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.THIETBI_NUM, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
     </div>
+}
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
