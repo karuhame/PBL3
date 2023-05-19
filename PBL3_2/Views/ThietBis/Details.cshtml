@@ -4,40 +4,41 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <h2>Details</h2>
 
-<h2>Details</h2>
+    <div>
+        <h4>ThietBi</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                <label for="THIETBI_NAME">Tên thiết bị</label>
+            </dt>
 
-<div>
-    <h4>ThietBi</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            <label for="THIETBI_NAME">Tên thiết bị</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.THIETBI_NAME)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.THIETBI_NAME)
-        </dd>
+            <dt>
+                <label for="THIETBI_STATUS">Số thiết bị hỏng</label>
+            </dt>
 
-        <dt>
-            <label for="THIETBI_STATUS">Số thiết bị hỏng</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.THIETBI_STATUS)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.THIETBI_STATUS)
-        </dd>
+            <dt>
+                <label for="THIETBI_NUM">Số thiết bị</label>
+            </dt>
 
-        <dt>
-            <label for="THIETBI_NUM">Số thiết bị</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.THIETBI_NUM)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.THIETBI_NUM)
-        </dd>
-
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.THIETBI_ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.THIETBI_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

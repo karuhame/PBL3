@@ -8,69 +8,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<div class="container">
+    <h2>Index</h2>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
-
-@using (Html.BeginForm("Index", "ThietBis", FormMethod.Get))
-{
     <p>
-        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
-        <button type="submit" class="btn btn-primary">Search</button> |
-        <a href="~/ThietBis/Index">Back to list</a>
+        @Html.ActionLink("Create New", "Create")
     </p>
-}
-<table class="table table-borde red">
-
-    <tr>
-        <th>
-            @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
 
 
-            @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
-            @Html.ActionLink("Tên Thiết bị", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NAME", strSearchThietBi = ViewBag.CurrentFilter })
 
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
-            @Html.ActionLink("Số thiết bị hỏng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_STATUS", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.THIETBI_NUM)*@
-            @Html.ActionLink("Số lượng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NUM", strSearchThietBi = ViewBag.CurrentFilter })
-
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    @using (Html.BeginForm("Index", "ThietBis", FormMethod.Get))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.THIETBI_NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.THIETBI_STATUS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.THIETBI_NUM)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.THIETBI_ID}) |
-                @Html.ActionLink("Details", "Details", new { id = item.THIETBI_ID}) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.THIETBI_ID })
-            </td>
-        </tr>
+        <p>
+            @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+            <button type="submit" class="btn btn-primary">Search</button> |
+            <a href="~/ThietBis/Index">Back to list</a>
+        </p>
     }
+    <table class="table table-borde red">
 
-</table>
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        <tr>
+            <th>
+                @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
 
+                @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
+                @Html.ActionLink("Tên Thiết bị", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
+                @Html.ActionLink("Số thiết bị hỏng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_STATUS", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.THIETBI_NUM)*@
+                @Html.ActionLink("Số lượng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NUM", strSearchThietBi = ViewBag.CurrentFilter })
+
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.THIETBI_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.THIETBI_STATUS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.THIETBI_NUM)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.THIETBI_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.THIETBI_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.THIETBI_ID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
+
+</div>

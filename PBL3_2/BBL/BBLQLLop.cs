@@ -39,7 +39,7 @@ namespace PBL3_2.BBL
             List<Account> list = new List<Account>();
             //Chạy hết tài khoản của nhân viên
             //Tìm xem tài khoản nhân viên nào rảnh trong các phiên tập
-            foreach (Account acc in db.Accounts.Where(p => p.ACCOUNT_ROLE == "Nhan Vien"))
+            foreach (Account acc in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
             {                
                 int cnt = phienTapList.Count();
                 foreach(PhienTap phien in phienTapList)

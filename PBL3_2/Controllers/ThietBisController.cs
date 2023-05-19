@@ -20,7 +20,7 @@ namespace PBL3_2.Controllers
         private DBGym db = new DBGym();
 
         // GET: ThietBis
-        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy)
+        public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy,int ? page=1)
         {
 
             //ViewBag.strSearch = strSearch;
@@ -95,7 +95,7 @@ namespace PBL3_2.Controllers
             }
 
             int pageSize = 5;
-            int pageNumber = 1;
+            int pageNumber = page ?? 1;
             return View(obj.ToPagedList(pageNumber, pageSize));
 
         }
