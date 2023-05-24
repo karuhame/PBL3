@@ -33,7 +33,8 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
 
-            
+    
+
         public ActionResult AdminLopView()
         {
             return View(db.Lops.Where(p=> p.LOP_STATUS == "Waiting").ToList());
@@ -43,12 +44,7 @@ namespace PBL3_2.Controllers
         {
 
             var lop = db.Lops.Find(id);
-
-
-            string name = User.Identity.GetUserName();
-            var user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
-
-            lop.ConfirmCreate(sub, user.ACCOUNT_ID);
+            lop.ConfirmCreate(sub, lop.Accounts.FirstOrDefault());
             return RedirectToAction("AdminLopView", db.Lops.ToList());
         }
 
@@ -88,7 +84,7 @@ namespace PBL3_2.Controllers
 
         public ActionResult Join()
         {
-            return View(db.Lops.ToList());
+            return View(db.Lops.Where(p=>p.LOP_STATUS == "Accepted" ).ToList());
         }
 
         [HttpPost]
@@ -106,7 +102,8 @@ namespace PBL3_2.Controllers
                 var lop = db.Lops.Find(Convert.ToInt32(sub));
                 string name= User.Identity.GetUserName();
                 Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault(); 
-                lop.AddNewClient(user.ACCOUNT_ID);
+                
+                lop.Accounts.Add(user);
                 return View("Index");
 
             }
@@ -131,19 +128,28 @@ namespace PBL3_2.Controllers
             if (ModelState.IsValid)
             {
                 lop.GOI_ID = Convert.ToInt32(loai);
-                lop.AddNewLop();
-                lop.LOP_STATUS = "Waiting";
+                db.Lops.Add(lop);
 
                 //Lỗi ở đây
                 string name = User.Identity.GetUserName();
+                
+                Account acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
 
-                var acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+                //Nếu là khách thì thêm lớp vào danh sách lớp, admin với nhân viên thì không
+                if(acc.ACCOUNT_ROLE == "0")
+                {
+                    lop.Accounts.Add(acc);
 
-                lop.Accounts.Add(acc);
-
-
+                }
+                else if(acc.ACCOUNT_ROLE == "1")
+                {
+                    lop.Staff = acc;
+                }
+ 
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
+
+
             }
 
             return View(lop);

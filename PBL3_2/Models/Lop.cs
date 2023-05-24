@@ -38,20 +38,27 @@ namespace PBL3_2.Models
             this.PhienTaps= new HashSet<PhienTap>();
             this.BienLais= new HashSet<BienLai>();
             this.Accounts= new HashSet<Account>();
+            this.LOP_STATUS = "Waiting";
         }
 
-        public void ConfirmCreate(string sub, int acc_id)
+        public void ConfirmCreate(string sub, Account acc)
         {
+
+
             DBGym db = new DBGym();
 
             if (sub == "Accept")
             {
-                this.LOP_STATUS = "Accepted";
-                BienLai.CreateBienLai(this.LOP_ID, acc_id);
+                db.Lops.Find(this.LOP_ID).LOP_STATUS = "Accepted";
+                if(acc != null)
+                {
+                    BienLai.CreateBienLai(this.LOP_ID, acc.ACCOUNT_ID);
+
+                }
             }
             else if (sub == "Delete")
             {
-                db.Lops.Remove(this);
+                db.Lops.Remove(db.Lops.Find(this.LOP_ID));
             }
             db.SaveChanges();
         }

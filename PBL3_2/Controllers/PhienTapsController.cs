@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PBL3_2.BBL;
 using PBL3_2.Models;
 
@@ -84,7 +85,19 @@ namespace PBL3_2.Controllers
                         phienTaps[i].LOP_ID = ID;
                     }
                     db.SaveChanges();
-                    return RedirectToAction("AddPT","Lops", new {ID_LOP = ID});
+                    var temp = db.Accounts.ToList();
+
+                    string name = User.Identity.GetUserName();
+                    var acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+
+
+                    if(acc.ACCOUNT_ROLE != "1")
+                    {
+                        return RedirectToAction("AddPT","Lops", new {ID_LOP = ID});
+                    }
+
+                    //Neu la nhan vien thi tra ve man hinh index
+                    return RedirectToAction("Index", "Lops");
                 }
 
                 return View(phienTaps);
