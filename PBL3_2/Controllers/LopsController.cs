@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Microsoft.AspNet.Identity;
 using PBL3_2.BBL;
 using PBL3_2.Models;
@@ -42,7 +43,11 @@ namespace PBL3_2.Controllers
         {
 
             var lop = db.Lops.Find(id);
-            var user = Account.GetUserByNameIdentity(User.Identity.Name);
+
+
+            string name = User.Identity.GetUserName();
+            var user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+
             lop.ConfirmCreate(sub, user.ACCOUNT_ID);
             return RedirectToAction("AdminLopView", db.Lops.ToList());
         }
@@ -52,11 +57,11 @@ namespace PBL3_2.Controllers
         // GET: Lops
         public ActionResult Index()
         {
-            
+                
             //!!
 
             var userName = User.Identity.GetUserName();
-            Account user = Account.GetUserByNameIdentity(userName);
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
             ViewBag.userRole = user.ACCOUNT_ROLE;
 
             if(user.ACCOUNT_ROLE != "2")
@@ -99,7 +104,8 @@ namespace PBL3_2.Controllers
 
                 //Thêm mới vào trong lớp
                 var lop = db.Lops.Find(Convert.ToInt32(sub));
-                Account user = Account.GetUserByNameIdentity(User.Identity.GetUserName());
+                string name= User.Identity.GetUserName();
+                Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault(); 
                 lop.AddNewClient(user.ACCOUNT_ID);
                 return View("Index");
 
@@ -127,7 +133,15 @@ namespace PBL3_2.Controllers
                 lop.GOI_ID = Convert.ToInt32(loai);
                 lop.AddNewLop();
                 lop.LOP_STATUS = "Waiting";
-                lop.Accounts.Add(Account.GetUserByNameIdentity(User.Identity.GetUserName()));
+
+                //Lỗi ở đây
+                string name = User.Identity.GetUserName();
+
+                var acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+
+                lop.Accounts.Add(acc);
+
+
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
             }
