@@ -18,14 +18,25 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
         // GET: BienLais
-        public ActionResult Index(string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
+        public ActionResult Index(string strSearchBienLai, string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
         {
             ViewBag.TenNguoiTraTien = TenNguoiTraTien;
             ViewBag.SortBy = SortBy;
             ViewBag.SortOrder = SortOrder;
+            ViewBag.CurrentFilter = strSearchBienLai;
 
             // Lap danh sach bien lai 
             List<BienLai> l = db.BienLais.ToList();
+
+            //Tìm kiếm
+            if (!String.IsNullOrEmpty(strSearchBienLai))
+            {
+                l= l.Where(p => p.Account.ACCOUNT_NAME.Contains(strSearchBienLai)).ToList();
+            }
+
+
+
+
             if (User.Identity.IsAuthenticated) // da dang nhap chua 
             { 
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
