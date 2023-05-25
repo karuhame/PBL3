@@ -18,7 +18,7 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
         // GET: BienLais
-        public ActionResult Index( string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
+        public ActionResult Index(string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
         {
             ViewBag.TenNguoiTraTien = TenNguoiTraTien;
             ViewBag.SortBy = SortBy;
