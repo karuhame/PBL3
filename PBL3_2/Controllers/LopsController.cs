@@ -53,9 +53,11 @@ namespace PBL3_2.Controllers
         // GET: Lops
         public ActionResult Index()
         {
-                
-            //!!
 
+            //
+            
+
+            db.SaveChanges();
             var userName = User.Identity.GetUserName();
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
             ViewBag.userRole = user.ACCOUNT_ROLE;
@@ -104,6 +106,11 @@ namespace PBL3_2.Controllers
                 Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault(); 
                 
                 lop.Accounts.Add(user);
+                db.SaveChanges();
+
+                lop.ConfirmCreate(sub, user);
+
+
                 return View("Index");
 
             }
