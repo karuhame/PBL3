@@ -19,16 +19,6 @@
     </form>
 </div>
 
-@using (Html.BeginForm("Index", "BienLais", FormMethod.Get))
-{
-    <p>
-        @Html.TextBox("strSearchBienLai", ViewBag.CurrentFilter as string)
-        <button type="submit" class="btn btn-primary">Search</button> |
-        <a href="~/ThietBis/Index">Back to list</a>
-    </p>
-}
-
-
 <table class="table">
     <tr>
         <th>
