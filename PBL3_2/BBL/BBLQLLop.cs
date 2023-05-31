@@ -2,6 +2,7 @@ using PBL3_2.Controllers;
 using PBL3_2.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -33,49 +34,89 @@ namespace PBL3_2.BBL
         }
 
         //Tìm kiếm PT trống trong mọi phiên tập 
-        public List<Account> FindPT(List<PhienTap> phienTapList)
+        public List<Account> FindPT(int ID_LOP, List<PhienTap> phienTapList)
         {
 
             List<Account> list = new List<Account>();
             //Chạy hết tài khoản của nhân viên
             //Tìm xem tài khoản nhân viên nào rảnh trong các phiên tập
-            foreach (Account acc in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
-            {                
-                int cnt = phienTapList.Count();
-                foreach(PhienTap phien in phienTapList)
+            //foreach (Account acc in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
+            //{                
+            //    int cnt = phienTapList.Count();
+            //    foreach(PhienTap phien in phienTapList)
+            //    {
+            //        if(acc.Lich[phien.PHIENTAP_DATE] == null)
+            //        {
+            //            cnt--;
+
+            //        }
+            //        else
+            //        {
+            //        // Phiên tập day chuyển lại thành int
+            //            foreach(PhienTap item in acc.Lich[phien.PHIENTAP_DATE])
+            //            {
+            //                // Nếu trùng trống thì chuyển sang ngày tiếp 
+            //                if (
+            //                    !((phien.PHIENTAP_startt >  item.PHIENTAP_startt && phien.PHIENTAP_endd >item.PHIENTAP_endd)
+            //                    ||(phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd)
+            //                    ||(phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd))
+
+            //                )
+            //                {
+            //                    cnt--;
+            //                    break;
+            //                }
+            //            }
+
+            //        }
+            //    }
+            //    if(cnt == 0)    
+            //    {
+            //        list.Add(acc);
+            //    }
+
+
+            //}
+
+            Lop temp = db.Lops.Find(ID_LOP);
+
+            //Chạy hết tất cả các lớp
+            foreach(Account NV in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
+            {
+                bool check = true;
+                foreach(Lop lop in db.Lops.Where(p => p.Staff.ACCOUNT_ID == NV.ACCOUNT_ID))
                 {
-                    if(acc.Lich[phien.PHIENTAP_DATE] == null)
+
+                    //Lớp không trùng lịch thì break
+                    if(!((temp.LOP_START > lop.LOP_START && temp.LOP_START < lop.LOP_END && temp.LOP_END < lop.LOP_END)
+                                || (temp.LOP_START < lop.LOP_START && temp.LOP_END < lop.LOP_END && temp.LOP_END >lop.LOP_START)
+                                || (temp.LOP_START > lop.LOP_START && temp.LOP_END < lop.LOP_END)
+                                || (temp.LOP_START < lop.LOP_START && temp.LOP_START > lop.LOP_END)))
                     {
-                        cnt--;
-                        
-                    }
-                    else
-                    {
-                    // Phiên tập day chuyển lại thành int
-                        foreach(PhienTap item in acc.Lich[phien.PHIENTAP_DATE])
+                        continue;
+                    }  
+                    
+                    foreach(PhienTap phien in db.PhienTaps.Where(p => p.LOP_ID == lop.LOP_ID)){
+                        foreach(PhienTap item in phienTapList)
                         {
-                            // Nếu trùng trống thì chuyển sang ngày tiếp 
-                            if (
-                                !((phien.PHIENTAP_startt >  item.PHIENTAP_startt && phien.PHIENTAP_endd >item.PHIENTAP_endd)
-                                ||(phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd)
-                                ||(phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd))
-                            
-                            )
+                            //Nếu trùng lịch của phiên tập thì chuyển trạng thái thành false
+                            if(phien.PHIENTAP_DATE == item.PHIENTAP_DATE 
+                                && ((phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_startt < item.PHIENTAP_endd && phien.PHIENTAP_endd > item.PHIENTAP_endd)
+                                || (phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd && phien.PHIENTAP_endd > item.PHIENTAP_startt)
+                                || (phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd)
+                                || (phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd > item.PHIENTAP_endd)))
                             {
-                                cnt--;
-                                break;
+                                check = false;
                             }
                         }
 
                     }
-                }
-                if(cnt == 0)    
-                {
-                    list.Add(acc);
-                }
 
+                }
+                if (check) list.Add(NV);
                 
             }
+
             return list;
         }
 

@@ -153,6 +153,7 @@ namespace PBL3_2.Controllers
                     lop.Staff = acc;
                 }
  
+
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
 
@@ -236,7 +237,7 @@ namespace PBL3_2.Controllers
             List<Account> accounts = new List<Account>();
 
             BBLQLLop bbl = new BBLQLLop();
-            accounts = bbl.FindPT(lop.PhienTaps.ToList());
+            accounts = bbl.FindPT(ID_LOP, lop.PhienTaps.ToList());
             ViewBag.ID_LOP = ID_LOP;
             return View(accounts);
 
