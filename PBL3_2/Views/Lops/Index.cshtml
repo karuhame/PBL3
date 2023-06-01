@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Danh sách lớp tập hiện tại</h2>
+<h2>Current class</h2>
 
 
 @{ 
@@ -15,39 +15,35 @@
     }
 }
 
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table table-borde red">
     <tr>
         <th>
-            Loại lớp
+            Type
         </th>
         <th>
-            Phí tập (1 buổi)
+            Fee (1 Session)
         </th>
         <th>
             @* Hiển thị tên của giáo viên *@
-            Tên huấn luyện viên
+            PT
 
         </th>
         <th>
             
-            Số buổi
+            Number of session
         </th>
         <th>
-            Trạng thái
+            Status
         </th>
         <th>
-            Thời khóa biểu
+            Schedule
 
         </th>
         <th>
-            Bắt đầu 
+            Start
         </th>
         <th>
-            Kết thúc
+            End
         </th>
     </tr>
 
@@ -114,10 +110,18 @@
             @x
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LOP_START)
+            @*@string.Format("{ dd/MM/YYY }", item.LOP_START)*@
+            @*@Html.DisplayFor(modelItem => item.LOP_START)*@
+            @{ 
+                string y = string.Format("{0:dd/MM/yyyy}", item.LOP_START);
+            }
+            @y
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LOP_END)
+            @{
+                string z = string.Format("{0:dd/MM/yyyy}", item.LOP_END);
+            }
+            @z
         </td>
         @*<td>
             @Html.ActionLink("Edit", "Edit", new {id = item.LOP_ID }) |

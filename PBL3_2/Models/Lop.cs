@@ -77,5 +77,28 @@ namespace PBL3_2.Models
             db.SaveChanges();
         }
    
+        public void RemoveClientFromLop(int ID_ACCOUNT, int ID_LOP)
+        {
+            DBGym db = new DBGym();
+            Lop lop = db.Lops.Find(ID_LOP);
+            Account user = db.Accounts.Find(ID_ACCOUNT);
+            try { 
+                lop.Accounts.Remove(user);
+            }
+            catch(Exception ex)
+            {
+                return;
+            }
+            db.SaveChanges();
+           
+        }
+
+        public List<Account> GetClientByIdLop()
+        {
+            DBGym db = new DBGym();
+            List<Account> accounts = new List<Account>();
+            Lop lop = db.Lops.Find(this.LOP_ID);
+            return lop.Accounts.ToList();
+        }
     }
 }

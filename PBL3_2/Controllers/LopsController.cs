@@ -250,6 +250,22 @@ namespace PBL3_2.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult ListClient(int ID_LOP)
+        {
+            var userName = User.Identity.GetUserName();
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
+
+            if(user.ACCOUNT_ROLE != "0")
+            {
+                Lop lop = db.Lops.Find(ID_LOP);
+                return View(lop.GetClientByIdLop());
+            }
+            return RedirectToAction("Index");
+
+
+        }
+
     }
 }
  
