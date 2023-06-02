@@ -228,7 +228,7 @@
     </div>
     <!-- Mobile Menu end -->
     @{
-        ViewBag.MainMenu = "_MainMenu.cshtml";
+        ViewBag.MainMenu = "_MainMenuForKhachHang.cshtml";
         if (User.Identity.IsAuthenticated) { // da dang nhap chua 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var currentUser = userManager.FindById(User.Identity.GetUserId());
