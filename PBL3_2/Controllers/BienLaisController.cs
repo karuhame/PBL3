@@ -49,23 +49,23 @@ namespace PBL3_2.Controllers
             // Sort 
             if(SortBy==1)
             {
-                if (SortOrder == 1) l.OrderBy(p => p.Account.ACCOUNT_NAME);
-                else if (SortOrder == 2) l.OrderByDescending(p => p.Account.ACCOUNT_NAME);
+                if (SortOrder == 1) l = l.OrderBy(p => p.Account.ACCOUNT_NAME).ToList();
+                else if (SortOrder == 2) l = l.OrderByDescending(p => p.Account.ACCOUNT_NAME).ToList();
             }
             else if(SortBy==2)
             {
-                if (SortOrder == 1) l.OrderBy(p => p.BIENLAI_PAYMENT);
-                else if (SortOrder == 2) l.OrderByDescending(p => p.BIENLAI_PAYMENT);
+                if (SortOrder == 1) l = l.OrderBy(p => p.BIENLAI_PAYMENT).ToList();
+                else if (SortOrder == 2) l = l.OrderByDescending(p => p.BIENLAI_PAYMENT).ToList();
             }
             else if(SortBy==3)
             {
-                if (SortOrder == 1) l.OrderBy(p => p.BIENLAI_START);
-                else if (SortOrder == 2) l.OrderByDescending(p => p.BIENLAI_END);
+                if (SortOrder == 1) l = l.OrderBy(p => p.BIENLAI_START).ToList();
+                else if (SortOrder == 2) l = l.OrderByDescending(p => p.BIENLAI_END).ToList();
             }
             else if (SortBy == 4)
             {
-                if (SortOrder == 1) l.OrderBy(p => p.BIENLAI_END);
-                else if (SortOrder == 2) l.OrderByDescending(p => p.BIENLAI_END);
+                if (SortOrder == 1) l = l.OrderBy(p => p.BIENLAI_END).ToList();
+                else if (SortOrder == 2) l = l.OrderByDescending(p => p.BIENLAI_END).ToList();
             }
 
             return View(l);
