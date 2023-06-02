@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using PBL3_2.BBL;
 using PBL3_2.Models;
 
@@ -251,20 +252,210 @@ namespace PBL3_2.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ListClient(int ID_LOP)
+
+        //Hiển thị danh sách client theo lớp
+        public ActionResult ListClient(string strSearchThietBi, string SortOrder, string SortBy, int? page, int ID_LOP = 0)
         {
             var userName = User.Identity.GetUserName();
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
-
+            ViewBag.IdLop = ID_LOP;
             if(user.ACCOUNT_ROLE != "0")
             {
-                Lop lop = db.Lops.Find(ID_LOP);
-                return View(lop.GetClientByIdLop());
+                //ViewBag.strSearch = strSearch;
+
+                ViewBag.SortOrder = SortOrder;
+                ViewBag.SortBy = SortBy;
+                ViewBag.CurrentFilter = strSearchThietBi;
+
+
+                var obj = Lop.GetClientByIdLop(ID_LOP).ToList();
+
+                //Tìm kiếm
+                if (!String.IsNullOrEmpty(strSearchThietBi))
+                {
+                    obj = obj.Where(p => p.ACCOUNT_NAME.Contains(strSearchThietBi)
+                                         || p.USER_NAME.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_BIRTHDAY.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_GENDER.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_HEIGHT.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_WEIGHT.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_PHONE.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_EMAIL.ToString() == strSearchThietBi
+                                         || p.ACCOUNT_CCCD.ToString() == strSearchThietBi).ToList();
+                }
+
+                //Sắp xếp
+                switch (SortBy)
+                {
+                    case "ACCOUNT_NAME":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_NAME).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_NAME).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "USER_NAME":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.USER_NAME).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.USER_NAME).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_CCCD":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_CCCD).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_CCCD).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_BIRTHDAY":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_BIRTHDAY).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_BIRTHDAY).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_GENDER":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_GENDER).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_GENDER).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_HEIGHT":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_HEIGHT).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_HEIGHT).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_WEIGHT":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_WEIGHT).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_WEIGHT).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_PHONE":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_PHONE).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_PHONE).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case "ACCOUNT_EMAIL":
+                        {
+                            switch (SortOrder)
+                            {
+                                case "Asc":
+                                    {
+                                        obj = obj.OrderBy(p => p.ACCOUNT_EMAIL).ToList();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        obj = obj.OrderByDescending(p => p.ACCOUNT_EMAIL).ToList();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+
+                }
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(obj.ToPagedList(pageNumber, pageSize));
             }
             return RedirectToAction("Index");
-
-
         }
+
+        public ActionResult RemoveFromLop(int IdLop = 0, string acc_name = "")
+        {
+            Lop.RemoveClientFromLop(acc_name, IdLop);
+            return RedirectToAction("ListClient", new { ID_LOP = IdLop});
+        }
+
 
     }
 }

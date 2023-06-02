@@ -123,10 +123,14 @@
             }
             @z
         </td>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.LOP_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LOP_ID })
-        </td>*@
+        <td>
+            @{ 
+                if(ViewBag.userRole != "0")
+                {
+                    @Html.ActionLink("List Clients", "ListClient", new { ID_LOP = item.LOP_ID })
+                }
+            }
+        </td>
     </tr>
 }
 

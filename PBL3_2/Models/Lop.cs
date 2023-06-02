@@ -77,11 +77,11 @@ namespace PBL3_2.Models
             db.SaveChanges();
         }
    
-        public void RemoveClientFromLop(int ID_ACCOUNT, int ID_LOP)
+        public static void RemoveClientFromLop(string Acc_Name, int ID_LOP)
         {
             DBGym db = new DBGym();
             Lop lop = db.Lops.Find(ID_LOP);
-            Account user = db.Accounts.Find(ID_ACCOUNT);
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == Acc_Name).FirstOrDefault();
             try { 
                 lop.Accounts.Remove(user);
             }
@@ -93,12 +93,18 @@ namespace PBL3_2.Models
            
         }
 
-        public List<Account> GetClientByIdLop()
+        public static List<AccountInfo> GetClientByIdLop(int LOP_ID)
         {
             DBGym db = new DBGym();
+            List<AccountInfo> accountInfos = new List<AccountInfo>();
             List<Account> accounts = new List<Account>();
-            Lop lop = db.Lops.Find(this.LOP_ID);
-            return lop.Accounts.ToList();
+            Lop lop = db.Lops.Find(LOP_ID);
+
+            foreach(Account i in lop.Accounts)
+            {
+                accountInfos.Add(i.AccountInfo);
+            }
+            return accountInfos;
         }
     }
 }
