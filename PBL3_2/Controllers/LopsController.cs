@@ -135,7 +135,6 @@ namespace PBL3_2.Controllers
         {
             if (ModelState.IsValid)
             {
-                lop.GOI_ID = Convert.ToInt32(loai);
                 db.Lops.Add(lop);
 
                 //Lỗi ở đây

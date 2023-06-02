@@ -19,7 +19,7 @@
 <div class="form-group">
     <label class="control-label col-md-2">Loại gói</label>
     <div class="col-md-4">
-        @Html.DropDownList("loai", ViewBag.loai as SelectList)
+        @Html.DropDownListFor(model => model.GOI_ID, ViewBag.loai as SelectList)
     </div>
 </div>  
     <div class="form-group">
