@@ -9,7 +9,7 @@
 
 }
 
-<h2>Phân quyền</h2>
+<h2>Authority</h2>
 
 
 
@@ -28,11 +28,11 @@
     <tr>
         <th>
             @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
-            Tên đăng nhập
+            Username
 
         </th>
         <th>
-            mật khẩu
+            Password
         </th>
         <th>
             @Html.ActionLink("Role", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_ROLE", strSearchThietBi = ViewBag.CurrentFilter })
@@ -48,10 +48,33 @@
                 @Html.DisplayFor(modelItem => item.ACCOUNT_NAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ACCOUNT_PASSWORD)
+                @{ 
+                    string temp = "";
+                    for(int i = 0; i< item.ACCOUNT_PASSWORD.Length; i++)
+                    {
+                        temp += "*";
+                    }
+                }
+                @temp
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ACCOUNT_ROLE)
+                @{
+                    string x = "";
+                    switch (item.ACCOUNT_ROLE) {
+                        case "0":
+                            x = "Khach hang";
+                            break;
+                        case "1":
+                            x = "Nhan vien";
+                            break;
+                        case "2":
+                            x = "Admin";
+                            break;
+                    }
+
+
+                }
+                @x
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ACCOUNT_ID }) 

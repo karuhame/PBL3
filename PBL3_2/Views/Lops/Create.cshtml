@@ -16,12 +16,13 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<div class="form-group">
-    <label class="control-label col-md-2">Loại gói</label>
-    <div class="col-md-4">
-        @Html.DropDownListFor(model => model.GOI_ID, ViewBag.loai as SelectList)
-    </div>
-</div>  
+    <div class="form-group">
+        <label class="control-label col-md-2">Loại gói</label>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.GOI_ID, ViewBag.loai as SelectList)
+        </div>
+    </div>  
+
     <div class="form-group">
         <label class="control-label col-md-2">Bắt đầu</label>
         <div class="col-md-4">

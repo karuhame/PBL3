@@ -176,6 +176,8 @@ namespace PBL3_2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
+
             return View(lop);
         }
 
@@ -184,10 +186,19 @@ namespace PBL3_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LOP_ID,LOP_START,LOP_END,LOP_NUMBERSESSION")] Lop lop)
+        public ActionResult Edit(Lop lop, string sub)
         {
             if (ModelState.IsValid)
             {
+                if(sub == "Cancel")
+                {
+                    return RedirectToAction("Index");
+                }
+
+                if(lop.LOP_NUMBERSESSION != db.Lops.Find(lop.LOP_ID).LOP_NUMBERSESSION)
+                {
+
+                }
                 db.Entry(lop).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
