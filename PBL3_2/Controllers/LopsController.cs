@@ -90,9 +90,7 @@ namespace PBL3_2.Controllers
             return View(db.Lops.Where(p=>p.LOP_STATUS == "Accepted" ).ToList());
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Join(string sub)
+        public ActionResult ChooseJoin(string sub)
         {
             if(sub == "create")
             {
@@ -109,10 +107,10 @@ namespace PBL3_2.Controllers
                 lop.Accounts.Add(user);
                 db.SaveChanges();
 
-                lop.ConfirmCreate(sub, user);
+                lop.ConfirmCreate("Accept", user);
 
 
-                return View("Index");
+                return RedirectToAction("Index");
 
             }
         }

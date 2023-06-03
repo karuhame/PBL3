@@ -38,7 +38,7 @@ namespace PBL3_2.Controllers
                 if (currentRole == "Khach Hang" || currentRole == "Nhan Vien")
                 {
                     l = db.BienLais.Where(p =>
-                     p.Account.ACCOUNT_ID.ToString() == ID ).ToList();
+                     p.ACCOUNT_ID.ToString() == ID ).ToList();
                 }
 
             }

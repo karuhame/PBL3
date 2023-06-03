@@ -65,7 +65,9 @@
 
         </td>
         <td>
-            <button type="submit" name="sub" value="@item.LOP_ID" class="btn btn-default">Join</button>
+            <form action="@Url.Action("ChooseJoin", new {sub = @item.LOP_ID})">
+                <button type="submit" name="sub" value="@item.LOP_ID" class="btn btn-default">Join</button>
+            </form>
 
         </td>
 
