@@ -11,10 +11,10 @@
 
 <div class="container">
 
-    <h2>Danh sách</h2>
+    <h2>List Info</h2>
 
     <p>
-        @Html.ActionLink("Tạo mới tài khoản", "Them")
+        @Html.ActionLink("Create new Account", "Them")
     </p>
 
 
@@ -36,27 +36,27 @@
 
 
                 @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
-                @Html.ActionLink("Tên đăng nhập", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Account name", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
 
             </th>
             <th>
                 @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
-                @Html.ActionLink("Tên người dùng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Username", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Sinh nhật", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Birth day", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Giới tính", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_GENDER", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Gender", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_GENDER", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Chiều cao(cm)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_HEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Height(cm)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_HEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Cân nặng(kg)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_WEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Weight(kg)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_WEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("SĐT", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Phone number", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
                 @Html.ActionLink("Email", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_EMAIL", strSearchThietBi = ViewBag.CurrentFilter })
@@ -76,11 +76,11 @@
 
                     @if (item.ACCOUNT_GENDER == true)
                     {
-                        <td>Nam</td>
+                        <td>Male</td>
                     }
                     else
                     {
-                        <td>Nữ</td>
+                        <td>Female</td>
                     }
                     <td>@item.ACCOUNT_HEIGHT</td>
                     <td>@item.ACCOUNT_WEIGHT</td>
@@ -88,9 +88,9 @@
                     <td>@item.ACCOUNT_EMAIL</td>
                     <td>@item.ACCOUNT_CCCD</td>
                     <td>
-                        @Html.ActionLink("Cập nhật", "Edit", new { id = item.ACCOUNT_NAME }) |
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ACCOUNT_NAME }) |
-                        @Html.ActionLink("Xóa", "Delete", new { id = item.ACCOUNT_NAME })
+                        @Html.ActionLink("Update", "Edit", new { id = item.ACCOUNT_NAME }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ACCOUNT_NAME }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ACCOUNT_NAME })
                     </td>
                 </tr>
             }
