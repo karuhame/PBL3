@@ -41,12 +41,33 @@ namespace PBL3_2.Controllers
             return View(db.Lops.Where(p=> p.LOP_STATUS == "Waiting").ToList());
         }
 
+        public ActionResult AdminLopView1()
+        {
+            return View(db.Requests.Where(p => p.status == false).ToList());
+        }
         public ActionResult ConfirmLop(int id, string sub)
         {
 
             var lop = db.Lops.Find(id);
             lop.ConfirmCreate(sub, lop.Accounts.FirstOrDefault());
             return RedirectToAction("AdminLopView", db.Lops.ToList());
+
+
+
+        }
+
+        public ActionResult ConfimJoinLop(int id, string sub)
+        {
+            Lop.ConfirmLopAdmin(id, sub);
+
+            return RedirectToAction("AdminLopView1");
+        }
+
+        public ActionResult testConfirm(int id, string sub)
+        {
+            Lop.ConfirmLopAdmin(id, sub);
+
+            return RedirectToAction("AdminLopView1");
         }
 
 
@@ -102,12 +123,12 @@ namespace PBL3_2.Controllers
                 //Thêm mới vào trong lớp
                 var lop = db.Lops.Find(Convert.ToInt32(sub));
                 string name= User.Identity.GetUserName();
-                Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault(); 
-                
-                lop.Accounts.Add(user);
-                db.SaveChanges();
+                Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
 
-                lop.ConfirmCreate("Accept", user);
+                //lop.Accounts.Add(user);
+
+                PBL3_2.Models.Request.CreateRequest(user.ACCOUNT_ID, lop.LOP_ID, 0);
+
 
 
                 return RedirectToAction("Index");
@@ -133,17 +154,26 @@ namespace PBL3_2.Controllers
         {
             if (ModelState.IsValid)
             {
+                string name = User.Identity.GetUserName();
+                Account acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+                 //LopPhienTapsView view = new LopPhienTapsView(lop, null);
+
+
                 db.Lops.Add(lop);
 
                 //Lỗi ở đây
-                string name = User.Identity.GetUserName();
-                
-                Account acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
 
                 //Nếu là khách thì thêm lớp vào danh sách lớp, admin với nhân viên thì không
                 if(acc.ACCOUNT_ROLE == "0")
                 {
                     lop.Accounts.Add(acc);
+
+
+                    //Them vao danh sach Request mỗi khi tạo lớp
+                    //Request rq = new Request();
+                    //rq.ACCOUNT_ID = acc.ACCOUNT_ID;
+                    //rq.LOP_ID = lop.LOP_ID;
+                    //db.Requests.Add(rq);
 
                 }
                 else if(acc.ACCOUNT_ROLE == "1")

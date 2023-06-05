@@ -13,7 +13,7 @@ namespace PBL3_2.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int LOP_ID { get; set; }
-        public DateTime? LOP_START { get; set; } 
+        public DateTime? LOP_START { get; set; }
 
         public DateTime? LOP_END { get; set; }
 
@@ -23,7 +23,7 @@ namespace PBL3_2.Models
         public virtual Account Staff { get; set; }
 
         public string LOP_STATUS { get; set; }
-        
+
 
 
         public virtual ICollection<PhienTap> PhienTaps { get; set; }
@@ -35,9 +35,9 @@ namespace PBL3_2.Models
 
         public Lop()
         {
-            this.PhienTaps= new HashSet<PhienTap>();
-            this.BienLais= new HashSet<BienLai>();
-            this.Accounts= new HashSet<Account>();
+            this.PhienTaps = new HashSet<PhienTap>();
+            this.BienLais = new HashSet<BienLai>();
+            this.Accounts = new HashSet<Account>();
             this.LOP_STATUS = "Waiting";
         }
 
@@ -50,9 +50,8 @@ namespace PBL3_2.Models
             if (sub == "Accept")
             {
                 db.Lops.Find(this.LOP_ID).LOP_STATUS = "Accepted";
-                if(acc != null)
+                if (acc != null)
                 {
-                    BienLai.CreateBienLai(this.LOP_ID, acc.ACCOUNT_ID);
 
                 }
             }
@@ -76,21 +75,21 @@ namespace PBL3_2.Models
             db.Lops.Add(this);
             db.SaveChanges();
         }
-   
+
         public static void RemoveClientFromLop(string Acc_Name, int ID_LOP)
         {
             DBGym db = new DBGym();
             Lop lop = db.Lops.Find(ID_LOP);
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == Acc_Name).FirstOrDefault();
-            try { 
+            try {
                 lop.Accounts.Remove(user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return;
             }
             db.SaveChanges();
-           
+
         }
 
         public static List<AccountInfo> GetClientByIdLop(int LOP_ID)
@@ -100,11 +99,48 @@ namespace PBL3_2.Models
             List<Account> accounts = new List<Account>();
             Lop lop = db.Lops.Find(LOP_ID);
 
-            foreach(Account i in lop.Accounts)
+            foreach (Account i in lop.Accounts)
             {
                 accountInfos.Add(i.AccountInfo);
             }
             return accountInfos;
         }
+
+        public static void ConfirmLopAdmin(int request_id, string sub)
+        {
+            DBGym db = new DBGym();
+            Request rq = db.Requests.Find(request_id);
+            if(sub == "AcceptJoin")
+            {
+                rq.JoinRequest();
+            }
+            else
+            {
+                db.Requests.Remove(rq);
+                db.SaveChanges();
+            }
+        }
+    }
+
+    public class LopPhienTapsView { 
+        [Key, Required] 
+        public int ID { get; set; }
+        public Lop lop { get; set; }
+        public ICollection<PhienTap> phienTaps { get; set; }
+
+        public LopPhienTapsView(Lop LOP, List<PhienTap> listPhienTaps)
+        {
+            DBGym db = new DBGym();
+
+            this.lop = LOP;
+            foreach(PhienTap i in listPhienTaps)
+            {
+                PhienTap temp = i;
+                this.phienTaps.Add(temp);
+            }
+
+            db.SaveChanges();
+        }
+        
     }
 }

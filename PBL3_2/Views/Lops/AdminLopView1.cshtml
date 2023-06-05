@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PBL3_2.Models.Request>
+
+@{
+    ViewBag.Title = "AdminLopView1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AdminLopView1</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            User name
+        </th>
+        <th>
+            Class ID
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LOP_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.query)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.ActionLink("Join", "testConfirm", new { id=item.REQUEST_ID, sub = "AcceptJoin" }) |
+            @Html.ActionLink("Delete", "testConfirm", new { id=item.REQUEST_ID, sub = "DeleteJoin" })
+        </td>
+    </tr>
+}
+
+</table>

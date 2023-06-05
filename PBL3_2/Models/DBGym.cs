@@ -29,6 +29,7 @@ namespace PBL3_2.Models
         public virtual DbSet<PhienTap> PhienTaps { get; set; }
         public virtual DbSet<ThietBi> ThietBis { get; set; }
 
+        public virtual DbSet<Request> Requests { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
