@@ -48,7 +48,12 @@ namespace PBL3_2.Models
                 Lop lop = db.Lops.Find(this.LOP_ID);
                 Account acc = db.Accounts.Find(this.ACCOUNT_ID);
                 lop.Accounts.Add(acc);
-                this.status = true;
+
+                BienLai.CreateBienLai(lop.LOP_ID, acc.ACCOUNT_ID);
+
+                var temp = db.Requests.Find(this.REQUEST_ID);
+                temp.status = true;
+
                 db.SaveChanges();
             }
         }

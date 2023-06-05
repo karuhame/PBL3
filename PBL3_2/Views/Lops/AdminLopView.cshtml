@@ -5,40 +5,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AdminLopView</h2>
+<h2>Waiting classes</h2>
+<a class="button-icon-btn" href="~/Lops/Index">Current Classes</a>
 
-<h2>Danh sách lớp tập đang chờ</h2>
-<a class="button-icon-btn" href="~/Lops/Index">Danh sách lớp hiện tại</a>
-
-<table class="table table">
+<table class="table table ">
     <tr>
         <th>
-            Loại lớp
+            Type
         </th>
         <th>
-            Phí tập (1 buổi)
+            Fee (1 Session)
         </th>
         <th>
             @* Hiển thị tên của giáo viên *@
-            Tên huấn luyện viên
+            PT Name
 
         </th>
         <th>
 
-            Số buổi
+            Number of session
         </th>
         <th>
-            Thời khóa biểu
+            Schedule
 
         </th>
         <th>
-            Bắt đầu
+            Start
         </th>
         <th>
-            Kết thúc
+            End
         </th>
         <th>
-            Tình trạng
+            Status
         </th>
     </tr>
 
@@ -95,10 +93,11 @@
                 @x
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LOP_START)
+                @string.Format("{0:dd-MM-yyyy}", item.LOP_START)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LOP_END)
+                @string.Format("{0:dd-MM-yyyy}", item.LOP_END)
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LOP_STATUS)

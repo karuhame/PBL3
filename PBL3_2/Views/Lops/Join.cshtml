@@ -5,32 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Tham gia lớp mới</h2>
+<h2>Join class</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-bordered">
     <tr>
         <th>
-            Loại lớp
+            Type
         </th>
         <th>
-            Phí tập (1 buổi)
+            Fee (1 Session)
         </th>
         <th>
             @* Hiển thị tên của giáo viên *@
-            Tên huấn luyện viên
+            PT Name
 
         </th>
         <th>
             @* Hiển thị ra số lượng buổi tập *@
-            Số buổi
+            Number of Session
         </th>
         <th>
             @* Hiển thị ra thời gian buổi tập  *@
             @* Hiển thị ra combobox ( ban đầu chỉ hiển thị thứ ) sau đó hiển thị ra từng giờ *@
-            Thời khóa biểu
+            Schedule
 
         </th>
     </tr>
@@ -55,7 +52,46 @@
         <td>
             @* Hiển thị ra thời gian buổi tập  *@
             @* Hiển thị ra combobox ( ban đầu chỉ hiển thị thứ ) sau đó hiển thị ra từng giờ *@
+            @{
+                string x = "";
+                foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
+                {
+                    x += i.PHIENTAP_startt.Hour.ToString();
+                    x += ":";
+                    x += i.PHIENTAP_startt.Minute.ToString();
+                    x += " -";
 
+                    switch (i.PHIENTAP_DATE)
+                    {
+                        case 0:
+                            x += " T2";
+                            break;
+                        case 1:
+                            x += " T3";
+                            break;
+                        case 2:
+                            x += " T4";
+                            break;
+                        case 3:
+                            x += " T5";
+                            break;
+                        case 4:
+                            x += " T6";
+                            break;
+                        case 5:
+                            x += " T7";
+                            break;
+                        case 6:
+                            x += " CN";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    x += "; ";
+                }
+            }
+            @x
 
         </td>
         <td>
@@ -76,7 +112,7 @@
 
 </table>
 
-<h2>Tham gia vào lớp học mới</h2>
+<h2>Create new class</h2>
 
 @* Tạo một lớp  *@
 
@@ -85,5 +121,5 @@ Chọn số buổi
 Chọn buổi*@
 
 <form action="@Url.Action("Create")" method="get">
-    <button type="submit" class="btn btn-default">Tạo lớp mới</button>
+    <button type="submit" class="btn btn-default">Create</button>
 </form> 

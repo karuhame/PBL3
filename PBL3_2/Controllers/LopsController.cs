@@ -43,25 +43,20 @@ namespace PBL3_2.Controllers
 
         public ActionResult AdminLopView1()
         {
+           
             return View(db.Requests.Where(p => p.status == false).ToList());
         }
         public ActionResult ConfirmLop(int id, string sub)
         {
 
             var lop = db.Lops.Find(id);
-            lop.ConfirmCreate(sub, lop.Accounts.FirstOrDefault());
+            lop.ConfirmCreate(sub, lop.Accounts.FirstOrDefault().ACCOUNT_ID);
             return RedirectToAction("AdminLopView", db.Lops.ToList());
 
 
 
         }
 
-        public ActionResult ConfimJoinLop(int id, string sub)
-        {
-            Lop.ConfirmLopAdmin(id, sub);
-
-            return RedirectToAction("AdminLopView1");
-        }
 
         public ActionResult testConfirm(int id, string sub)
         {
@@ -108,7 +103,10 @@ namespace PBL3_2.Controllers
 
         public ActionResult Join()
         {
-            return View(db.Lops.Where(p=>p.LOP_STATUS == "Accepted" ).ToList());
+            string name = User.Identity.GetUserName();
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+            var obj = Lop.GetLopNotJoiningByAccId(user.ACCOUNT_ID);
+            return View(obj.ToList());
         }
 
         public ActionResult ChooseJoin(string sub)
@@ -493,6 +491,8 @@ namespace PBL3_2.Controllers
             Lop.RemoveClientFromLop(acc_name, IdLop);
             return RedirectToAction("ListClient", new { ID_LOP = IdLop});
         }
+
+        public 
 
 
     }

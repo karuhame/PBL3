@@ -41,7 +41,7 @@ namespace PBL3_2.Models
             this.LOP_STATUS = "Waiting";
         }
 
-        public void ConfirmCreate(string sub, Account acc)
+        public void ConfirmCreate(string sub, int acc_ID)
         {
 
 
@@ -50,9 +50,9 @@ namespace PBL3_2.Models
             if (sub == "Accept")
             {
                 db.Lops.Find(this.LOP_ID).LOP_STATUS = "Accepted";
-                if (acc != null)
+                if (acc_ID != null)
                 {
-
+                    BienLai.CreateBienLai(this.LOP_ID, acc_ID);
                 }
             }
             else if (sub == "Delete")
@@ -104,6 +104,23 @@ namespace PBL3_2.Models
                 accountInfos.Add(i.AccountInfo);
             }
             return accountInfos;
+        }
+
+        public static List<Lop> GetLopNotJoiningByAccId(int Acc_ID)
+        {
+            DBGym db = new DBGym();
+            List<Lop> list = new List<Lop>();
+            Account acc = db.Accounts.Find(Acc_ID);
+            foreach(Lop item in db.Lops)
+            {
+                bool check = true;
+                foreach(Lop i in acc.Lops)
+                {
+                    if (item.LOP_ID == i.LOP_ID) check = false;
+                }
+                if(check) list.Add(item);
+            }
+            return list.ToList();
         }
 
         public static void ConfirmLopAdmin(int request_id, string sub)
