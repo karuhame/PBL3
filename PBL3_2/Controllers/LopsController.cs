@@ -492,7 +492,7 @@ namespace PBL3_2.Controllers
             return RedirectToAction("ListClient", new {ID_LOP = IdLop});
         }
 
-        public 
+        
 
 
     }

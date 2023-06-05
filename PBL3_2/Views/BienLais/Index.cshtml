@@ -13,7 +13,15 @@
     -->
 <div>
     <form action="~/BienLais/Index">
-        <input type="text" name="TenNguoiTraTien" value="@ViewBag.TenNguoiTraTien"/>
+        Name :
+        <input type="text" name="TenNguoiTraTien" value="@ViewBag.TenNguoiTraTien" placeholder="Name of payer" />
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        Begin day :
+        <input type="date" name="Batdau" value="2023-05-04" />
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        End day :
+        <input type="date" name="Batdau" value="2023-05-04" />
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <button type="submit" class="btn btn-primary">Search</button> |
         <a href="~/BienLais/Index">Back to list</a>
     </form>
