@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<PBL3_2.Models.BienLai>
 
+
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity;
+@using PBL3_2.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,7 +27,7 @@
         <input type="date" name="Batdau" value="2023-05-04" />
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         End day :
-        <input type="date" name="Batdau" value="2023-05-04" />
+        <input type="date" name="Ketthuc" value="2023-05-04" />
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <button type="submit" class="btn btn-primary">Search</button> |
         <a href="~/BienLais/Index">Back to list</a>
@@ -60,11 +67,30 @@
                 @Html.DisplayFor(modelItem => item.BIENLAI_END)
             </td>
             <td>
-@*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
+                @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
                 @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
             </td>
         </tr>
     }
 
 </table>
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        var currentUser = userManager.FindById(User.Identity.GetUserId());
+        var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+        if (currentRole == "Admin")
+        {
+            int cost = 0;
+            foreach (var item in Model)
+            {
+                cost += (int)item.BIENLAI_PAYMENT;
+            }
+            <hr />
+            <h4 class="text-secondary">Total income : @cost</h4>
+        }
+    }
+}
