@@ -489,7 +489,7 @@ namespace PBL3_2.Controllers
         public ActionResult RemoveFromLop(int IdLop = 0, string acc_name = "")
         {
             Lop.RemoveClientFromLop(acc_name, IdLop);
-            return RedirectToAction("ListClient", new { ID_LOP = IdLop});
+            return RedirectToAction("ListClient", new {ID_LOP = IdLop});
         }
 
         public 

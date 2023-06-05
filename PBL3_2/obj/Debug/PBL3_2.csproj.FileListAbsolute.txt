@@ -1525,3 +1525,7 @@ F:\bachkhoa\Git\PBL3\PBL3_2\bin\System.Memory.xml
 F:\bachkhoa\Git\PBL3\PBL3_2\bin\System.Numerics.Vectors.xml
 F:\bachkhoa\Git\PBL3\PBL3_2\bin\System.Runtime.CompilerServices.Unsafe.xml
 F:\bachkhoa\Git\PBL3\PBL3_2\bin\System.Text.Encodings.Web.xml
+C:\Users\ACER\Downloads\PBL3 6-5\PBL3\PBL3_2\obj\Debug\PBL3_2.csproj.AssemblyReference.cache
+C:\Users\ACER\Downloads\PBL3 6-5\PBL3\PBL3_2\obj\Debug\PBL3_2.csproj.CoreCompileInputs.cache
+C:\Users\ACER\Downloads\PBL3 6-5\PBL3\PBL3_2\obj\Debug\PBL3_2.dll
+C:\Users\ACER\Downloads\PBL3 6-5\PBL3\PBL3_2\obj\Debug\PBL3_2.pdb
