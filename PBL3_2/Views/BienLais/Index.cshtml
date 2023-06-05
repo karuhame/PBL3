@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>List of Receipts</h2>
 <!--
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -30,16 +30,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Người đóng tiền", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
+            @Html.ActionLink("Payer", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
-            @Html.ActionLink("Số tiền đóng", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 2, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
+            @Html.ActionLink("Cost", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 2, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
-            @Html.ActionLink("Ngày bắt đầu gói tập", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 3, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
+            @Html.ActionLink("Begin day", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 3, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
-            @Html.ActionLink("Ngày kết thúc gói tập", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 4, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
+            @Html.ActionLink("End day", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 4, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th></th>
     </tr>
@@ -60,8 +60,8 @@
                 @Html.DisplayFor(modelItem => item.BIENLAI_END)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |
+@*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
                 @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
             </td>
         </tr>

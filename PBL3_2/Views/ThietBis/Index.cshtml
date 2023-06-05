@@ -9,10 +9,10 @@
 
 }
 
-<h2>Index</h2>
+<h2>List of devices</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add new device", "Create")
 </p>
 
 
@@ -33,17 +33,17 @@
 
 
             @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
-            @Html.ActionLink("Tên Thiết bị", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+            @Html.ActionLink("Name of device", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.THIETBI_NUM)*@
+            @Html.ActionLink("Number of devices", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NUM", strSearchThietBi = ViewBag.CurrentFilter })
 
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
-            @Html.ActionLink("Số thiết bị hỏng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_STATUS", strSearchThietBi = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.THIETBI_NUM)*@
-            @Html.ActionLink("Số lượng", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NUM", strSearchThietBi = ViewBag.CurrentFilter })
-
+            @Html.ActionLink("Number of broken devices", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_STATUS", strSearchThietBi = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -55,10 +55,10 @@
                 @Html.DisplayFor(modelItem => item.THIETBI_NAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.THIETBI_STATUS)
+                @Html.DisplayFor(modelItem => item.THIETBI_NUM)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.THIETBI_NUM)
+                @Html.DisplayFor(modelItem => item.THIETBI_STATUS)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.THIETBI_ID }) |
