@@ -18,31 +18,38 @@
         <th>
             Type
         </th>
-        <th>
-            Status
-        </th>
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LOP_ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.query)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.ActionLink("Join", "testConfirm", new { id=item.REQUEST_ID, sub = "AcceptJoin" }) |
-            @Html.ActionLink("Delete", "testConfirm", new { id=item.REQUEST_ID, sub = "DeleteJoin" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LOP_ID)
+            </td>
+            <td>
+                @{
+                    if (item.query == 0)
+                    {
+                        <p>Joining Class</p>
+                    }
+                }
+                @*@Html.DisplayFor(modelItem => item.query)*@
+            </td>
+            <td>
+                @{
+                    if (ViewBag.Role != "0")
+                    {
+                        Html.ActionLink("Join", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin" });
+                        Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" });
+                    }
+                }
+            </td>
+        </tr>
+    }
 
 </table>
