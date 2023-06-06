@@ -47,7 +47,7 @@ namespace PBL3_2.Controllers
             Lop temp = db.Lops.Find(ID);
             ViewData["lop"] = temp;
 
-            ViewBag.TKB = new SelectList( new SelectListItem[]
+            ViewBag.TKB = new SelectList(new SelectListItem[]
            {
                new SelectListItem(){ Text = "Thứ hai", Value = "0"},
                new SelectListItem(){ Text = "Thứ ba", Value = "1"},
@@ -59,7 +59,7 @@ namespace PBL3_2.Controllers
            }, "Value", "Text");
             //ViewData["soBuoi"] = lop.LOP_NUMBERSESSION;
 
-           //ViewBag.soBuoi = 2;
+            //ViewBag.soBuoi = 2;
 
             return View();
         }
@@ -70,9 +70,9 @@ namespace PBL3_2.Controllers
         //Truyền vào List<phienTaps> rồi add vào LopID tương ứng    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(List<PhienTap> phienTaps,int Date, string sub, int ID)
+        public ActionResult Create(List<PhienTap> phienTaps, int Date, string sub, int ID)
         {
-            if(sub == "Create")
+            if (sub == "Create")
             {
                 if (ModelState.IsValid)
                 {
@@ -83,7 +83,7 @@ namespace PBL3_2.Controllers
                         BBLQLLop bbl = new BBLQLLop();
                         phienTaps[i].PHIENTAP_DATE = Date;
                         db.PhienTaps.Add(phienTaps[i]);
-                        phienTaps[i].LOP_ID = ID;  
+                        phienTaps[i].LOP_ID = ID;
                     }
                     db.SaveChanges();
                     var temp = db.Accounts.ToList();
@@ -92,9 +92,9 @@ namespace PBL3_2.Controllers
                     var acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
 
 
-                    if(acc.ACCOUNT_ROLE != "1")
+                    if (acc.ACCOUNT_ROLE != "1")
                     {
-                        return RedirectToAction("AddPT","Lops", new {ID_LOP = ID});
+                        return RedirectToAction("AddPT", "Lops", new { ID_LOP = ID });
                     }
 
                     //Neu la nhan vien thi tra ve man hinh index
@@ -103,7 +103,7 @@ namespace PBL3_2.Controllers
 
                 return View(phienTaps);
             }
-            else if( sub == "Cancel")
+            else if (sub == "Cancel")
             {
                 db.Lops.Remove(db.Lops.Find(ID));
                 db.SaveChanges();
@@ -119,12 +119,27 @@ namespace PBL3_2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PhienTap phienTap = db.PhienTaps.Find(id);
-            if (phienTap == null)
+
+            Lop temp = db.Lops.Find(id);
+            ViewData["lop"] = temp;
+            List<PhienTap> phienTaps = temp.PhienTaps.ToList();
+
+            ViewBag.TKB = new SelectList(new SelectListItem[]
+           {
+               new SelectListItem(){ Text = "Thứ hai", Value = "0"},
+               new SelectListItem(){ Text = "Thứ ba", Value = "1"},
+               new SelectListItem(){ Text = "Thứ tư", Value = "2"},
+               new SelectListItem(){ Text = "Thứ năm", Value = "3"},
+               new SelectListItem(){ Text = "Thứ sáu", Value = "4"},
+               new SelectListItem(){ Text = "Thứ bảy", Value = "5"},
+               new SelectListItem(){ Text = "Chủ nhật" +
+               "", Value = "6"}
+           }, "Value", "Text");
+            if (phienTaps == null)
             {
                 return HttpNotFound();
             }
-            return View(phienTap);
+            return View(phienTaps);
         }
 
         // POST: PhienTaps/Edit/5
@@ -132,16 +147,15 @@ namespace PBL3_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PHIENTAP_ID,PHIENTAP_DAY,PHIENTAP_START,PHIENTAP_END")] PhienTap phienTap, int ID, int LopID)
+        public ActionResult Edit(List<PhienTap> phienTaps)
         {
-      
+
             if (ModelState.IsValid)
             {
-                db.Entry(phienTap).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                PhienTap.updatePhienTaps(phienTaps);
+                return RedirectToAction("Index", "Lops");
             }
-            return View(phienTap);
+            return View(phienTaps);
         }
 
         // GET: PhienTaps/Delete/5

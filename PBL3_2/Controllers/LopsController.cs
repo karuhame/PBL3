@@ -24,7 +24,7 @@ namespace PBL3_2.Controllers
     //User: Xem danh sách lớp tập của bản thân -> tham gia vào lớp mới -> trở về danh sách lớp tập 
     //Nhân viên: Xem danh sách lớp mà bản thân dạy-> xem thông tin của những học viên trong lớp đó
     //
-    
+
     //Tính năng cần làm:
     //- Trong trường hợp bận, vắng thì làm sao
     //- Tính ngày hết hạn 
@@ -34,18 +34,31 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
 
-    
+
 
         public ActionResult AdminLopView()
         {
-            return View(db.Lops.Where(p=> p.LOP_STATUS == "Waiting").ToList());
+            return View(db.Lops.Where(p => p.LOP_STATUS == "Waiting").ToList());
         }
 
+
+
+        //Admin: hiển thị ra mọi request tham gia lớp
+        //Staff: hiên thị ra request tham gia lớp của bảng thân 
         public ActionResult AdminLopView1()
         {
-           
-            return View(db.Requests.Where(p => p.status == false).ToList());
+            var userName = User.Identity.GetUserName();
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
+
+            ViewBag.Role = user.ACCOUNT_ROLE;
+
+            List<Request> obj;
+            obj = PBL3_2.Models.Request.GetRequestById(user.ACCOUNT_ID);
+
+            return View(obj);
         }
+
+        //Confirm khi tạo lớp mới
         public ActionResult ConfirmLop(int id, string sub)
         {
 
@@ -58,6 +71,7 @@ namespace PBL3_2.Controllers
         }
 
 
+        //Confirm khi join vào lớp 
         public ActionResult testConfirm(int id, string sub)
         {
             Lop.ConfirmLopAdmin(id, sub);
@@ -71,15 +85,11 @@ namespace PBL3_2.Controllers
         public ActionResult Index()
         {
 
-            //
-            
-
-            db.SaveChanges();
             var userName = User.Identity.GetUserName();
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
             ViewBag.userRole = user.ACCOUNT_ROLE;
 
-            if(user.ACCOUNT_ROLE != "2")
+            if (user.ACCOUNT_ROLE != "2")
             {
                 return View(user.Lops.ToList());
             }
@@ -111,7 +121,7 @@ namespace PBL3_2.Controllers
 
         public ActionResult ChooseJoin(string sub)
         {
-            if(sub == "create")
+            if (sub == "create")
             {
                 return RedirectToAction("Create");
             }
@@ -120,7 +130,7 @@ namespace PBL3_2.Controllers
 
                 //Thêm mới vào trong lớp
                 var lop = db.Lops.Find(Convert.ToInt32(sub));
-                string name= User.Identity.GetUserName();
+                string name = User.Identity.GetUserName();
                 Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
 
                 //lop.Accounts.Add(user);
@@ -138,7 +148,7 @@ namespace PBL3_2.Controllers
         // GET: Lops/Create
         public ActionResult Create()
         {
-            
+
             ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
             return View();
         }
@@ -154,7 +164,7 @@ namespace PBL3_2.Controllers
             {
                 string name = User.Identity.GetUserName();
                 Account acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
-                 //LopPhienTapsView view = new LopPhienTapsView(lop, null);
+                //LopPhienTapsView view = new LopPhienTapsView(lop, null);
 
 
                 db.Lops.Add(lop);
@@ -162,7 +172,7 @@ namespace PBL3_2.Controllers
                 //Lỗi ở đây
 
                 //Nếu là khách thì thêm lớp vào danh sách lớp, admin với nhân viên thì không
-                if(acc.ACCOUNT_ROLE == "0")
+                if (acc.ACCOUNT_ROLE == "0")
                 {
                     lop.Accounts.Add(acc);
 
@@ -174,14 +184,14 @@ namespace PBL3_2.Controllers
                     //db.Requests.Add(rq);
 
                 }
-                else if(acc.ACCOUNT_ROLE == "1")
+                else if (acc.ACCOUNT_ROLE == "1")
                 {
                     lop.Staff = acc;
                 }
- 
+
 
                 db.SaveChanges();
-                return RedirectToAction("Create", "PhienTaps", new {id = lop.LOP_ID});
+                return RedirectToAction("Create", "PhienTaps", new { id = lop.LOP_ID });
 
 
             }
@@ -216,12 +226,12 @@ namespace PBL3_2.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(sub == "Cancel")
+                if (sub == "Cancel")
                 {
                     return RedirectToAction("Index");
                 }
 
-                if(lop.LOP_NUMBERSESSION != db.Lops.Find(lop.LOP_ID).LOP_NUMBERSESSION)
+                if (lop.LOP_NUMBERSESSION != db.Lops.Find(lop.LOP_ID).LOP_NUMBERSESSION)
                 {
 
                 }
@@ -295,7 +305,7 @@ namespace PBL3_2.Controllers
             var userName = User.Identity.GetUserName();
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
             ViewBag.IdLop = ID_LOP;
-            if(user.ACCOUNT_ROLE != "0")
+            if (user.ACCOUNT_ROLE != "0")
             {
                 //ViewBag.strSearch = strSearch;
 
@@ -489,12 +499,8 @@ namespace PBL3_2.Controllers
         public ActionResult RemoveFromLop(int IdLop = 0, string acc_name = "")
         {
             Lop.RemoveClientFromLop(acc_name, IdLop);
-            return RedirectToAction("ListClient", new {ID_LOP = IdLop});
+            return RedirectToAction("ListClient", new { ID_LOP = IdLop });
         }
-
-        
-
-
     }
 }
- 
+

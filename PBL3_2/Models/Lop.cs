@@ -81,7 +81,8 @@ namespace PBL3_2.Models
             DBGym db = new DBGym();
             Lop lop = db.Lops.Find(ID_LOP);
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == Acc_Name).FirstOrDefault();
-            try {
+            try
+            {
                 lop.Accounts.Remove(user);
             }
             catch (Exception ex)
@@ -111,14 +112,14 @@ namespace PBL3_2.Models
             DBGym db = new DBGym();
             List<Lop> list = new List<Lop>();
             Account acc = db.Accounts.Find(Acc_ID);
-            foreach(Lop item in db.Lops)
+            foreach (Lop item in db.Lops)
             {
                 bool check = true;
-                foreach(Lop i in acc.Lops)
+                foreach (Lop i in acc.Lops)
                 {
                     if (item.LOP_ID == i.LOP_ID) check = false;
                 }
-                if(check) list.Add(item);
+                if (check) list.Add(item);
             }
             return list.ToList();
         }
@@ -127,7 +128,7 @@ namespace PBL3_2.Models
         {
             DBGym db = new DBGym();
             Request rq = db.Requests.Find(request_id);
-            if(sub == "AcceptJoin")
+            if (sub == "AcceptJoin")
             {
                 rq.JoinRequest();
             }
@@ -139,8 +140,9 @@ namespace PBL3_2.Models
         }
     }
 
-    public class LopPhienTapsView { 
-        [Key, Required] 
+    public class LopPhienTapsView
+    {
+        [Key, Required]
         public int ID { get; set; }
         public Lop lop { get; set; }
         public ICollection<PhienTap> phienTaps { get; set; }
@@ -150,7 +152,7 @@ namespace PBL3_2.Models
             DBGym db = new DBGym();
 
             this.lop = LOP;
-            foreach(PhienTap i in listPhienTaps)
+            foreach (PhienTap i in listPhienTaps)
             {
                 PhienTap temp = i;
                 this.phienTaps.Add(temp);
@@ -158,6 +160,6 @@ namespace PBL3_2.Models
 
             db.SaveChanges();
         }
-        
+
     }
 }

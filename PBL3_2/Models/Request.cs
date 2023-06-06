@@ -40,9 +40,39 @@ namespace PBL3_2.Models
             db.Requests.Add(rq);
             db.SaveChanges();
         }
+
+        public static List<Request> GetRequestById(int acc_id)
+        {
+            DBGym db = new DBGym();
+            List<Request> requests = new List<Request>();
+            Account acc = db.Accounts.Find(acc_id);
+
+            if (acc.ACCOUNT_ROLE == "1")
+            {
+                foreach (Request rq in db.Requests)
+                {
+                    Lop temp = db.Lops.Find(rq.LOP_ID);
+                    if (temp.Staff.ACCOUNT_ID == acc_id)
+                    {
+                        requests.Add(rq);
+                    }
+                }
+            }
+            else if (acc.ACCOUNT_ROLE == "0")
+            {
+                requests = db.Requests.Where(p => p.ACCOUNT_ID == acc_id).ToList();
+            }
+            else if (acc.ACCOUNT_ROLE == "2")
+            {
+                requests = db.Requests.ToList();
+            }
+
+            return requests.Where(p => p.status == false).ToList();
+        }
+
         public void JoinRequest()
         {
-            if(this.query == 0)
+            if (this.query == 0)
             {
                 DBGym db = new DBGym();
                 Lop lop = db.Lops.Find(this.LOP_ID);
@@ -81,7 +111,7 @@ namespace PBL3_2.Models
                 default: break;
             }
             db.SaveChanges();
-        
+
         }
 
     }
