@@ -152,6 +152,7 @@ namespace PBL3_2.Controllers
 
             if (ModelState.IsValid)
             {
+                // Create Request here where query = 1
                 PhienTap.updatePhienTaps(phienTaps, id);
                 return RedirectToAction("Index", "Lops");
             }

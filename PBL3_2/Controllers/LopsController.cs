@@ -315,7 +315,7 @@ namespace PBL3_2.Controllers
                 ViewBag.CurrentFilter = strSearchThietBi;
 
 
-                var obj = Lop.GetClientByIdLop(ID_LOP).ToList();
+                var obj = Lop.GetClientInfoByIdLop(ID_LOP).ToList();
 
                 //Tìm kiếm
                 if (!String.IsNullOrEmpty(strSearchThietBi))

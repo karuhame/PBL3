@@ -93,7 +93,21 @@ namespace PBL3_2.Models
 
         }
 
-        public static List<AccountInfo> GetClientByIdLop(int LOP_ID)
+        public static List<Lop> GetLopByIdStaff(int id)
+        {
+            DBGym db = new DBGym();
+            Account x = db.Accounts.Find(id);
+            List<Lop> list = new List<Lop>();
+            foreach(Lop item in db.Lops)
+            {
+                if(item.Staff.ACCOUNT_ID == id)
+                {
+                    list.Add(item);
+                }
+            }
+            return list;
+        }
+        public static List<AccountInfo> GetClientInfoByIdLop(int LOP_ID)
         {
             DBGym db = new DBGym();
             List<AccountInfo> accountInfos = new List<AccountInfo>();
@@ -160,6 +174,7 @@ namespace PBL3_2.Models
 
             db.SaveChanges();
         }
+
 
     }
 }
