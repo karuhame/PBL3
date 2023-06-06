@@ -29,15 +29,25 @@ namespace PBL3_2.Models
         [ForeignKey("LOP_ID")]
         public virtual Lop Lop { get; set; }
 
-        public static void updatePhienTaps(List<PhienTap> phienTaps)
+        public void UpdatePhienTapByPhienTap(PhienTap i)
+        {
+            this.PHIENTAP_DATE = i.PHIENTAP_DATE;
+            this.PHIENTAP_startt = i.PHIENTAP_startt;
+            this.PHIENTAP_endd= i.PHIENTAP_endd;
+        }
+
+        public static void updatePhienTaps(List<PhienTap> phienTaps, int id)
         {
             DBGym db = new DBGym();
-            foreach (PhienTap item in phienTaps)
+            Lop lop = db.Lops.Find(id);
+
+            int cnt = 0;
+            foreach(PhienTap item in lop.PhienTaps)
             {
-                PhienTap temp = db.PhienTaps.Find(item.PHIENTAP_ID);
-                temp = item;
+                item.UpdatePhienTapByPhienTap(phienTaps[cnt++]);
                 db.SaveChanges();
             }
+            List<PhienTap> list = lop.PhienTaps.ToList();
         }
     }
 }

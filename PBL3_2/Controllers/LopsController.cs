@@ -214,7 +214,8 @@ namespace PBL3_2.Controllers
             }
             ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
 
-            return View(lop);
+            return RedirectToAction("Edit", "PhienTaps", new { id = lop.LOP_ID });
+
         }
 
         // POST: Lops/Edit/5

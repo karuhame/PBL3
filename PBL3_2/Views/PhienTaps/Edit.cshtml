@@ -11,6 +11,10 @@
     @Html.AntiForgeryToken()
     for (int i = 0; i < (int)((PBL3_2.Models.Lop)ViewData["lop"]).LOP_NUMBERSESSION; i++)
     {
+        <div> @Model[0].PHIENTAP_ID</div>
+        <div> @Model[0].PHIENTAP_startt</div>
+        <div> @Model[0].PHIENTAP_endd</div>
+        <div> @Model[0].PHIENTAP_DATE</div>
         <div class="form-horizontal">
             <h4>Session @(i+1)</h4>
             <hr />
@@ -26,7 +30,7 @@
                 </b>
                 <div class="col-md-4">
 
-                    @Html.DropDownList("Date", ViewBag.TKB as SelectList)
+                    @Html.DropDownListFor(model => model[i].PHIENTAP_DATE , ViewBag.TKB as SelectList)
                 </div>
             </div>
 
@@ -35,7 +39,10 @@
                     Start
                 </b>
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model[i].PHIENTAP_startt, new { htmlAttributes = new { @class = "form-control", type = "time" } })
+                    @*@Html.EditorFor(model => model[i].PHIENTAP_startt, new { htmlAttributes = new { @class = "form-control", type = "time" }, value = "@Model[i].PHIENTAP_startt" })*@
+                    @*<input type="text"  class="form-control" value="@Model[i].PHIENTAP_startt" />*@
+                    @Html.TextBoxFor(model => model[i].PHIENTAP_startt, new { @class = "form-control", type = "time" })
+
                     @Html.ValidationMessageFor(model => model[i].PHIENTAP_startt, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -45,7 +52,9 @@
                     End
                 </b>
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model[i].PHIENTAP_endd, new { htmlAttributes = new { @class = "form-control", type = "time" } })
+
+                    @Html.TextBoxFor(model => model[i].PHIENTAP_endd, new { @class = "form-control", type = "time" })
+
                     @Html.ValidationMessageFor(model => model[i].PHIENTAP_endd, "", new { @class = "text-danger" })
                 </div>
             </div>

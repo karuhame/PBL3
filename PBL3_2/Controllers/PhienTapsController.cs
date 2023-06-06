@@ -147,12 +147,12 @@ namespace PBL3_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(List<PhienTap> phienTaps)
+        public ActionResult Edit(List<PhienTap> phienTaps, int id)
         {
 
             if (ModelState.IsValid)
             {
-                PhienTap.updatePhienTaps(phienTaps);
+                PhienTap.updatePhienTaps(phienTaps, id);
                 return RedirectToAction("Index", "Lops");
             }
             return View(phienTaps);
