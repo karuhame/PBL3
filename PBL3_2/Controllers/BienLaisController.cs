@@ -19,11 +19,14 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
         // GET: BienLais
-        public ActionResult Index(string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
+        public ActionResult Index(DateTime ?Batdau,DateTime ?Ketthuc, string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
         {
             ViewBag.TenNguoiTraTien = TenNguoiTraTien;
             ViewBag.SortBy = SortBy;
             ViewBag.SortOrder = SortOrder;
+
+            ViewBag.Batdau = Batdau;
+            ViewBag.Ketthuc = Ketthuc;
 
             // Lap danh sach bien lai 
             List<BienLai> l = new List<BienLai>();
