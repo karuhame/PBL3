@@ -12,7 +12,7 @@ using System.Web.Security;
 
 namespace PBL3_2.Controllers
 {
-    [Authorize]
+    [CustomAuthorize(Roles = "Admin")]
     public class PostsController : Controller
     {
         private DBGym db = new DBGym();

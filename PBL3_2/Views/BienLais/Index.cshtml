@@ -10,6 +10,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int cost = 0;
 }
 
 <h2>List of Receipts</h2>
@@ -24,16 +25,37 @@
         <input type="text" name="TenNguoiTraTien" value="@ViewBag.TenNguoiTraTien" placeholder="Name of payer" />
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         Begin day :
-        <input type="date" name="Batdau" value="2023-05-04" />
+        <input type="date" name="Batdau" />
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         End day :
-        <input type="date" name="Ketthuc" value="2023-05-04" />
+        <input type="date" name="Ketthuc" />
         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <button type="submit" class="btn btn-primary">Search</button> |
         <a href="~/BienLais/Index">Back to list</a>
     </form>
 </div>
 
+
+@{
+    if (ViewBag.Batdau != null && ViewBag != null)
+    {
+        <hr />
+        <p>
+            Receipts from @ViewBag.Batdau
+            to @ViewBag.Ketthuc
+        </p>
+    }
+
+    if (ViewBag.Batdau == null)
+    {
+        <p>Batdau is null</p>
+    }
+
+    if (ViewBag.Ketthuc == null)
+    {
+        <p>Ketthuc is null</p>
+    }
+}
 <table class="table">
     <tr>
         <th>
@@ -53,25 +75,59 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BIENLAI_START)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BIENLAI_END)
-            </td>
-            <td>
-                @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
-            </td>
-        </tr>
+
+        if (ViewBag.Batdau != null && ViewBag != null)
+        {
+            if ((DateTime)ViewBag.Batdau <= item.BIENLAI_START.Value.Date && item.BIENLAI_END.Value.Date <= (DateTime)ViewBag.Ketthuc)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BIENLAI_START)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BIENLAI_END)
+                    </td>
+                    <td>
+                        @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
+                    </td>
+                </tr>
+
+                cost += (int)item.BIENLAI_PAYMENT;
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BIENLAI_START)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BIENLAI_END)
+                </td>
+                <td>
+                    @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
+                </td>
+            </tr>
+
+            cost += (int)item.BIENLAI_PAYMENT;
+        }
+
     }
 
 </table>
@@ -82,15 +138,15 @@
         var currentUser = userManager.FindById(User.Identity.GetUserId());
         var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
 
+        <hr />
         if (currentRole == "Admin")
         {
-            int cost = 0;
-            foreach (var item in Model)
-            {
-                cost += (int)item.BIENLAI_PAYMENT;
-            }
-            <hr />
+
             <h4 class="text-secondary">Total income : @cost</h4>
+        }
+        else if (currentRole == "Khach Hang")
+        {
+            <h4 class="text-secondary">Total cost : @cost</h4>
         }
     }
 }
