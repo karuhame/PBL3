@@ -9,17 +9,19 @@ namespace PBL3_2.Attribute
 {
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
-        public void OnAuthorization(AuthorizationContext filterContext)
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            // Check the authorization logic
-            bool isAuthorized = false; // Your authorization logic here
-
-            if (!isAuthorized)
+            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                // Redirect to the Unauthorized action within the Error controller
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary(new { controller = "Error", action = "Unauthorized" })
-                );
+                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                {
+                    controller = "Error",
+                    action = "Forbidden"
+                }));
+            }
+            else
+            {
+                base.HandleUnauthorizedRequest(filterContext);
             }
         }
     }
