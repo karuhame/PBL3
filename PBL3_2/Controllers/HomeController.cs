@@ -1,7 +1,10 @@
-﻿using PBL3_2.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using PBL3_2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.PeerToPeer;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -12,10 +15,29 @@ namespace PBL3_2.Controllers
     public class HomeController : Controller
     {
         private DBGym db = new DBGym();
+
         public ActionResult Index()
         {
-            return View();
+            /*var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = userManager.FindByName("testadmin1");
+
+            if (user != null)
+            {
+                var isOldPasswordCorrect = userManager.CheckPassword(user, "oldpass");
+
+                if (isOldPasswordCorrect)
+                {
+                    userManager.RemovePassword(user.Id);
+                    userManager.AddPassword(user.Id, "newpass");
+                }
+
+
+            }*/
+
+            var posts = db.Posts.OrderByDescending(p => p.CreatedAt).ToList();
+            return View(posts);
         }
+
 
         public ActionResult About()
         {
@@ -78,7 +100,7 @@ namespace PBL3_2.Controllers
 
 
                 var f_password = GetMD5(password);
-              
+
                 var data = db.Accounts.Where(s => s.ACCOUNT_NAME.Equals(email) && s.ACCOUNT_PASSWORD.Equals(f_password)).ToList();
                 if (data.Count() > 0)
                 {

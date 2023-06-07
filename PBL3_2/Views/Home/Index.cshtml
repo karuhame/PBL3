@@ -1,6 +1,14 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@model List<PBL3_2.Models.Post>
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity;
+@using PBL3_2.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework
+
 
 <div class="jumbotron">
     <h1 align="center">WE GO TO JIM</h1>
@@ -11,27 +19,92 @@
 <div class="row">
     <div class="col-md-4">
         @*        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
         <img src="https://i.pinimg.com/564x/93/7e/ba/937ebac86d4a01f9ea2f99f346434b43.jpg" width="300" height="150" align="middle" style="margin-left:20%;" />
         <p style="margin-left:20%;">Go practice regularly</p>
     </div>
     <div class="col-md-4">
         @*        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
         <img src="https://i.pinimg.com/736x/93/09/1a/93091a77715fb2d28792ae5ba8e349df.jpg" width="300" height="150" align="middle" style="margin-left:20%;" />
         <p style="margin-left:20%;">Practice with the Personal Trainer of our GYM center</p>
     </div>
     <div class="col-md-4">
         @*        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
         <img src="https://i.pinimg.com/564x/de/03/be/de03be077408ca48c67962b345ef1a16.jpg" width="300" height="150" align="middle" style="margin-left:20%;" />
         <p style="margin-left:20%;">WE GO TO JIM !!!</p>
     </div>
 </div>
+<h2>Posts</h2>
+
+
+@{
+    var currentRole = "";
+    if (User.Identity.IsAuthenticated)
+    {
+        var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        var currentUser = userManager.FindById(User.Identity.GetUserId());
+        currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+    }
+
+    if (currentRole == "Admin")
+    {
+        <a href="@Url.Action("Create", "Posts")" class="btn btn-primary">Create Post</a>
+    }
+    <br>
+    <br>
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <div class="form-group" style="display: flex; align-items: center;">
+
+        <select name="searchType" class="form-control" style="width: 150px;">
+            <option value="title" @(Request.QueryString["searchType"] == "title" ? "selected" : "")>Search Title</option>
+            <option value="content" @(Request.QueryString["searchType"] == "content" ? "selected" : "")>Search Content</option>
+        </select>
+
+        @Html.TextBox("searchTitle", Request.QueryString["searchTitle"], new { @class = "form-control", placeholder = "Search", style = "width: 200px; margin-right: 10px;" })
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+}
+
+
+@foreach (var post in Model)
+{
+
+
+
+
+    bool isSearchTitle = string.IsNullOrEmpty(Request.QueryString["searchType"]) || Request.QueryString["searchType"] == "title";
+    bool isSearchContent = Request.QueryString["searchType"] == "content";
+
+    if ((isSearchTitle && (string.IsNullOrEmpty(Request.QueryString["searchTitle"]) || post.Title.Contains(Request.QueryString["searchTitle"])))
+    || (isSearchContent && (string.IsNullOrEmpty(Request.QueryString["searchTitle"]) || post.Content.Contains(Request.QueryString["searchTitle"]))))
+    {
+        <div style="margin-bottom: 50px; margin-top: 50px;">
+            <h3 style="color: blue;">@post.Title</h3>
+            <p style="color: black;">@post.Content</p>
+            <p>
+                <small style="font-size: smaller; font-style: italic;"> Posted at</small>
+                <em style="font-size: smaller; font-style: italic;"> @post.CreatedAt </em>
+            </p>
+            @if (currentRole == "Admin")
+            {
+                @Html.ActionLink("Edit", "Edit", "Posts", new { id = post.ID }, null)
+                @Html.Raw(" | ")
+                @Html.ActionLink("Delete", "Delete", "Posts", new { id = post.ID }, null)
+            }
+        </div>
+    }
+}

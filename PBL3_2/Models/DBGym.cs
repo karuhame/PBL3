@@ -30,6 +30,7 @@ namespace PBL3_2.Models
         public virtual DbSet<ThietBi> ThietBis { get; set; }
 
         public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
