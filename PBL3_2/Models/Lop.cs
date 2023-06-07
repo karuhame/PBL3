@@ -138,17 +138,32 @@ namespace PBL3_2.Models
             return list.ToList();
         }
 
-        public static void ConfirmLopAdmin(int request_id, string sub)
+        public static void ConfirmLopAdmin(int request_id, string sub, int query)
         {
             DBGym db = new DBGym();
             Request rq = db.Requests.Find(request_id);
             if (sub == "AcceptJoin")
             {
-                rq.JoinRequest();
+                if (query == 0)
+                {
+                    rq.JoinRequest();
+                }
+                else if (query == 1)
+                {
+                    rq.EditRequest();
+                }
             }
             else
             {
-                db.Requests.Remove(rq);
+                if (query == 0)
+                {
+                    db.Requests.Remove(rq);
+                }
+                else if (query == 1)
+                {
+                    db.PhienTaps.RemoveRange(db.PhienTaps.Where(p => p.REQUEST_ID == request_id));
+                    db.Requests.Remove(rq);
+                }
                 db.SaveChanges();
             }
         }

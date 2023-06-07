@@ -72,9 +72,9 @@ namespace PBL3_2.Controllers
 
 
         //Confirm khi join vào lớp 
-        public ActionResult testConfirm(int id, string sub)
+        public ActionResult testConfirm(int id, string sub, string query)
         {
-            Lop.ConfirmLopAdmin(id, sub);
+            Lop.ConfirmLopAdmin(id, sub, Convert.ToInt16(query));
 
             return RedirectToAction("AdminLopView1");
         }

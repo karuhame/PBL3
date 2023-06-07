@@ -25,10 +25,14 @@ namespace PBL3_2.Models
         public virtual Lop Lop { get; set; }
 
         public Lop EditLop { get; set; }
-
         public ICollection<PhienTap> phienTaps { get; set; }
 
-        public static void CreateRequest(int ACCOUNT_ID, int LOP_ID, int query)
+        public Request()
+        {
+            this.phienTaps = new HashSet<PhienTap>();
+        }
+
+        public static void CreateRequest(int ACCOUNT_ID, int LOP_ID, int query = 0)
         {
             DBGym db = new DBGym();
             Request rq = new Request();
@@ -41,6 +45,31 @@ namespace PBL3_2.Models
             db.SaveChanges();
         }
 
+        public static void CreateEditRequest(int ACCOUNT_ID, int LOP_ID, List<PhienTap> phienTaps, int query = 1)
+        {
+            DBGym db = new DBGym();
+            Request rq = new Request();
+            rq.ACCOUNT_ID = ACCOUNT_ID;
+            rq.LOP_ID = LOP_ID;
+            rq.query = query;
+            rq.status = false;
+
+            foreach (PhienTap pt in phienTaps)
+            {
+                //Lop mac dinh tao ra
+                db.PhienTaps.Add(pt);
+                db.SaveChanges();
+            }
+
+            foreach (PhienTap pt in phienTaps)
+            {
+                PhienTap temp = db.PhienTaps.Find(pt.PHIENTAP_ID);
+                rq.phienTaps.Add(temp);
+                db.SaveChanges();
+            }
+            db.Requests.Add(rq);
+            db.SaveChanges();
+        }
         public static List<Request> GetRequestById(int acc_id)
         {
             DBGym db = new DBGym();
@@ -85,6 +114,15 @@ namespace PBL3_2.Models
                 temp.status = true;
 
                 db.SaveChanges();
+            }
+        }
+
+        public void EditRequest()
+        {
+            if (this.query == 1)
+            {
+                DBGym db = new DBGym();
+                PhienTap.updatePhienTaps(this.phienTaps.ToList(), this.LOP_ID);
             }
         }
         public void ImplementRequest(LopPhienTapsView view)

@@ -18,40 +18,48 @@
         <th>
             Type
         </th>
-        
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LOP_ID)
-        </td>
-        <td>
-            @{ 
-                if(item.query == 0)
-                {
-                    <p>Joining Class</p>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LOP_ID)
+            </td>
+            <td>
+                @{
+                    ViewBag.query = item.query;
                 }
-            }
-            @*@Html.DisplayFor(modelItem => item.query)*@
-        </td>
-        <td>
-            @{ 
-                if(ViewBag.Role != "0")
-                {
-                    <div>
+                @{
+                    if (item.query == 0)
+                    {
+                        <p>Joining Class</p>
+                    }
+                    if (item.query == 1)
+                    {
+                        <p>Editing Class</p>
+                    }
+                }
+                @*@Html.DisplayFor(modelItem => item.query)*@
+            </td>
+            <td>
+                @{
+                    if (ViewBag.Role != "0")
+                    {
+                        <div>
 
-                    @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin" } , new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" }, new { @class = "btn btn-primary" })
-                    </div>
+                            @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin", query = item.query }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" }, new { @class = "btn btn-primary" })
+                        </div>
+                    }
                 }
-            }
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
 
 </table>

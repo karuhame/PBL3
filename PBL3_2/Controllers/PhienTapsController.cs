@@ -152,8 +152,12 @@ namespace PBL3_2.Controllers
 
             if (ModelState.IsValid)
             {
+                var userName = User.Identity.GetUserName();
+                Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
+
                 // Create Request here where query = 1
-                PhienTap.updatePhienTaps(phienTaps, id);
+                PBL3_2.Models.Request.CreateEditRequest(user.ACCOUNT_ID, id, phienTaps);
+
                 return RedirectToAction("Index", "Lops");
             }
             return View(phienTaps);

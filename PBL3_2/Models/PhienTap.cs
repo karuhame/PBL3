@@ -25,15 +25,20 @@ namespace PBL3_2.Models
         public int PHIENTAP_DATE { get; set; }
         public DateTime PHIENTAP_startt { get; set; }
         public DateTime PHIENTAP_endd { get; set; }
-        public int LOP_ID { get; set; }
+        public int? LOP_ID { get; set; }
         [ForeignKey("LOP_ID")]
         public virtual Lop Lop { get; set; }
+
+        public int? REQUEST_ID { get; set; }
+        [ForeignKey("REQUEST_ID ")]
+        public virtual Request Request { get; set; }
+
 
         public void UpdatePhienTapByPhienTap(PhienTap i)
         {
             this.PHIENTAP_DATE = i.PHIENTAP_DATE;
             this.PHIENTAP_startt = i.PHIENTAP_startt;
-            this.PHIENTAP_endd= i.PHIENTAP_endd;
+            this.PHIENTAP_endd = i.PHIENTAP_endd;
         }
 
         public static void updatePhienTaps(List<PhienTap> phienTaps, int id)
