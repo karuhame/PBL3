@@ -228,12 +228,12 @@
     </div>
     <!-- Mobile Menu end -->
     @{
-        ViewBag.MainMenu = "_MainMenuForKhachHang.cshtml";
-        if (User.Identity.IsAuthenticated) { // da dang nhap chua 
+        ViewBag.MainMenu = "_MainMenuForNothing.cshtml";
+        if (User.Identity.IsAuthenticated)
+        { // da dang nhap chua
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
-            
 
             if (currentRole == "Admin")
             {
@@ -247,13 +247,15 @@
             {
                 ViewBag.MainMenu = "_MainMenuForKhachHang.cshtml";
             }
+
         }
     }
     @RenderPage((string)ViewBag.MainMenu)
-<div class="container">
-    @RenderBody()
-</div>
-    
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
     <!-- Start Footer area-->
     <div class="footer-copyright-area">
         <div class="container">
