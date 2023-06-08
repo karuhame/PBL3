@@ -141,7 +141,7 @@ namespace PBL3_2.Models
         public static void ConfirmLopAdmin(int request_id, string sub, int query)
         {
             DBGym db = new DBGym();
-            Request rq = db.Requests.Find(request_id);
+            Request rq = db.Requests.Find(request_id); 
             if (sub == "AcceptJoin")
             {
                 if (query == 0)
@@ -150,6 +150,8 @@ namespace PBL3_2.Models
                 }
                 else if (query == 1)
                 {
+                    rq.status = true;
+                    db.SaveChanges();
                     rq.EditRequest();
                 }
             }
@@ -157,11 +159,13 @@ namespace PBL3_2.Models
             {
                 if (query == 0)
                 {
+                    db.PhienTaps.RemoveRange(db.PhienTaps.Where(p => p.REQUEST_ID == request_id));
                     db.Requests.Remove(rq);
                 }
                 else if (query == 1)
                 {
                     db.PhienTaps.RemoveRange(db.PhienTaps.Where(p => p.REQUEST_ID == request_id));
+                    db.SaveChanges();
                     db.Requests.Remove(rq);
                 }
                 db.SaveChanges();

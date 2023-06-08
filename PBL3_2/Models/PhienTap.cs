@@ -36,9 +36,11 @@ namespace PBL3_2.Models
 
         public void UpdatePhienTapByPhienTap(PhienTap i)
         {
+            DBGym db = new DBGym();
             this.PHIENTAP_DATE = i.PHIENTAP_DATE;
             this.PHIENTAP_startt = i.PHIENTAP_startt;
             this.PHIENTAP_endd = i.PHIENTAP_endd;
+            db.SaveChanges();
         }
 
         public static void updatePhienTaps(List<PhienTap> phienTaps, int id)

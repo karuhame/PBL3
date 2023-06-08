@@ -32,6 +32,14 @@ namespace PBL3_2.Models
             this.phienTaps = new HashSet<PhienTap>();
         }
 
+        public static void DeleteRequest(int REQUEST_ID)
+        {
+            DBGym db = new DBGym();
+            db.PhienTaps.RemoveRange(db.PhienTaps.Where(p => p.REQUEST_ID == REQUEST_ID));
+            db.Requests.Remove(db.Requests.Find(REQUEST_ID));
+            db.SaveChanges();
+
+        }
         public static void CreateRequest(int ACCOUNT_ID, int LOP_ID, int query = 0)
         {
             DBGym db = new DBGym();
@@ -53,6 +61,8 @@ namespace PBL3_2.Models
             rq.LOP_ID = LOP_ID;
             rq.query = query;
             rq.status = false;
+            db.Requests.Add(rq);
+            db.SaveChanges();
 
             foreach (PhienTap pt in phienTaps)
             {
@@ -67,8 +77,8 @@ namespace PBL3_2.Models
                 rq.phienTaps.Add(temp);
                 db.SaveChanges();
             }
-            db.Requests.Add(rq);
             db.SaveChanges();
+            Request t = db.Requests.Find(rq.REQUEST_ID);
         }
         public static List<Request> GetRequestById(int acc_id)
         {
@@ -122,7 +132,8 @@ namespace PBL3_2.Models
             if (this.query == 1)
             {
                 DBGym db = new DBGym();
-                PhienTap.updatePhienTaps(this.phienTaps.ToList(), this.LOP_ID);
+                List<PhienTap> list = db.PhienTaps.Where(p => p.REQUEST_ID== this.REQUEST_ID).ToList();
+                PhienTap.updatePhienTaps(list, this.LOP_ID);
             }
         }
         public void ImplementRequest(LopPhienTapsView view)

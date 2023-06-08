@@ -1,0 +1,160 @@
+﻿@model IEnumerable<PBL3_2.Models.Request>
+
+@{
+    ViewBag.Title = "EditLopView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Editing Request</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            User name
+        </th>
+        <th>
+            Membership
+        </th>
+        <th>
+            PT Name
+        </th>
+
+        <th>
+            Old Schedule
+        </th>
+        <th>
+            New Schedule
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lop.LoaiGoi.GOI_TYPE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lop.Staff.ACCOUNT_NAME)
+                @*@{
+                        ViewBag.query = item.query;
+                    }
+                    @{
+                        if (item.query == 0)
+                        {
+                            <p>Joining Class</p>
+                        }
+                        if (item.query == 1)
+                        {
+                            <p>Editing Class</p>
+                        }
+                    }*@
+                @*@Html.DisplayFor(modelItem => item.query)*@
+            </td>
+
+            <td>
+                @{
+                    string x = "";
+                    PBL3_2.Models.DBGym db = new PBL3_2.Models.DBGym();
+                    foreach (PBL3_2.Models.PhienTap i in db.PhienTaps.Where(p => p.LOP_ID == item.LOP_ID))
+                    {
+                        x += i.PHIENTAP_startt.Hour.ToString();
+                        x += ":";
+                        x += i.PHIENTAP_startt.Minute.ToString();
+                        x += " -";
+
+                        switch (i.PHIENTAP_DATE)
+                        {
+                            case 0:
+                                x += " T2";
+                                break;
+                            case 1:
+                                x += " T3";
+                                break;
+                            case 2:
+                                x += " T4";
+                                break;
+                            case 3:
+                                x += " T5";
+                                break;
+                            case 4:
+                                x += " T6";
+                                break;
+                            case 5:
+                                x += " T7";
+                                break;
+                            case 6:
+                                x += " CN";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        x += " ; ";
+                    }
+                }
+                @x
+            </td>
+            <td>
+                @{ 
+                    string y = "";
+                    foreach (PBL3_2.Models.PhienTap i in db.PhienTaps.Where(p => p.REQUEST_ID == item.REQUEST_ID))
+                    {
+                        y += i.PHIENTAP_startt.Hour.ToString();
+                        y += ":";
+                        y += i.PHIENTAP_startt.Minute.ToString();
+                        y += " -";
+
+                        switch (i.PHIENTAP_DATE)
+                        {
+                            case 0:
+                                y += " T2";
+                                break;
+                            case 1:
+                                y += " T3";
+                                break;
+                            case 2:
+                                y += " T4";
+                                break;
+                            case 3:
+                                y += " T5";
+                                break;
+                            case 4:
+                                y += " T6";
+                                break;
+                            case 5:
+                                y += " T7";
+                                break;
+                            case 6:
+                                y += " CN";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        y += " ; ";
+                    }
+                }
+                    @y
+            </td>
+            <td>
+                @{
+                    <div>
+                        @if (ViewBag.Role != "0")
+                        {
+
+                        @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin", query = item.query }, new { @class = "btn btn-primary" })
+
+                        }
+                        @Html.ActionLink("Edit", "EditRequest", new { id = item.REQUEST_ID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" }, new { @class = "btn btn-primary" })
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

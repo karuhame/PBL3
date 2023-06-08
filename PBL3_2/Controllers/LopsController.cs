@@ -53,9 +53,32 @@ namespace PBL3_2.Controllers
             ViewBag.Role = user.ACCOUNT_ROLE;
 
             List<Request> obj;
-            obj = PBL3_2.Models.Request.GetRequestById(user.ACCOUNT_ID);
+            obj = PBL3_2.Models.Request.GetRequestById(user.ACCOUNT_ID).Where(p => p.query == 0).ToList();
 
             return View(obj);
+        }
+
+        public ActionResult EditLopView()
+        {
+            var userName = User.Identity.GetUserName();
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
+
+            ViewBag.Role = user.ACCOUNT_ROLE;
+
+            List<Request> obj;
+            obj = PBL3_2.Models.Request.GetRequestById(user.ACCOUNT_ID).Where(p => p.query == 1).ToList();
+
+            return View(obj);
+        }
+
+        [HttpGet]
+        public ActionResult EditRequest(int id)
+        {
+            DBGym db = new DBGym();
+            Request rq = db.Requests.Find(id);
+            int lop_id = rq.LOP_ID;
+            PBL3_2.Models.Request.DeleteRequest(id);
+            return RedirectToAction("Edit", "PhienTaps", new { id = lop_id });
         }
 
         //Confirm khi tạo lớp mới
