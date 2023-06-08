@@ -305,6 +305,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Request.cs" />
+    <Compile Include="Service\QLBienLai.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\AccountInfoesController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
