@@ -9,20 +9,23 @@ namespace PBL3_2.Service
 {
     public class QLBienLai
     {
-        DBGym db = new DBGym();
+        
 
         public List<BienLai> ListBL()
         {
+            DBGym db = new DBGym();
             return db.BienLais.ToList();
         }
         public List<BienLai> getBienLaiByUserName(string userName)
         {
+            DBGym db = new DBGym();
             List<BienLai> l = db.BienLais.Where(p =>
                 p.Account.ACCOUNT_NAME == userName).ToList();
             return l;
         }
 
-        public List<BienLai> getBienLaiByUserNameAndTenNguoiTraTien(string userName,string TenNguoiTraTien) { 
+        public List<BienLai> getBienLaiByUserNameAndTenNguoiTraTien(string userName,string TenNguoiTraTien) {
+            DBGym db = new DBGym();
             return db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien) &&
                         p.Account.ACCOUNT_NAME == userName
                         ).ToList();
