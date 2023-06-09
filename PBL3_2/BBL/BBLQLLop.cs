@@ -79,7 +79,11 @@ namespace PBL3_2.BBL
             //}
 
             Lop temp = db.Lops.Find(ID_LOP);
+            var abc = db.Accounts;
+            foreach(Account i in abc)
+            {
 
+            }
             //Chạy hết tất cả các lớp
             foreach(Account NV in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
             {
