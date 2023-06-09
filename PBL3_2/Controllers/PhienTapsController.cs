@@ -70,7 +70,7 @@ namespace PBL3_2.Controllers
         //Truyền vào List<phienTaps> rồi add vào LopID tương ứng    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(List<PhienTap> phienTaps, int Date, string sub, int ID)
+        public ActionResult Create(List<PhienTap> phienTaps, string sub, int ID)
         {
             if (sub == "Create")
             {
@@ -81,7 +81,6 @@ namespace PBL3_2.Controllers
                     {
                         Lop x = db.Lops.Find(ID);
                         BBLQLLop bbl = new BBLQLLop();
-                        phienTaps[i].PHIENTAP_DATE = Date;
                         db.PhienTaps.Add(phienTaps[i]);
                         phienTaps[i].LOP_ID = ID;
                     }

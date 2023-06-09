@@ -9,7 +9,60 @@ namespace PBL3_2.Service
 {
     public class QLBienLai
     {
-        
+        static int Convert_Date_to_Int(string date)
+        {
+            if (date == "Monday")
+            {
+                return 0;
+            }
+            else if (date == "Tuesday")
+            {
+                return 1;
+            }
+            else if (date == "Wednesday")
+            {
+                return 2;
+            }
+            else if (date == "Thursday")
+            {
+                return 3;
+            }
+            else if (date == "Friday")
+            {
+                return 4;
+            }
+            else if (date== "Saturday")
+            {
+                return 5;
+            }
+            else if (date== "Sunday")
+            {
+                return 6;
+            }
+            return 0;
+        }
+        public static int Cal_Money(int ID_LOP)
+        {
+            DBGym db = new DBGym();
+            int money = 0;
+
+
+            Lop lop = db.Lops.Find(ID_LOP);
+            DateTime iterator = lop.LOP_START.Value.Date;
+            if(iterator <= DateTime.Now.Date) iterator = DateTime.Now.Date;
+            while(iterator <= lop.LOP_END.Value.Date)
+            {
+                foreach(PhienTap i in lop.PhienTaps)
+                {
+                    if(i.PHIENTAP_DATE == Convert_Date_to_Int(iterator.DayOfWeek.ToString()) )
+                    {
+                        money += lop.LoaiGoi.GOI_FEE;
+                    }
+                }
+                iterator = iterator.AddDays(1);
+            }
+            return money ;
+        }
 
         public List<BienLai> ListBL()
         {

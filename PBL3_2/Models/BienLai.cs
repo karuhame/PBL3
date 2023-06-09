@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PBL3_2.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,7 +39,7 @@ namespace PBL3_2.Models
                     ACCOUNT_ID = ID_ACC,
                     BIENLAI_START = lop.LOP_START,
                     BIENLAI_END = lop.LOP_END,
-                    BIENLAI_PAYMENT = lop.LOP_NUMBERSESSION * lop.LoaiGoi.GOI_FEE
+                    BIENLAI_PAYMENT = QLBienLai.Cal_Money(ID_LOP)
 
 
                 };
