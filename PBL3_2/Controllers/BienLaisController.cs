@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using System.Net.PeerToPeer;
+using PBL3_2.Service;
 
 namespace PBL3_2.Controllers
 {
@@ -29,6 +30,7 @@ namespace PBL3_2.Controllers
             ViewBag.Ketthuc = Ketthuc;
 
             // Lap danh sach bien lai 
+            QLBienLai QLBL = new QLBienLai();
             List<BienLai> l = new List<BienLai>();
 
 
@@ -40,11 +42,10 @@ namespace PBL3_2.Controllers
                 var ID = User.Identity.GetUserId();
                 var userName = User.Identity.GetUserName();
 
-                l = db.BienLais.ToList();
+                l = QLBL.ListBL();
                 if (currentRole == "Khach Hang" || currentRole == "Nhan Vien")
                 {
-                    l = db.BienLais.Where(p =>
-                     p.Account.ACCOUNT_NAME == userName).ToList();
+                    l = QLBL.getBienLaiByUserName(userName);
                 }
 
                 //
@@ -54,39 +55,24 @@ namespace PBL3_2.Controllers
                 {
                     if (currentRole == "Khach Hang" || currentRole == "Nhan Vien")
                     {
-                        l = db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien) &&
-                        p.Account.ACCOUNT_NAME == userName
-                        ).ToList();
+                        l = QLBL.getBienLaiByUserNameAndTenNguoiTraTien(userName, TenNguoiTraTien);
                     }
                     else l = db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien)).ToList();
+                }
+
+                //
+                // Loc theo Date 
+                //
+                if (Batdau != null && Ketthuc != null) {
+                    l = QLBL.SearchBLByDate(l, Batdau.Value.Date ,Ketthuc.Value.Date);
                 }
 
             }
 
 
-
-
             // Sort 
-            if (SortBy==1)
-            {
-                if (SortOrder == 1) l = l.OrderBy(p => p.Account.ACCOUNT_NAME).ToList();
-                else if (SortOrder == 2) l = l.OrderByDescending(p => p.Account.ACCOUNT_NAME).ToList();
-            }
-            else if(SortBy==2)
-            {
-                if (SortOrder == 1) l = l.OrderBy(p => p.BIENLAI_PAYMENT).ToList();
-                else if (SortOrder == 2) l = l.OrderByDescending(p => p.BIENLAI_PAYMENT).ToList();
-            }
-            else if(SortBy==3)
-            {
-                if (SortOrder == 1) l = l.OrderBy(p => p.BIENLAI_START.Value.Date).ToList();
-                else if (SortOrder == 2) l = l.OrderByDescending(p => p.BIENLAI_START.Value.Date).ToList();
-            }
-            else if (SortBy == 4)
-            {
-                if (SortOrder == 1) l = l.OrderBy(p => p.BIENLAI_END.Value.Date).ToList();
-                else if (SortOrder == 2) l = l.OrderByDescending(p => p.BIENLAI_END.Value.Date).ToList();
-            }
+            l = QLBL.SortBL(l, SortBy, SortOrder);
+
 
             return View(l);
         }

@@ -16,13 +16,13 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>ThietBi</h4>
+        <h4>Device</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="THIETBI_NAME">Tên thiết bị</label>
+            <label class="control-label col-md-2" for="THIETBI_NAME">Name of devices</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.THIETBI_NAME, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -31,15 +31,15 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="THIETBI_STATUS">Số thiết bị hỏng</label>
+            <label class="control-label col-md-2" for="THIETBI_STATUS">Number of broken devices</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.THIETBI_STATUS, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.THIETBI_STATUS, new { htmlAttributes = new { @class = "form-control" , @Value=0} })
                 @Html.ValidationMessageFor(model => model.THIETBI_STATUS, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="THIETBI_NUM">Số lượng thiết bị</label>
+            <label class="control-label col-md-2" for="THIETBI_NUM">Number of devices</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.THIETBI_NUM, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.THIETBI_NUM, "", new { @class = "text-danger" })

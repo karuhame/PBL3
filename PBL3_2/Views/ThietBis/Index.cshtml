@@ -20,7 +20,7 @@
 @using (Html.BeginForm("Index", "ThietBis", FormMethod.Get))
 {
     <p>
-        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string )
         <button type="submit" class="btn btn-primary">Search</button> |
         <a href="~/ThietBis/Index">Back to list</a>
     </p>
@@ -33,7 +33,7 @@
 
 
             @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
-            @Html.ActionLink("Name of device", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+            @Html.ActionLink("Name of devices", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "THIETBI_NAME", strSearchThietBi = ViewBag.CurrentFilter })
 
         </th>
         <th>

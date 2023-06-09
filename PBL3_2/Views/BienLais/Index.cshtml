@@ -46,20 +46,11 @@
         </p>
     }
 
-    if (ViewBag.Batdau == null)
-    {
-        <p>Batdau is null</p>
-    }
-
-    if (ViewBag.Ketthuc == null)
-    {
-        <p>Ketthuc is null</p>
-    }
 }
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Payer", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
+            @Html.ActionLink("Account Payer", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 1, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
         </th>
         <th>
             @Html.ActionLink("Cost", "Index", new { TenNguoiTraTien = (string)ViewBag.TenNguoiTraTien, SortBy = 2, SortOrder = ((int)ViewBag.SortOrder == 0 || (int)ViewBag.SortOrder == 2) ? 1 : 2 })
@@ -75,59 +66,27 @@
 
     @foreach (var item in Model)
     {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENLAI_START)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BIENLAI_END)
+            </td>
+            <td>
+                @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
+            </td>
+        </tr>
 
-        if (ViewBag.Batdau != null && ViewBag != null)
-        {
-            if ((DateTime)ViewBag.Batdau <= item.BIENLAI_START.Value.Date && item.BIENLAI_END.Value.Date <= (DateTime)ViewBag.Ketthuc)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BIENLAI_START)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BIENLAI_END)
-                    </td>
-                    <td>
-                        @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
-                        @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
-                    </td>
-                </tr>
-
-                cost += (int)item.BIENLAI_PAYMENT;
-            }
-        }
-        else
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Account.ACCOUNT_NAME)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BIENLAI_START)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BIENLAI_END)
-                </td>
-                <td>
-                    @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
-                </td>
-            </tr>
-
-            cost += (int)item.BIENLAI_PAYMENT;
-        }
-
+        cost += (int)item.BIENLAI_PAYMENT;
     }
 
 </table>
@@ -141,7 +100,6 @@
         <hr />
         if (currentRole == "Admin")
         {
-
             <h4 class="text-secondary">Total income : @cost</h4>
         }
         else if (currentRole == "Khach Hang")

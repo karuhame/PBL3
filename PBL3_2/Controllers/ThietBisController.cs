@@ -11,6 +11,7 @@ using System.Web.UI;
 using Microsoft.Ajax.Utilities;
 using PagedList;
 using PBL3_2.Models;
+using PBL3_2.Service;
 
 namespace PBL3_2.Controllers
 {
@@ -22,19 +23,19 @@ namespace PBL3_2.Controllers
         // GET: ThietBis
         public ActionResult Index(string strSearchThietBi, string SortOrder, string SortBy,int ? page=1)
         {
-
+            QLThietBi QLTB = new QLThietBi();
             //ViewBag.strSearch = strSearch;
 
             ViewBag.SortOrder = SortOrder;
             ViewBag.SortBy = SortBy;
             ViewBag.CurrentFilter = strSearchThietBi;
 
-            var obj = db.ThietBis.ToList();
+            var obj = QLTB.GetTB();
 
             //Tìm kiếm
             if (!String.IsNullOrEmpty(strSearchThietBi))
             {
-                obj = obj.Where(p => p.THIETBI_NAME.Contains(strSearchThietBi)).ToList();
+                obj = QLTB.GetThietBiByName(strSearchThietBi);
             }
 
             //Sắp xếp
