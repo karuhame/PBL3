@@ -34,6 +34,9 @@ namespace PBL3_2.Controllers
 
             }*/
 
+            // Kiểm tra lớp hết hạn
+
+            Lop.CheckValidClass();
             var posts = db.Posts.OrderByDescending(p => p.CreatedAt).ToList();
             return View(posts);
         }

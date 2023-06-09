@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using WebGrease.Css.Extensions;
 
 namespace PBL3_2.Models
 {
@@ -170,6 +171,43 @@ namespace PBL3_2.Models
                 }
                 db.SaveChanges();
             }
+        }
+
+        public static void CheckValidClass()
+        {
+            DBGym db = new DBGym();
+            foreach(Lop lop in db.Lops)
+            {
+                if(lop.LOP_END < DateTime.Now)
+                {
+                    Lop.DeleteLop(lop.LOP_ID);
+                }
+            }
+            db.SaveChanges();
+        }
+
+        public static void DeleteLop(int ID_LOP)
+        {
+            DBGym db = new DBGym();
+            //foreach(PhienTap pt in db.PhienTaps)
+            //{
+            //    if(pt.LOP_ID == ID_LOP)
+            //    {
+            //        PhienTap.DeletePhienTap(pt.PHIENTAP_ID);
+            //    }
+            //}
+            //db.PhienTaps.RemoveRange(db.PhienTaps.Where(p => p.LOP_ID == ID_LOP));
+            foreach(PhienTap pt in db.PhienTaps.Where(p => p.LOP_ID == ID_LOP))
+            {
+               if(db.Requests.Find(pt.REQUEST_ID) != null)
+                {
+                    db.Requests.Remove(db.Requests.Find(pt.REQUEST_ID));
+                }
+                db.PhienTaps.Remove(pt);
+            }
+            db.SaveChanges();
+            db.Lops.Remove(db.Lops.Find(ID_LOP));
+            db.SaveChanges();
         }
     }
 

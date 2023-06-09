@@ -149,7 +149,31 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(List<PhienTap> phienTaps, int id)
         {
+            foreach(PhienTap i in phienTaps)
+            {
+                if (ModelState.IsValid && i.PHIENTAP_endd< i.PHIENTAP_startt)
+                {
+                    ModelState.AddModelError("", "Invalid Time");
+                    Lop temp = db.Lops.Find(id);
+                    ViewData["lop"] = temp;
 
+                    ViewBag.TKB = new SelectList(new SelectListItem[]
+                   {
+                       new SelectListItem(){ Text = "Thứ hai", Value = "0"},
+                       new SelectListItem(){ Text = "Thứ ba", Value = "1"},
+                       new SelectListItem(){ Text = "Thứ tư", Value = "2"},
+                       new SelectListItem(){ Text = "Thứ năm", Value = "3"},
+                       new SelectListItem(){ Text = "Thứ sáu", Value = "4"},
+                       new SelectListItem(){ Text = "Thứ bảy", Value = "5"},
+                       new SelectListItem(){ Text = "Chủ nhật" +
+                       "", Value = "6"}
+                   }, "Value", "Text");
+
+                    return View(phienTaps);
+                }
+
+            
+            }
             if (ModelState.IsValid)
             {
                 var userName = User.Identity.GetUserName();

@@ -183,6 +183,13 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Lop lop, string loai)
         {
+
+            if(ModelState.IsValid && lop.LOP_END < lop.LOP_START)
+            {
+                ModelState.AddModelError("", "Invalid Time");
+                ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
+                return View(lop);
+            }
             if (ModelState.IsValid)
             {
                 string name = User.Identity.GetUserName();
@@ -309,6 +316,13 @@ namespace PBL3_2.Controllers
 
             BBLQLLop bbl = new BBLQLLop();
             accounts = bbl.FindPT(ID_LOP, lop.PhienTaps.ToList());
+
+            if(accounts.Count < 1)
+            {
+                ModelState.AddModelError("", "No available PT");
+                return Create();
+
+            }
             ViewBag.ID_LOP = ID_LOP;
             return View(accounts);
 

@@ -7,33 +7,46 @@ using System.Web;
 
 namespace PBL3_2.Models
 {
-    public class PhienTap
-    {
+        public class PhienTap
+        {
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PHIENTAP_ID { get; set; }
+            [Key]
+            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int PHIENTAP_ID { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? PHIENTAP_DAY { get; set; }
+            [Column(TypeName = "date")]
+            public DateTime? PHIENTAP_DAY { get; set; }
 
-        public int? PHIENTAP_START { get; set; }
+            public int? PHIENTAP_START { get; set; }
 
-        public int? PHIENTAP_END { get; set; }
-
-
-        public int PHIENTAP_DATE { get; set; }
-        public DateTime PHIENTAP_startt { get; set; }
-        public DateTime PHIENTAP_endd { get; set; }
-        public int? LOP_ID { get; set; }
-        [ForeignKey("LOP_ID")]
-        public virtual Lop Lop { get; set; }
-
-        public int? REQUEST_ID { get; set; }
-        [ForeignKey("REQUEST_ID ")]
-        public virtual Request Request { get; set; }
+            public int? PHIENTAP_END { get; set; }
 
 
+            public int PHIENTAP_DATE { get; set; }
+            public DateTime PHIENTAP_startt { get; set; }
+            public DateTime PHIENTAP_endd { get; set; }
+            public int? LOP_ID { get; set; }
+            [ForeignKey("LOP_ID")]
+            public virtual Lop Lop { get; set; }
+
+            public int? REQUEST_ID { get; set; }
+            [ForeignKey("REQUEST_ID ")]
+            public virtual Request Request { get; set; }
+
+
+        public static void DeletePhienTap(int ID_PHIENTAP)
+        {
+            DBGym db = new DBGym();
+            PhienTap pt = db.PhienTaps.Find(ID_PHIENTAP);
+            //if(db.Requests.Find(pt.REQUEST_ID) != null)
+            //{
+            //    int rq_id = Convert.ToInt16(pt.REQUEST_ID);
+            //    Request.DeleteRequest(rq_id);
+            //}
+            db.PhienTaps.Remove(pt);
+
+            db.SaveChanges();
+        }
         public void UpdatePhienTapByPhienTap(PhienTap i)
         {
             DBGym db = new DBGym();
