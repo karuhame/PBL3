@@ -1,0 +1,150 @@
+﻿@model PagedList.IPagedList<PBL3_2.Models.AccountInfo>
+@using PagedList
+@using PagedList.Mvc
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity;
+@using PBL3_2.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework
+
+
+@{
+    ViewBag.Title = "XemDanhSachThongTinDuaTren_Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xem Thong tin</h2>
+
+
+<div class="container">
+
+    <h2>Danh sach</h2>
+    @{
+        ViewBag.MainMenu = "_MainMenu.cshtml";
+        if (User.Identity.IsAuthenticated)
+        { // da dang nhap chua
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+
+            if (currentRole == "Admin")
+            {
+                <p>
+                    @Html.ActionLink("Tao moi tai khoan", "Them")
+                </p>
+            }
+        }
+    }
+
+
+
+    @using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))
+    {
+        <p>
+            @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+            <button type="submit" class="btn btn-primary">Search</button> |
+            @*<a href="~/ThietBis/Index">Back to list</a>*@
+        </p>
+    }
+
+
+    <table class="table table-borde red">
+
+        <tr>
+            <th>
+                @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
+
+
+                @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
+                @Html.ActionLink("Ten dang nhap", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
+                @Html.ActionLink("Ten nguoi dung", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Sinh nhat", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Gioi tinh", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_GENDER", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Chieu cao(cm)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_HEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Can nang(kg)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_WEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Sdt", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Email", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_EMAIL", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("CCCD", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_CCCD", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th></th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ACCOUNT_NAME</td>
+                    <td>@item.USER_NAME</td>
+                    <td> @string.Format("{0:dd-MM-yyyy}", item.ACCOUNT_BIRTHDAY) </td>
+
+                    @if (item.ACCOUNT_GENDER == true)
+                    {
+                        <td>Nam</td>
+                    }
+                    else
+                    {
+                        <td>Nu</td>
+                    }
+                    <td>@item.ACCOUNT_HEIGHT</td>
+                    <td>@item.ACCOUNT_WEIGHT</td>
+                    <td>@item.ACCOUNT_PHONE</td>
+                    <td>@item.ACCOUNT_EMAIL</td>
+                    <td>@item.ACCOUNT_CCCD</td>
+                    @{
+                        ViewBag.MainMenu = "_MainMenu.cshtml";
+                        if (User.Identity.IsAuthenticated)
+                        { // da dang nhap chua
+
+                            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                            var currentUser = userManager.FindById(User.Identity.GetUserId());
+                            var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+
+                            if (currentRole == "Admin")
+                            {
+                                <td>
+
+                                    @Html.ActionLink("Cap nhat", "Edit", new { id = item.ACCOUNT_NAME }) |
+                                    @Html.ActionLink("Chi tiet", "Details", new { id = item.ACCOUNT_NAME }) |
+                                    @Html.ActionLink("Xoa", "Delete", new { id = item.ACCOUNT_NAME })
+                                </td>
+                            }
+                            else if (currentRole == "Nhan Vien")
+                            {
+                                <td>
+                                    @Html.ActionLink("Chi tiet", "Details", new { id = item.ACCOUNT_NAME }) |
+                                </td>
+                            }
+                        }
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter }))
+
+</div>

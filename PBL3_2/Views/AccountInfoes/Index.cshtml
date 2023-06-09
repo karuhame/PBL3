@@ -1,6 +1,13 @@
-@model PagedList.IPagedList<PBL3_2.Models.AccountInfo>
+@model PagedList.IPagedList<PBL3_2.Models.Account>
 @using PagedList
 @using PagedList.Mvc
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity;
+@using PBL3_2.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework
+
 
 @{
     ViewBag.Title = "Index";
@@ -11,21 +18,55 @@
 
 <div class="container">
 
-    <h2>List Info</h2>
+    @{
+        ViewBag.MainMenu = "_MainMenu.cshtml";
+        if (User.Identity.IsAuthenticated)
+        { // da dang nhap chua
 
-    <p>
-        @Html.ActionLink("Create new Account", "Them")
-    </p>
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
 
+            if (currentRole == "Admin")
+            {
+                <h2>List of accounts</h2>
+                using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))
+                {
+                    <p>Key
+                        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+                        <button type="submit" class="btn btn-primary">Search</button> |
+                    </p>
+                }
 
-    @using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))
-    {
-        <p>
-            @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
-            <button type="submit" class="btn btn-primary">Search</button> |
-            @*<a href="~/ThietBis/Index">Back to list</a>*@
-        </p>
+            }
+            if (currentRole == "Nhan Vien")
+            {
+                <h2>List of customer accounts</h2>
+                using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))
+                {
+                    <p>Key
+                        @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+                        <button type="submit" class="btn btn-primary">Search</button> |
+                    </p>
+                }
+            }
+            if (currentRole == "Khach Hang")
+            {
+                <h2>Your accounts</h2>
+            }
+
+            if (currentRole == "Admin")
+            {
+                <p>
+                    @Html.ActionLink("Create new account", "Them")
+                    <br />
+                    <br />
+
+                </p>
+            }
+        }
     }
+
 
 
     <table class="table table-borde red">
@@ -35,16 +76,14 @@
                 @*Khi người dùng bấm sắp xếp lần đầu sẽ là Ascending, những lần sau sẽ ngược lại với SortOrder đang có. VD: Asc-Desc-Asc-...  *@
 
 
-                @*@Html.DisplayNameFor(model => model.THIETBI_NAME)*@
-                @Html.ActionLink("Account name", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("User name", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_NAME", strSearchThietBi = ViewBag.CurrentFilter })
 
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.THIETBI_STATUS)*@
-                @Html.ActionLink("Username", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Full name", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "USER_NAME", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Birth day", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Birthday", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_BIRTHDAY", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
                 @Html.ActionLink("Gender", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_GENDER", strSearchThietBi = ViewBag.CurrentFilter })
@@ -56,13 +95,16 @@
                 @Html.ActionLink("Weight(kg)", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_WEIGHT", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Phone number", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Phone", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_PHONE", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
                 @Html.ActionLink("Email", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_EMAIL", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("CCCD", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_CCCD", strSearchThietBi = ViewBag.CurrentFilter })
+                @Html.ActionLink("Identification ID", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_CCCD", strSearchThietBi = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Role", "Index", new { SortOrder = (ViewBag.SortOrder == null) ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), SortBy = "ACCOUNT_ROLE", strSearchThietBi = ViewBag.CurrentFilter })
             </th>
             <th></th>
         </tr>
@@ -70,28 +112,168 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.ACCOUNT_NAME</td>
-                    <td>@item.USER_NAME</td>
-                    <td> @string.Format("{0:dd-MM-yyyy}", item.ACCOUNT_BIRTHDAY) </td>
+                    @{
+                        if (@item.ACCOUNT_NAME != null)
+                        {
 
-                    @if (item.ACCOUNT_GENDER == true)
-                    {
-                        <td>Male</td>
+                            <td>@item.ACCOUNT_NAME</td>
+                        }
+                        else
+                        {
+                            //continue;
+                            <td>Null</td>
+
+                        }
+
+                        if (@item.AccountInfo.USER_NAME != null)
+                        {
+
+                            <td>@item.AccountInfo.USER_NAME</td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+                        if (@item.AccountInfo.ACCOUNT_BIRTHDAY != null)
+                        {
+                            <td> @string.Format("{0:dd-MM-yyyy}", item.AccountInfo.ACCOUNT_BIRTHDAY) </td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+                        if (@item.AccountInfo.ACCOUNT_GENDER != null)
+                        {
+                            if (@item.AccountInfo.ACCOUNT_GENDER == true)
+                            {
+                                <td>Male</td>
+                            }
+                            else
+                            {
+                                <td>Female</td>
+                            }
+
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+
+                        if (@item.AccountInfo.ACCOUNT_HEIGHT != null)
+                        {
+                            <td>@item.AccountInfo.ACCOUNT_HEIGHT </td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+                        if (@item.AccountInfo.ACCOUNT_WEIGHT != null)
+                        {
+                            <td>@item.AccountInfo.ACCOUNT_WEIGHT </td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+                        if (@item.AccountInfo.ACCOUNT_PHONE != null)
+                        {
+                            <td>@item.AccountInfo.ACCOUNT_PHONE </td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+                        if (@item.AccountInfo.ACCOUNT_EMAIL != null)
+                        {
+                            <td>@item.AccountInfo.ACCOUNT_EMAIL </td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+                        if (@item.AccountInfo.ACCOUNT_CCCD != null)
+                        {
+                            <td>@item.AccountInfo.ACCOUNT_CCCD </td>
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
+
+                        if (@item.ACCOUNT_ROLE != null)
+                        {
+                            if (@item.ACCOUNT_ROLE == "2")
+                            {
+                                <td>Admin</td>
+                            }
+                            if (@item.ACCOUNT_ROLE == "1")
+                            {
+                                <td>Staff</td>
+                            }
+                            if (@item.ACCOUNT_ROLE == "0")
+                            {
+                                <td>Customer</td>
+                            }
+                        }
+                        else
+                        {
+                            //continue;
+
+                            <td>Null</td>
+                        }
                     }
-                    else
-                    {
-                        <td>Female</td>
+
+                    @{
+                        ViewBag.MainMenu = "_MainMenu.cshtml";
+                        if (User.Identity.IsAuthenticated)
+                        { // da dang nhap chua
+
+                            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                            var currentUser = userManager.FindById(User.Identity.GetUserId());
+                            var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+
+
+                            if (currentRole == "Admin")
+                            {
+                                <td>
+
+                                    @Html.ActionLink("Edit profile", "Edit", new { id = item.ACCOUNT_NAME }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ACCOUNT_NAME })
+                                    <br />
+
+                                    @Html.ActionLink("Change password", "ChangePassword", new { id = item.ACCOUNT_NAME })
+
+                                </td>
+                            }
+                            else if (currentRole == "Nhan Vien")
+                            {
+
+                            }
+                        }
                     }
-                    <td>@item.ACCOUNT_HEIGHT</td>
-                    <td>@item.ACCOUNT_WEIGHT</td>
-                    <td>@item.ACCOUNT_PHONE</td>
-                    <td>@item.ACCOUNT_EMAIL</td>
-                    <td>@item.ACCOUNT_CCCD</td>
-                    <td>
-                        @Html.ActionLink("Update", "Edit", new { id = item.ACCOUNT_NAME }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ACCOUNT_NAME }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ACCOUNT_NAME })
-                    </td>
+
                 </tr>
             }
         </tbody>

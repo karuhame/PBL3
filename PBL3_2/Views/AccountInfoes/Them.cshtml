@@ -8,7 +8,7 @@
 <main>
     <div class="page-section features" style="margin: 150px 0px">
         <div class="container">
-            <a href="~/AccountInfoes/Index" class="back-home-link">Quay lại trang chủ</a>
+            <a href="~/AccountInfoes/Index" class="back-home-link">Quay lai trang chu</a>
             <style>
                 .back-home-link {
                     display: inline-block;
@@ -26,7 +26,7 @@
                     }
             </style>
 
-            <h1 class="page-heading">Thêm tài khoản</h1>
+            <h1 class="page-heading">Them tai khoan</h1>
 
             <style>
                 .page-heading {
@@ -43,27 +43,27 @@
 
             <form action="~/AccountInfoes/Them2" method="post">
                 <div class="form-group">
-                    <label for="email">Tên đăng nhập:</label>
+                    <label for="email">Ten dang nhap:</label>
                     <input type="text" class="form-control" name="Account_name">
                     @*@Html.EditorFor(p => p.Account.ACCOUNT_NAME)*@
                 </div>
 
                 <div class="form-group">
-                    <label for="pwd">Mật khẩu:</label>
+                    <label for="pwd">Mat khau:</label>
                     <input type="password" class="form-control" name="Account_password">
                     @*@Html.PasswordFor(p => p.Account.ACCOUNT_PASSWORD)*@
 
                 </div>
 
                 <div class="form-group">
-                    <label for="pwd">Nhập lại mật khẩu:</label>
+                    <label for="pwd">Nhap lai mat khau:</label>
                     <input type="password" class="form-control" name="Retype_Account_password">
                     @*@Html.PasswordFor(p => p.retypePassword)*@
 
                 </div>
 
                 <div class="form-group">
-                    <label for="pwd">Họ và tên:</label>
+                    <label for="pwd">Ho va ten:</label>
                     <input type="text" class="form-control" name="User_name">
                     @*@Html.EditorFor(p => p.AccountInfo.USER_NAME)*@
 
@@ -74,52 +74,52 @@
                     @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_CCCD)*@
                     <input type="text" class="form-control" name="Account_CCCD">
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="pwd">Sinh nhật:</label>
-                    @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_BIRTHDAY, new { htmlAttributes = new { type = "date" } })*@        
+                    <label for="pwd">Sinh nhat:</label>
+                    @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_BIRTHDAY, new { htmlAttributes = new { type = "date" } })*@
                     <input type="date" class="form-control" name="Account_birthday">
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-2">Giới tính</label>
+                    <label class="control-label col-md-2">Gioi tinh</label>
                     <div class="col-md-10">
                         <select name="GioiTinh" class="form-control">
-                             <option value=True>Giới tính Nam</option>
-                            <option value=False>Giới tính Nữ</option>
+                            <option value=True>Nam</option>
+                            <option value=False>Nu</option>
                         </select>
                         @*<div>
-                            <label>
-                                @Html.RadioButtonFor(m => m.AccountInfo.ACCOUNT_GENDER, false)
-                                Nữ
-                            </label>
+                                <label>
+                                    @Html.RadioButtonFor(m => m.AccountInfo.ACCOUNT_GENDER, false)
+                                    Nữ
+                                </label>
 
-                            <label>
-                                @Html.RadioButtonFor(m => m.AccountInfo.ACCOUNT_GENDER, true)
-                                Nam
-                            </label>
-                        </div>*@
+                                <label>
+                                    @Html.RadioButtonFor(m => m.AccountInfo.ACCOUNT_GENDER, true)
+                                    Nam
+                                </label>
+                            </div>*@
                         @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_BIRTHDAY, new { htmlAttribute = new { type = "chec" } })*@
 
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="pwd">Chiều cao(cm):</label>
+                    <label for="pwd">Chieu cao(cm):</label>
                     <input type="number" class="form-control" name="Account_Height">
                     @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_HEIGHT, new { htmlAttribute = new { type = "number" } })*@
 
                 </div>
 
                 <div class="form-group">
-                    <label for="pwd">Cân nặng(kg):</label>
+                    <label for="pwd">Can nang(kg):</label>
                     <input type="number" class="form-control" name="Account_Weight">
                     @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_WEIGHT, new { htmlAttribute = new { type = "number" } })*@
                 </div>
 
                 <div class="form-group">
-                    <label for="pwd">SĐT:</label>
-                           <input type="text" class="form-control" name="Account_phone">
+                    <label for="pwd">Sdt:</label>
+                    <input type="text" class="form-control" name="Account_phone">
                     @*@Html.EditorFor(p => p.AccountInfo.ACCOUNT_PHONE, new { htmlAttribute = new { type = "text" } })*@
 
                 </div>

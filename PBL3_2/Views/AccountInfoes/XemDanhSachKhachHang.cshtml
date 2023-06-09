@@ -1,65 +1,64 @@
-﻿@model PagedList.IPagedList<PBL3_2.Models.Account>
-@using PagedList
-@using PagedList.Mvc
+﻿﻿@model PagedList.IPagedList<PBL3_2.Models.Account>
+    @using PagedList
+    @using PagedList.Mvc
 
-@{
+    @{
     ViewBag.Title = "Danh Sach khach hang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-}
-
-
-<div class="container">
-
-    <h2>Danh sách</h2>
-
-
-
-    @using (Html.BeginForm("XemDanhSachKhachHang", "AccountInfoes", FormMethod.Get))
-    {
-        <p>
-            @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
-            <button type="submit" class="btn btn-primary">Search</button> |
-            @*<a href="~/ThietBis/Index">Back to list</a>*@
-        </p>
     }
 
 
-    <table class="table table-borde red">
+    <div class="container">
 
-        <tr>
-            <th>
-                Tên đăng nhập
-            </th>
-            <th>
-                Tên người dùng
-             </th>
-            <th>
-                Sinh nhật
-            </th>
-            <th>
-                Giới tính
-            </th>
-            <th>
-                Chiều cao(cm)
-            </th>
-            <th>
-                Cân nặng(kg)
-            </th>
-            <th>
-                SĐT
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                CCCD
-            </th>
-            <th></th>
-        </tr>
-        <tbody>
-            @foreach (var item in Model)
-            {
+        <h2>Danh sach</h2>
+
+
+
+        @using (Html.BeginForm("XemDanhSachKhachHang", "AccountInfoes", FormMethod.Get))
+        {
+        <p>
+            @Html.TextBox("strSearchThietBi", ViewBag.CurrentFilter as string)
+            <button type="submit" class="btn btn-primary">Search</button> |
+        </p>
+        }
+
+
+        <table class="table table-borde red">
+
+            <tr>
+                <th>
+                    Ten dang nhap
+                </th>
+                <th>
+                    Ten nguoi dung
+                </th>
+                <th>
+                    Sinh nhat
+                </th>
+                <th>
+                    Gioi tinh
+                </th>
+                <th>
+                    Chieu cao(cm)
+                </th>
+                <th>
+                    Can nang(kg)
+                </th>
+                <th>
+                    Sdt
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    CCCD
+                </th>
+                <th></th>
+            </tr>
+            <tbody>
+                @foreach (var item in Model)
+                {
                 <tr>
                     <td>@item.AccountInfo.ACCOUNT_NAME</td>
                     <td>@item.AccountInfo.USER_NAME</td>
@@ -67,11 +66,11 @@
 
                     @if (item.AccountInfo.ACCOUNT_GENDER == true)
                     {
-                        <td>Nam</td>
+                    <td>Nam</td>
                     }
                     else
                     {
-                        <td>Nữ</td>
+                    <td>Nữ</td>
                     }
                     <td>@item.AccountInfo.ACCOUNT_HEIGHT</td>
                     <td>@item.AccountInfo.ACCOUNT_WEIGHT</td>
@@ -79,12 +78,12 @@
                     <td>@item.AccountInfo.ACCOUNT_EMAIL</td>
                     <td>@item.AccountInfo.ACCOUNT_CCCD</td>
                 </tr>
-            }
-        </tbody>
-    </table>
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                }
+            </tbody>
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Index",
+        @Html.PagedListPager(Model, page => Url.Action("Index",
         new { page, currentFilter = ViewBag.CurrentFilter }))
 
-</div>
+    </div>
