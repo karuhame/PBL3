@@ -99,9 +99,9 @@ namespace PBL3_2.Models
             DBGym db = new DBGym();
             Account x = db.Accounts.Find(id);
             List<Lop> list = new List<Lop>();
-            foreach(Lop item in db.Lops)
+            foreach(Lop item in db.Lops.Where(p=>p.LOP_STATUS=="Accepted").ToList())
             {
-                if(item.Staff.ACCOUNT_ID == id)
+                if(item.Staff !=null && item.Staff.ACCOUNT_ID == id)
                 {
                     list.Add(item);
                 }

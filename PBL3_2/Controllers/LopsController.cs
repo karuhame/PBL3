@@ -112,9 +112,14 @@ namespace PBL3_2.Controllers
             Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
             ViewBag.userRole = user.ACCOUNT_ROLE;
 
-            if (user.ACCOUNT_ROLE != "2")
+            if (user.ACCOUNT_ROLE == "0")
             {
                 return View(user.Lops.ToList());
+            }
+            if (user.ACCOUNT_ROLE == "1")
+            {
+                List<Lop> l = Lop.GetLopByIdStaff(user.ACCOUNT_ID);
+                return View(l);
             }
             return View(db.Lops.ToList());
         }
