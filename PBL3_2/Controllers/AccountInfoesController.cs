@@ -108,7 +108,6 @@ namespace PBL3_2.Controllers
                 {
                     obj = obj.Where(p => p.ACCOUNT_NAME.Contains(strSearchThietBi)
                                          || p.AccountInfo.USER_NAME.Contains(strSearchThietBi)
-                                         || p.AccountInfo.ACCOUNT_PHONE.ToString().Contains(strSearchThietBi)
                                          || p.AccountInfo.ACCOUNT_EMAIL.ToString().Contains(strSearchThietBi)
                                          || p.ACCOUNT_ROLE.ToString().Contains(strSearchThietBi)).ToList();
                 }

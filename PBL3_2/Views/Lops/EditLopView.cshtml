@@ -39,7 +39,17 @@
                 @Html.DisplayFor(modelItem => item.Lop.LoaiGoi.GOI_TYPE)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Lop.Staff.ACCOUNT_NAME)
+                @{ 
+                    if (item.Lop.Staff == null)
+                    {
+                        <p>No PT</p>
+                    }
+                else
+                {
+
+                    @Html.DisplayFor(modelItem => item.Lop.Staff.ACCOUNT_NAME)
+                }
+                }
                 @*@{
                         ViewBag.query = item.query;
                     }
@@ -145,16 +155,22 @@
             </td>
             <td>
                 @{
-                    <div>
-                        @if (ViewBag.Role != "0")
-                        {
+                                <div>
+                                    @if (ViewBag.Role != "0")
+                                    {
 
-                        @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin", query = item.query }, new { @class = "btn btn-primary" })
+                                        @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin", query = item.query }, new { @class = "btn btn-primary" })
 
-                        }
-                        @Html.ActionLink("Edit", "EditRequest", new { id = item.REQUEST_ID }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" }, new { @class = "btn btn-primary" })
-                    </div>
+                                    }
+                                    @if (ViewBag.Role != "2")
+                                    {
+
+                                        @Html.ActionLink("Edit", "EditRequest", new { id = item.REQUEST_ID }, new { @class = "btn btn-primary" })
+
+                                    }
+
+                                    @Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" }, new { @class = "btn btn-primary" })
+                                </div>
                 }
             </td>
         </tr>

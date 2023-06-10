@@ -197,12 +197,13 @@ namespace PBL3_2.Controllers
         public ActionResult Create(Lop lop, string loai)
         {
 
-            if (ModelState.IsValid && lop.LOP_END <= lop.LOP_START)
+            ViewBag.loai = new SelectList(db.LoaiGois.Where(p => p.GOI_PT == true).ToList(), "GOI_ID", "GOI_TYPE");
+            if (ModelState.IsValid && (lop.LOP_END <= lop.LOP_START || lop.LOP_START < DateTime.Now))
             {
                 ModelState.AddModelError("", "Invalid Time");
-                ViewBag.loai = new SelectList(db.LoaiGois.Where(p => p.GOI_PT == true).ToList(), "GOI_ID", "GOI_TYPE");
                 return View(lop);
             }
+            
 
             if (ModelState.IsValid)
             {

@@ -51,11 +51,31 @@
                 @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
+                @{
+                    if (item.Staff == null)
+                    {
+                        <p>No PT</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
+
+                    }
+                }
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
+                @{
+                    if (item.Staff == null)
+                    {
+                        <p>All time</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
+
+                    }
+                }
             </td>
             <td>
                 @{

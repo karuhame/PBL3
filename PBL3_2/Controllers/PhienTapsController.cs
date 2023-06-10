@@ -146,6 +146,10 @@ namespace PBL3_2.Controllers
             }
 
             Lop temp = db.Lops.Find(id);
+            if(temp.LoaiGoi.GOI_PT == false)
+            {
+
+            }
             ViewData["lop"] = temp;
             List<PhienTap> phienTaps = temp.PhienTaps.ToList();
 

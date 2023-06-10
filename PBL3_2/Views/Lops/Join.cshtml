@@ -9,7 +9,7 @@
     <h2 style="color: green;">@ViewBag.Title</h2>
 </div>
 
-<table class="table table-bordered">
+<table class="table">
     <tr>
         <th>
             Type
@@ -18,7 +18,7 @@
             Fee (1 Session)
         </th>
         <th>
-            @* Hiển thị tên của giáo viên *@
+            @* Hiển thị tên của giáo viên *@    
             PT Name
 
         </th>
@@ -43,13 +43,31 @@
             @Html.DisplayFor(model => item.LoaiGoi.GOI_FEE)
         </td>
         <td>
-            @* Hiển thị tên của giáo viên *@
-            @Html.DisplayFor(model => item.Accounts.FirstOrDefault().AccountInfo.USER_NAME)
+            @{
+                if (item.Staff == null)
+                {
+                    <p>No PT</p>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
 
+                }
+            }
         </td>
+
         <td>
-            @* Hiển thị ra số lượng buổi tập *@
-            @Html.DisplayFor(model => item.LOP_NUMBERSESSION)
+            @{
+                if (item.Staff == null)
+                {
+                    <p>All time</p>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
+
+                }
+            }
         </td>
         <td>
             @* Hiển thị ra thời gian buổi tập  *@
@@ -107,9 +125,9 @@
 }
 
 </table>
-
-<h2>Create new class</h2>
-
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">Create New Class</h2>
+</div>
 @* Tạo một lớp  *@
 
 @*Chọn loại lớp

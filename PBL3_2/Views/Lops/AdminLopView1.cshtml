@@ -38,21 +38,17 @@
                 @Html.DisplayFor(modelItem => item.Lop.LoaiGoi.GOI_TYPE)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Lop.Staff.ACCOUNT_NAME)
-                @*@{
-            ViewBag.query = item.query;
-        }
-        @{
-            if (item.query == 0)
-            {
-                <p>Joining Class</p>
-            }
-            if (item.query == 1)
-            {
-                <p>Editing Class</p>
-            }
-        }*@
-                @*@Html.DisplayFor(modelItem => item.query)*@
+                @{
+                    if (item.Lop.Staff == null)
+                    {
+                        <p>No PT</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Lop.Staff.AccountInfo.USER_NAME)
+
+                    }
+                }
             </td>
 
             <td>
@@ -61,7 +57,7 @@
             <td>
                 @{
                     <div>
-                    @if (ViewBag.Role != "0")
+                        @if (ViewBag.Role != "0")
                         {
 
                             @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin", query = item.query }, new { @class = "btn btn-primary" })

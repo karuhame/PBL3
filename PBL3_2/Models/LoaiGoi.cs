@@ -20,6 +20,10 @@ namespace PBL3_2.Models
         public int GOI_MAX_CUSTOMER { get; set; }
         public bool GOI_PT { get; set; }
 
+        public LoaiGoi() {
+
+            GOI_MAX_CUSTOMER = 1;
+        }
 
 
     }
