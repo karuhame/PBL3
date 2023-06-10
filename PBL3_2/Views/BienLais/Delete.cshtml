@@ -13,7 +13,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.BIENLAI_PAYMENT)
+            Account Payer
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.ACCOUNT_NAME)
+        </dd>
+
+        <dt>
+            Cost
         </dt>
 
         <dd>
@@ -21,19 +29,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BIENLAI_START)
+            Begin day
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BIENLAI_START)
+            @Model.BIENLAI_START.Value.Month/@Model.BIENLAI_START.Value.Day/@Model.BIENLAI_START.Value.Year
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BIENLAI_END)
+            End day
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BIENLAI_END)
+            @Model.BIENLAI_END.Value.Month/@Model.BIENLAI_END.Value.Day/@Model.BIENLAI_END.Value.Year
         </dd>
 
     </dl>

@@ -74,16 +74,27 @@
                 @Html.DisplayFor(modelItem => item.BIENLAI_PAYMENT)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BIENLAI_START)
+                @item.BIENLAI_START.Value.Month/@item.BIENLAI_START.Value.Day/@item.BIENLAI_START.Value.Year
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BIENLAI_END)
+                @item.BIENLAI_END.Value.Month/@item.BIENLAI_END.Value.Day/@item.BIENLAI_END.Value.Year
             </td>
-            <td>
-                @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
-            </td>
+            @{ 
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                    var currentUser = userManager.FindById(User.Identity.GetUserId());
+                    var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
+                    if (currentRole != "Khach Hang")
+                    {
+                        <td>
+                            @*                @Html.ActionLink("Edit", "Edit", new { id = item.BIENLAI_ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.BIENLAI_ID }) |*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.BIENLAI_ID })
+                        </td>
+                        }
+                    }
+                }
         </tr>
 
         cost += (int)item.BIENLAI_PAYMENT;
