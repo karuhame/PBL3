@@ -1,22 +1,28 @@
-﻿@model PBL3_2.Models.AccountInfo
+@model PBL3_2.Models.AccountInfo
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2 style="text-align: center;">
+    Create Account
+</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>AccountInfo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*@Html.HiddenFor(model => model.ACCOUNT_NAME)*@
+    <form action="~/AccountInfoes/Create" method="post">
+        @Html.AntiForgeryToken()
+
         <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("ACCOUNT_NAME", "Account name", new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.USER_NAME, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ACCOUNT_NAME, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_NAME, "", new { @class = "text-danger" })
@@ -24,7 +30,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.USER_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("USER_NAME", "Full name", new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.USER_NAME, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.USER_NAME, "", new { @class = "text-danger" })
@@ -32,49 +39,38 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_CCCD, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("ACCOUNT_CCCD", "Identification ID", new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.ACCOUNT_CCCD, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ACCOUNT_CCCD, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_CCCD, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_BIRTHDAY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ACCOUNT_BIRTHDAY, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ACCOUNT_BIRTHDAY, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_GENDER, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.ACCOUNT_GENDER)
+        @*<div class="form-group">
+                @Html.Label("ACCOUNT_GENDER", "Gender", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ACCOUNT_GENDER" id="female" value="false">
+                        <label class="form-check-label" for="female">
+                            Female
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ACCOUNT_GENDER" id="male" value="true">
+                        <label class="form-check-label" for="male">
+                            Male
+                        </label>
+                    </div>
                     @Html.ValidationMessageFor(model => model.ACCOUNT_GENDER, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
+            </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_HEIGHT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ACCOUNT_HEIGHT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ACCOUNT_HEIGHT, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.Label("ACCOUNT_PHONE", "Phone number", new { @class = "control-label col-md-2" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_WEIGHT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ACCOUNT_WEIGHT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ACCOUNT_WEIGHT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_PHONE, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.ACCOUNT_PHONE, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ACCOUNT_PHONE, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_PHONE, "", new { @class = "text-danger" })
@@ -82,21 +78,85 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ACCOUNT_EMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("ACCOUNT_EMAIL", "Email", new { @class = "control-label col-md-2" })
+
+            @*@Html.LabelFor(model => model.ACCOUNT_PHONE, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ACCOUNT_EMAIL, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_EMAIL, "", new { @class = "text-danger" })
             </div>
         </div>
 
+
+
+        @if (@ViewBag.role == null)
+        {
+            <div class="form-group">
+                @Html.Label("Role", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="Admin" value=2 />
+                        <label class="form-check-label" for="Admin">
+                            Admin
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="Staff" value=1 />
+                        <label class="form-check-label" for="Staff">
+                            Staff
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="Customer" value=0 checked />
+                        <label class="form-check-label" for="Customer">
+                            Customer
+                        </label>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.Label("Role", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ACCOUNT_GENDER, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="Admin" value=2 @(ViewBag.Role == "2" ? "checked" : "") />
+                        <label class="form-check-label" for="Admin">
+                            Admin
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="Staff" value=1 @(ViewBag.Role == "1" ? "checked" : "") />
+                        <label class="form-check-label" for="Staff">
+                            Staff
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="Customer" value=0 @(ViewBag.Role == "0" ? "checked" : "") />
+                        <label class="form-check-label" for="Customer">
+                            Customer
+                        </label>
+                    </div>
+                </div>
+            </div>
+        }
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-    </div>
-}
 
-<div>
+    </form>
+</div>
+
+
+
+
+
+<div style="margin-left: 200px;">
     @Html.ActionLink("Back to List", "Index")
 </div>
