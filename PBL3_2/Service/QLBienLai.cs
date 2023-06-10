@@ -31,11 +31,11 @@ namespace PBL3_2.Service
             {
                 return 4;
             }
-            else if (date== "Saturday")
+            else if (date == "Saturday")
             {
                 return 5;
             }
-            else if (date== "Sunday")
+            else if (date == "Sunday")
             {
                 return 6;
             }
@@ -49,19 +49,19 @@ namespace PBL3_2.Service
 
             Lop lop = db.Lops.Find(ID_LOP);
             DateTime iterator = lop.LOP_START.Value.Date;
-            if(iterator <= DateTime.Now.Date) iterator = DateTime.Now.Date;
-            while(iterator <= lop.LOP_END.Value.Date)
+            if (iterator <= DateTime.Now.Date) iterator = DateTime.Now.Date;
+            while (iterator <= lop.LOP_END.Value.Date)
             {
-                foreach(PhienTap i in lop.PhienTaps)
+                foreach (PhienTap i in lop.PhienTaps)
                 {
-                    if(i.PHIENTAP_DATE == Convert_Date_to_Int(iterator.DayOfWeek.ToString()) )
+                    if (i.PHIENTAP_DATE == Convert_Date_to_Int(iterator.DayOfWeek.ToString()))
                     {
                         money += lop.LoaiGoi.GOI_FEE;
                     }
                 }
                 iterator = iterator.AddDays(1);
             }
-            return money ;
+            return money;
         }
 
         public List<BienLai> ListBL()
@@ -77,16 +77,17 @@ namespace PBL3_2.Service
             return l;
         }
 
-        public List<BienLai> getBienLaiByUserNameAndTenNguoiTraTien(string userName,string TenNguoiTraTien) {
+        public List<BienLai> getBienLaiByUserNameAndTenNguoiTraTien(string userName, string TenNguoiTraTien)
+        {
             DBGym db = new DBGym();
             return db.BienLais.Where(p => p.Account.ACCOUNT_NAME.Contains(TenNguoiTraTien) &&
                         p.Account.ACCOUNT_NAME == userName
                         ).ToList();
         }
 
-        public List<BienLai> SearchBLByDate(List<BienLai> tmp,DateTime Batdau,DateTime Ketthuc)
+        public List<BienLai> SearchBLByDate(List<BienLai> tmp, DateTime Batdau, DateTime Ketthuc)
         {
-            List <BienLai> list = new List<BienLai>();
+            List<BienLai> list = new List<BienLai>();
             foreach (var i in tmp)
             {
                 if (Batdau <= i.BIENLAI_START.Value.Date && i.BIENLAI_END.Value.Date <= Ketthuc)
@@ -96,9 +97,33 @@ namespace PBL3_2.Service
             }
             return list;
         }
+        public List<BienLai> SearchBLByBegin(List<BienLai> tmp, DateTime Batdau)
+        {
+            List<BienLai> list = new List<BienLai>();
+            foreach (var i in tmp)
+            {
+                if (Batdau <= i.BIENLAI_START.Value.Date)
+                {
+                    list.Add(i);
+                }
+            }
+            return list;
+        }
+        public List<BienLai> SearchBLByKethuc(List<BienLai> tmp, DateTime Ketthuc)
+        {
+            List<BienLai> list = new List<BienLai>();
+            foreach (var i in tmp)
+            {
+                if (i.BIENLAI_END.Value.Date <= Ketthuc)
+                {
+                    list.Add(i);
+                }
+            }
+            return list;
+        }
 
 
-        public List<BienLai> SortBL(List<BienLai> l,int SortBy,int SortOrder)
+        public List<BienLai> SortBL(List<BienLai> l, int SortBy, int SortOrder)
         {
             if (SortBy == 1)
             {
@@ -126,7 +151,7 @@ namespace PBL3_2.Service
         public int TotalCost(List<BienLai> l)
         {
             int total = 0;
-            foreach(var i in l)
+            foreach (var i in l)
             {
                 total += i.BIENLAI_PAYMENT.Value;
             }

@@ -36,13 +36,32 @@
 
 
 @{
-    if (ViewBag.Batdau != null && ViewBag.Ketthuc != null)
+    if (ViewBag.Batdau != null || ViewBag.Ketthuc != null)
     {
         <hr />
-        <p>
-            Receipts from @ViewBag.Batdau
-            to @ViewBag.Ketthuc
-        </p>
+        if (ViewBag.Batdau != null && ViewBag.Ketthuc != null)
+        {
+            DateTime begin = (DateTime)ViewBag.Batdau;
+            DateTime end = (DateTime)ViewBag.Ketthuc;
+            <p>
+                Receipts from @begin.Month/@begin.Day/@begin.Year
+                to @end.Month/@end.Day/@end.Year
+            </p>
+        }
+        else if (ViewBag.Batdau != null)
+        {
+            DateTime begin = (DateTime)ViewBag.Batdau;
+            <p>
+                Receipts from @begin.Month/@begin.Day/@begin.Year
+            </p>
+        }
+        else
+        {
+            DateTime end = (DateTime)ViewBag.Ketthuc;
+            <p>
+                Receipts to @end.Month/@end.Day/@end.Year
+            </p>
+        }
     }
 
 }
@@ -121,4 +140,4 @@
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, Batdau = ViewBag.Batdau, Ketthuc=ViewBag.Ketthuc, TenNguoiTraTien = ViewBag.TenNguoiTraTien ,SortBy = ViewBag.SortBy ,SortOrder = ViewBag.SortOrder }))
+    new { page, Batdau = ViewBag.Batdau, Ketthuc = ViewBag.Ketthuc, TenNguoiTraTien = ViewBag.TenNguoiTraTien, SortBy = ViewBag.SortBy, SortOrder = ViewBag.SortOrder }))

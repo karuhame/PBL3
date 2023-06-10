@@ -20,7 +20,7 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
         // GET: BienLais
-        public ActionResult Index(DateTime ?Batdau,DateTime ?Ketthuc, string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0,int page =1 )
+        public ActionResult Index(DateTime? Batdau, DateTime? Ketthuc, string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0, int page = 1)
         {
             ViewBag.TenNguoiTraTien = TenNguoiTraTien;
             ViewBag.SortBy = SortBy;
@@ -35,7 +35,7 @@ namespace PBL3_2.Controllers
 
 
             if (User.Identity.IsAuthenticated) // da dang nhap chua 
-            { 
+            {
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                 var currentUser = userManager.FindById(User.Identity.GetUserId());
                 var currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
@@ -43,7 +43,7 @@ namespace PBL3_2.Controllers
                 var userName = User.Identity.GetUserName();
 
                 l = QLBL.ListBL();
-                if (currentRole == "Khach Hang" || currentRole == "Nhan Vien")
+                if (currentRole == "Khach Hang")
                 {
                     l = QLBL.getBienLaiByUserName(userName);
                 }
@@ -53,7 +53,7 @@ namespace PBL3_2.Controllers
                 //
                 if (TenNguoiTraTien != "")
                 {
-                    if (currentRole == "Khach Hang" || currentRole == "Nhan Vien")
+                    if (currentRole == "Khach Hang")
                     {
                         l = QLBL.getBienLaiByUserNameAndTenNguoiTraTien(userName, TenNguoiTraTien);
                     }
@@ -63,8 +63,17 @@ namespace PBL3_2.Controllers
                 //
                 // Loc theo Date 
                 //
-                if (Batdau != null && Ketthuc != null) {
-                    l = QLBL.SearchBLByDate(l, Batdau.Value.Date ,Ketthuc.Value.Date);
+                if (Batdau != null && Ketthuc != null)
+                {
+                    l = QLBL.SearchBLByDate(l, Batdau.Value.Date, Ketthuc.Value.Date);
+                }
+                else if (Batdau != null)
+                {
+                    l = QLBL.SearchBLByBegin(l, Batdau.Value.Date);
+                }
+                else if (Ketthuc != null)
+                {
+                    l = QLBL.SearchBLByKethuc(l, Ketthuc.Value.Date);
                 }
 
             }
