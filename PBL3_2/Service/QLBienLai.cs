@@ -50,6 +50,19 @@ namespace PBL3_2.Service
             Lop lop = db.Lops.Find(ID_LOP);
             DateTime iterator = lop.LOP_START.Value.Date;
             if (iterator <= DateTime.Now.Date) iterator = DateTime.Now.Date;
+
+            if (lop.Staff == null) // Tinh tien cho lop ko co PT
+            {
+                while(iterator<= lop.LOP_END.Value.Date)
+                {
+                    money += lop.LoaiGoi.GOI_FEE;
+                    iterator = iterator.AddDays(1);
+                }
+                return money;
+            }
+
+            // Tinh tien lop co PT 
+
             while (iterator <= lop.LOP_END.Value.Date)
             {
                 foreach (PhienTap i in lop.PhienTaps)

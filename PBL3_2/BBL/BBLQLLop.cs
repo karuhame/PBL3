@@ -16,7 +16,7 @@ namespace PBL3_2.BBL
             db = new DBGym();
         }
 
-        public void AddLop(Lop lop, int AccountID,int GoiID, int StaffID)
+        public void AddLop(Lop lop, int AccountID, int GoiID, int StaffID)
         {
             db.Lops.Add(lop);
             lop.LoaiGoi = db.LoaiGois.Find(GoiID);
@@ -34,6 +34,14 @@ namespace PBL3_2.BBL
         }
 
         //Tìm kiếm PT trống trong mọi phiên tập 
+
+        public static bool CompareTime(DateTime t1, DateTime t2)
+        {
+            long res1 = t1.Hour * 3600 + t1.Minute * 60 + t1.Second;
+            long res2 = t2.Hour * 3600 + t2.Minute * 60 + t2.Second;
+            if (t1 > t2) return true;
+            return false;
+        }
         public List<Account> FindPT(int ID_LOP, List<PhienTap> phienTapList)
         {
 
@@ -80,35 +88,44 @@ namespace PBL3_2.BBL
 
             Lop temp = db.Lops.Find(ID_LOP);
             var abc = db.Accounts;
-            foreach(Account i in abc)
+            foreach (Account i in abc)
             {
 
             }
             //Chạy hết tất cả các lớp
-            foreach(Account NV in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
+            foreach (Account NV in db.Accounts.Where(p => p.ACCOUNT_ROLE == "1"))
             {
                 bool check = true;
-                foreach(Lop lop in db.Lops.Where(p => p.Staff.ACCOUNT_ID == NV.ACCOUNT_ID))
+                foreach (Lop lop in db.Lops.Where(p => p.Staff.ACCOUNT_ID == NV.ACCOUNT_ID))
                 {
 
                     //Lớp không trùng lịch thì break
-                    if(!((temp.LOP_START > lop.LOP_START && temp.LOP_START < lop.LOP_END && temp.LOP_END < lop.LOP_END)
-                                || (temp.LOP_START < lop.LOP_START && temp.LOP_END < lop.LOP_END && temp.LOP_END >lop.LOP_START)
-                                || (temp.LOP_START > lop.LOP_START && temp.LOP_END < lop.LOP_END)
-                                || (temp.LOP_START < lop.LOP_START && temp.LOP_START > lop.LOP_END)))
+                    //if(!((temp.LOP_START > lop.LOP_START && temp.LOP_START < lop.LOP_END && temp.LOP_END < lop.LOP_END)
+                    //            || (temp.LOP_START < lop.LOP_START && temp.LOP_END < lop.LOP_END && temp.LOP_END >lop.LOP_START)
+                    //            || (temp.LOP_START > lop.LOP_START && temp.LOP_END < lop.LOP_END)
+                    //            || (temp.LOP_START < lop.LOP_START && temp.LOP_START > lop.LOP_END)))
+                    //{
+                    //    continue;
+                    //}  
+                    if (temp.LOP_END < lop.LOP_START || temp.LOP_START > lop.LOP_END)
                     {
                         continue;
-                    }  
-                    
-                    foreach(PhienTap phien in db.PhienTaps.Where(p => p.LOP_ID == lop.LOP_ID)){
-                        foreach(PhienTap item in phienTapList)
+                    }
+
+                    foreach (PhienTap phien in db.PhienTaps.Where(p => p.LOP_ID == lop.LOP_ID))
+                    {
+                        foreach (PhienTap item in phienTapList)
                         {
                             //Nếu trùng lịch của phiên tập thì chuyển trạng thái thành false
-                            if(phien.PHIENTAP_DATE == item.PHIENTAP_DATE 
-                                && ((phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_startt < item.PHIENTAP_endd && phien.PHIENTAP_endd > item.PHIENTAP_endd)
-                                || (phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd && phien.PHIENTAP_endd > item.PHIENTAP_startt)
-                                || (phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd)
-                                || (phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd > item.PHIENTAP_endd)))
+                            //if(phien.PHIENTAP_DATE == item.PHIENTAP_DATE 
+                            //    && ((phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_startt < item.PHIENTAP_endd && phien.PHIENTAP_endd > item.PHIENTAP_endd)
+                            //    || (phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd && phien.PHIENTAP_endd > item.PHIENTAP_startt)
+                            //    || (phien.PHIENTAP_startt > item.PHIENTAP_startt && phien.PHIENTAP_endd < item.PHIENTAP_endd)
+                            //    || (phien.PHIENTAP_startt < item.PHIENTAP_startt && phien.PHIENTAP_endd > item.PHIENTAP_endd)))
+                            //{
+                            //    check = false;
+                            //}
+                            if (phien.PHIENTAP_DATE == item.PHIENTAP_DATE && !(CompareTime(phien.PHIENTAP_endd, item.PHIENTAP_startt) || CompareTime(phien.PHIENTAP_startt, item.PHIENTAP_endd)))
                             {
                                 check = false;
                             }
@@ -118,7 +135,7 @@ namespace PBL3_2.BBL
 
                 }
                 if (check) list.Add(NV);
-                
+
             }
 
             return list;

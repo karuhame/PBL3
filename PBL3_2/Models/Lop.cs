@@ -18,6 +18,7 @@ namespace PBL3_2.Models
 
         public DateTime? LOP_END { get; set; }
 
+        public int LOP_MAX_CUSTOMER { get; set; }
         public int? LOP_NUMBERSESSION { get; set; }
         public int GOI_ID { get; set; }
 
@@ -58,7 +59,7 @@ namespace PBL3_2.Models
             }
             else if (sub == "Delete")
             {
-                db.Lops.Remove(db.Lops.Find(this.LOP_ID));
+                Lop.DeleteLop(this.LOP_ID);
             }
             db.SaveChanges();
         }
@@ -99,9 +100,9 @@ namespace PBL3_2.Models
             DBGym db = new DBGym();
             Account x = db.Accounts.Find(id);
             List<Lop> list = new List<Lop>();
-            foreach(Lop item in db.Lops.Where(p=>p.LOP_STATUS=="Accepted").ToList())
+            foreach (Lop item in db.Lops.Where(p => p.LOP_STATUS == "Accepted").ToList())
             {
-                if(item.Staff !=null && item.Staff.ACCOUNT_ID == id)
+                if (item.Staff != null && item.Staff.ACCOUNT_ID == id)
                 {
                     list.Add(item);
                 }
@@ -136,13 +137,13 @@ namespace PBL3_2.Models
                 }
                 if (check) list.Add(item);
             }
-            return list.ToList();
+            return list.Where(p => p.LOP_STATUS == "Accepted").ToList();
         }
 
         public static void ConfirmLopAdmin(int request_id, string sub, int query)
         {
             DBGym db = new DBGym();
-            Request rq = db.Requests.Find(request_id); 
+            Request rq = db.Requests.Find(request_id);
             if (sub == "AcceptJoin")
             {
                 if (query == 0)
@@ -176,9 +177,9 @@ namespace PBL3_2.Models
         public static void CheckValidClass()
         {
             DBGym db = new DBGym();
-            foreach(Lop lop in db.Lops)
+            foreach (Lop lop in db.Lops)
             {
-                if(lop.LOP_END < DateTime.Now)
+                if (lop.LOP_END < DateTime.Now)
                 {
                     Lop.DeleteLop(lop.LOP_ID);
                 }
@@ -197,9 +198,9 @@ namespace PBL3_2.Models
             //    }
             //}
             //db.PhienTaps.RemoveRange(db.PhienTaps.Where(p => p.LOP_ID == ID_LOP));
-            foreach(PhienTap pt in db.PhienTaps.Where(p => p.LOP_ID == ID_LOP))
+            foreach (PhienTap pt in db.PhienTaps.Where(p => p.LOP_ID == ID_LOP))
             {
-               if(db.Requests.Find(pt.REQUEST_ID) != null)
+                if (db.Requests.Find(pt.REQUEST_ID) != null)
                 {
                     db.Requests.Remove(db.Requests.Find(pt.REQUEST_ID));
                 }

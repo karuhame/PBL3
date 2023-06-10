@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<PBL3_2.Models.Lop>
 
 @{
-    ViewBag.Title = "AdminLopView";
+    ViewBag.Title = "Waiting Classes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Waiting classes</h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 <table class="table table ">
     <tr>
@@ -61,6 +62,11 @@
                     string x = "";
                     foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
                     {
+                        x += i.PHIENTAP_startt.Hour.ToString();
+                        x += " : ";
+                        x += i.PHIENTAP_startt.Minute.ToString();
+                        x += " -";
+
                         switch (i.PHIENTAP_DATE)
                         {
                             case 0:
@@ -87,9 +93,12 @@
                             default:
                                 break;
                         }
+
+                        x += " | ";
                     }
                 }
-                @x
+                @x.Substring(0, (x.Length - 3) > 0 ? (x.Length - 3) : 0)
+
             </td>
             <td>
                 @string.Format("{0:dd-MM-yyyy}", item.LOP_START)

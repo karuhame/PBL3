@@ -149,9 +149,14 @@ namespace PBL3_2.Controllers
 
         public ActionResult ChooseJoin(string sub)
         {
-            if (sub == "create")
+            if (sub == "Create")
             {
                 return RedirectToAction("Create");
+            }
+            else if (sub == "CreateWithoutPT")
+            {
+                return RedirectToAction("CreateLopWithoutPT");
+
             }
             else
             {
@@ -174,10 +179,13 @@ namespace PBL3_2.Controllers
 
 
         // GET: Lops/Create
-        public ActionResult Create()
+        public ActionResult Create(bool check = true)
         {
-
-            ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
+            if (!check)
+            {
+                ModelState.AddModelError("", "No available PT");
+            }
+            ViewBag.loai = new SelectList(db.LoaiGois.Where(p => p.GOI_PT == true).ToList(), "GOI_ID", "GOI_TYPE");
             return View();
         }
 
@@ -189,12 +197,13 @@ namespace PBL3_2.Controllers
         public ActionResult Create(Lop lop, string loai)
         {
 
-            if(ModelState.IsValid && lop.LOP_END < lop.LOP_START)
+            if (ModelState.IsValid && lop.LOP_END <= lop.LOP_START)
             {
                 ModelState.AddModelError("", "Invalid Time");
-                ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
+                ViewBag.loai = new SelectList(db.LoaiGois.Where(p => p.GOI_PT == true).ToList(), "GOI_ID", "GOI_TYPE");
                 return View(lop);
             }
+
             if (ModelState.IsValid)
             {
                 string name = User.Identity.GetUserName();
@@ -210,8 +219,6 @@ namespace PBL3_2.Controllers
                 if (acc.ACCOUNT_ROLE == "0")
                 {
                     lop.Accounts.Add(acc);
-
-
                     //Them vao danh sach Request mỗi khi tạo lớp
                     //Request rq = new Request();
                     //rq.ACCOUNT_ID = acc.ACCOUNT_ID;
@@ -224,6 +231,12 @@ namespace PBL3_2.Controllers
                     lop.Staff = acc;
                 }
 
+                else if (acc.ACCOUNT_ROLE == "2")
+                {
+                    lop.LOP_STATUS = "Accepted";
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
                 db.SaveChanges();
                 return RedirectToAction("Create", "PhienTaps", new { id = lop.LOP_ID });
@@ -247,7 +260,7 @@ namespace PBL3_2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
+            ViewBag.loai = new SelectList(db.LoaiGois.Where(p => p.GOI_PT == true).ToList(), "GOI_ID", "GOI_TYPE");
 
             return RedirectToAction("Edit", "PhienTaps", new { id = lop.LOP_ID });
 
@@ -266,11 +279,6 @@ namespace PBL3_2.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-
-                if (lop.LOP_NUMBERSESSION != db.Lops.Find(lop.LOP_ID).LOP_NUMBERSESSION)
-                {
-
-                }
                 db.Entry(lop).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -286,23 +294,25 @@ namespace PBL3_2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Lop lop = db.Lops.Find(id);
+
             if (lop == null)
             {
                 return HttpNotFound();
             }
-            return View(lop);
-        }
-
-        // POST: Lops/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Lop lop = db.Lops.Find(id);
-            db.Lops.Remove(lop);
-            db.SaveChanges();
+            Lop.DeleteLop(lop.LOP_ID);
             return RedirectToAction("Index");
         }
+
+        //// POST: Lops/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Lop lop = db.Lops.Find(id);
+        //    db.Lops.Remove(lop);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -313,21 +323,33 @@ namespace PBL3_2.Controllers
             base.Dispose(disposing);
         }
 
-
         public ActionResult AddPT(int ID_LOP)
         {
+            var userName = User.Identity.GetUserName();
+            Account user = db.Accounts.Where(p => p.ACCOUNT_NAME == userName).FirstOrDefault();
+
+            //Nếu là admin thì add luôn k tạo request
+            if (user.ACCOUNT_ROLE == "2")
+            {
+                Lop llop = db.Lops.Find(ID_LOP);
+                llop.LOP_STATUS = "Accepted";
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
             var lop = db.Lops.Find(ID_LOP);
             List<Account> accounts = new List<Account>();
 
             BBLQLLop bbl = new BBLQLLop();
             accounts = bbl.FindPT(ID_LOP, lop.PhienTaps.ToList());
 
-            if(accounts.Count < 1)
+            if (accounts.Count < 1)
             {
-                ModelState.AddModelError("", "No available PT");
-                return Create();
+                Lop.DeleteLop(ID_LOP);
+                return RedirectToAction("Create", new { check = false });
 
             }
+
             ViewBag.ID_LOP = ID_LOP;
             return View(accounts);
 
@@ -543,6 +565,53 @@ namespace PBL3_2.Controllers
         {
             Lop.RemoveClientFromLop(acc_name, IdLop);
             return RedirectToAction("ListClient", new { ID_LOP = IdLop });
+        }
+
+
+        //-> Chon goi khong PT -> Tao Bien Lai
+        public ActionResult CreateLopWithoutPT()
+        {
+            ViewBag.loai = new SelectList(db.LoaiGois.Where(p => p.GOI_PT == false).ToList(), "GOI_ID", "GOI_TYPE");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateLopWithoutPT(Lop lop, string loai)
+        {
+            string name = User.Identity.GetUserName();
+            Account acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+            //LopPhienTapsView view = new LopPhienTapsView(lop, null);
+
+            lop.LOP_NUMBERSESSION = 7;
+            db.Lops.Add(lop);
+            db.SaveChanges();
+            //Lỗi ở đây
+
+            //Nếu là khách thì thêm lớp vào danh sách lớp, admin với nhân viên thì không
+            if (acc.ACCOUNT_ROLE == "0")
+            {
+                lop.Accounts.Add(acc);
+                //Them vao danh sach Request mỗi khi tạo lớp
+                //Request rq = new Request();
+                //rq.ACCOUNT_ID = acc.ACCOUNT_ID;
+                //rq.LOP_ID = lop.LOP_ID;
+                //db.Requests.Add(rq);
+
+            }
+            else if (acc.ACCOUNT_ROLE == "1")
+            {
+                lop.Staff = acc;
+            }
+            else if (acc.ACCOUNT_ROLE == "2")
+            {
+                lop.LOP_STATUS = "Accepted";
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

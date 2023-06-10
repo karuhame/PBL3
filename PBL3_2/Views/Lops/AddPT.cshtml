@@ -1,11 +1,13 @@
 ﻿@model ICollection<PBL3_2.Models.Account>
 
 @{
-    ViewBag.Title = "AddPT";
+    ViewBag.Title = "Choose PT";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Chọn huấn luyện viên </h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 <table class="table">
     <tr>
@@ -27,7 +29,7 @@
                 @Html.DisplayFor(modelItem => item.AccountInfo.USER_NAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AccountInfo.ACCOUNT_GENDER)
+                @item.AccountInfo.ACCOUNT_GENDER
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AccountInfo.ACCOUNT_PHONE)

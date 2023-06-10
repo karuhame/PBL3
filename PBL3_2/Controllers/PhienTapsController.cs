@@ -47,6 +47,10 @@ namespace PBL3_2.Controllers
             Lop temp = db.Lops.Find(ID);
             ViewData["lop"] = temp;
 
+            string name = User.Identity.GetUserName();
+            var acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
+
+            ViewBag.Role = acc.ACCOUNT_ROLE;
             ViewBag.TKB = new SelectList(new SelectListItem[]
            {
                new SelectListItem(){ Text = "Thứ hai", Value = "0"},
@@ -72,8 +76,31 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(List<PhienTap> phienTaps, string sub, int ID)
         {
+            Lop temp = db.Lops.Find(ID);
+            ViewData["lop"] = temp;
+
+            ViewBag.TKB = new SelectList(new SelectListItem[]
+            {
+            new SelectListItem(){ Text = "Thứ hai", Value = "0"},
+            new SelectListItem(){ Text = "Thứ ba", Value = "1"},
+            new SelectListItem(){ Text = "Thứ tư", Value = "2"},
+            new SelectListItem(){ Text = "Thứ năm", Value = "3"},
+            new SelectListItem(){ Text = "Thứ sáu", Value = "4"},
+            new SelectListItem(){ Text = "Thứ bảy", Value = "5"},
+            new SelectListItem(){ Text = "Chủ nhật" +
+            "", Value = "6"}
+            }, "Value", "Text");
             if (sub == "Create")
             {
+                foreach (PhienTap i in phienTaps)
+                {
+                    if (ModelState.IsValid && i.PHIENTAP_endd < i.PHIENTAP_startt)
+                    {
+                        ModelState.AddModelError("", "Invalid Time");
+
+                        return View(phienTaps);
+                    }
+                }
                 if (ModelState.IsValid)
                 {
                     //db.PhienTaps.Add(phienTap);
@@ -85,7 +112,6 @@ namespace PBL3_2.Controllers
                         phienTaps[i].LOP_ID = ID;
                     }
                     db.SaveChanges();
-                    var temp = db.Accounts.ToList();
 
                     string name = User.Identity.GetUserName();
                     var acc = db.Accounts.Where(p => p.ACCOUNT_NAME == name).FirstOrDefault();
@@ -148,9 +174,9 @@ namespace PBL3_2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(List<PhienTap> phienTaps, int id)
         {
-            foreach(PhienTap i in phienTaps)
+            foreach (PhienTap i in phienTaps)
             {
-                if (ModelState.IsValid && i.PHIENTAP_endd< i.PHIENTAP_startt)
+                if (ModelState.IsValid && BBLQLLop.CompareTime(i.PHIENTAP_startt, i.PHIENTAP_endd))
                 {
                     ModelState.AddModelError("", "Invalid Time");
                     Lop temp = db.Lops.Find(id);
@@ -171,7 +197,7 @@ namespace PBL3_2.Controllers
                     return View(phienTaps);
                 }
 
-            
+
             }
             if (ModelState.IsValid)
             {

@@ -1,22 +1,28 @@
 ﻿@model IEnumerable<PBL3_2.Models.LoaiGoi>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List Membership";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.GOI_TYPE)
+            Membership type
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GOI_FEE)
+            Fee (Per session)
+        </th>
+        <th>
+            Maximum number of customers
+        </th>
+        <th>
+            PT Required
         </th>
         <th></th>
     </tr>
@@ -29,10 +35,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.GOI_FEE)
         </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.GOI_MAX_CUSTOMER)
+        </th>
+        <th>
+            @Html.DisplayFor(modelItem => item.GOI_PT)
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.GOI_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.GOI_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.GOI_ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.GOI_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.GOI_ID })
         </td>
     </tr>
 }

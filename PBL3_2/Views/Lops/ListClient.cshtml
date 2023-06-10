@@ -3,11 +3,12 @@
 @using PagedList.Mvc
 
 @{
-    ViewBag.Title = "ListClient";
+    ViewBag.Title = "List Client";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>List Client</h2>
-
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 <div class="container">
     @using (Html.BeginForm("Index", "AccountInfoes", FormMethod.Get))

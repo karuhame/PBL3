@@ -1,20 +1,19 @@
 ﻿@model List<PBL3_2.Models.PhienTap>
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit Sessions";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     for (int i = 0; i < (int)((PBL3_2.Models.Lop)ViewData["lop"]).LOP_NUMBERSESSION; i++)
     {
-        <div> @Model[0].PHIENTAP_ID</div>
-        <div> @Model[0].PHIENTAP_startt</div>
-        <div> @Model[0].PHIENTAP_endd</div>
-        <div> @Model[0].PHIENTAP_DATE</div>
+     
         <div class="form-horizontal">
             <h4>Session @(i+1)</h4>
             <hr />

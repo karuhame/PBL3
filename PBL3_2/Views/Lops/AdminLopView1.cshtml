@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<PBL3_2.Models.Request>
 
 @{
-    ViewBag.Title = "AdminLopView1";
+    ViewBag.Title = "Joining Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Joining Request</h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 <table class="table">
     <tr>
@@ -65,8 +67,6 @@
                             @Html.ActionLink("Confirm", "testConfirm", new { id = item.REQUEST_ID, sub = "AcceptJoin", query = item.query }, new { @class = "btn btn-primary" })
 
                         }
-                    
-                        @Html.ActionLink("Edit", "EditRequest", new {id = item.REQUEST_ID}, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Delete", "testConfirm", new { id = item.REQUEST_ID, sub = "DeleteJoin" }, new { @class = "btn btn-primary" })
                     </div>
                 }

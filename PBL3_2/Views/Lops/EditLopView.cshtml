@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<PBL3_2.Models.Request>
 
 @{
-    ViewBag.Title = "EditLopView";
+    ViewBag.Title = "Edit Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Editing Request</h2>
-
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 <table class="table">
     <tr>
         <th>
@@ -59,10 +60,11 @@
                 @{
                     string x = "";
                     PBL3_2.Models.DBGym db = new PBL3_2.Models.DBGym();
+
                     foreach (PBL3_2.Models.PhienTap i in db.PhienTaps.Where(p => p.LOP_ID == item.LOP_ID))
                     {
                         x += i.PHIENTAP_startt.Hour.ToString();
-                        x += ":";
+                        x += " : ";
                         x += i.PHIENTAP_startt.Minute.ToString();
                         x += " -";
 
@@ -93,18 +95,19 @@
                                 break;
                         }
 
-                        x += " ; ";
+                        x += " | ";
                     }
-                }
-                @x
+            }
+                @x.Substring(0, x.Length -3)
+
             </td>
             <td>
-                @{ 
+                @{
                     string y = "";
                     foreach (PBL3_2.Models.PhienTap i in db.PhienTaps.Where(p => p.REQUEST_ID == item.REQUEST_ID))
                     {
                         y += i.PHIENTAP_startt.Hour.ToString();
-                        y += ":";
+                        y += " : ";
                         y += i.PHIENTAP_startt.Minute.ToString();
                         y += " -";
 
@@ -135,10 +138,10 @@
                                 break;
                         }
 
-                        y += " ; ";
+                        y += " | ";
                     }
                 }
-                    @y
+                @y.Substring(0, (y.Length - 3) > 0 ? (y.Length - 3) : 0)
             </td>
             <td>
                 @{

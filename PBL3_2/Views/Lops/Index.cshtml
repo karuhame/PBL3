@@ -1,134 +1,143 @@
 @model IEnumerable<PBL3_2.Models.Lop>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Current Class";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Current class</h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
+    <table class="table ">
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Fee (1 Session)
+            </th>
+            <th>
+                @* Hiển thị tên của giáo viên *@
+                PT
 
-<table class="table ">
-    <tr>
-        <th>
-            Type
-        </th>
-        <th>
-            Fee (1 Session)
-        </th>
-        <th>
-            @* Hiển thị tên của giáo viên *@
-            PT
+            </th>
+            <th>
 
-        </th>
-        <th>
-            
-            Number of session
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Schedule
+                Number of session
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Schedule
 
-        </th>
-        <th>
-            Start
-        </th>
-        <th>
-            End
-        </th>
-        <th></th>
-    </tr>
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_TYPE)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
-        </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_TYPE)
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LOP_STATUS)
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
+                </td>
 
-        </td>
-        <td>
-            @{
-                string x = "";
-                foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
-                {
-                    x += i.PHIENTAP_startt.Hour.ToString();
-                    x += ":";
-                    x += i.PHIENTAP_startt.Minute.ToString();
-                    x += " -";
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOP_NUMBERSESSION)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOP_STATUS)
 
-                    switch (i.PHIENTAP_DATE)
-                    {
-                        case 0:
-                            x += " T2";
-                            break;
-                        case 1:
-                            x += " T3";
-                            break;
-                        case 2:
-                            x += " T4";
-                            break;
-                        case 3:
-                            x += " T5";
-                            break;
-                        case 4:
-                            x += " T6";
-                            break;
-                        case 5:
-                            x += " T7";
-                            break;
-                        case 6:
-                            x += " CN";
-                            break;
-                        default:
-                            break;
+                </td>
+                <td>
+                    @{
+                        string x = "";
+                        foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
+                        {
+                            x += i.PHIENTAP_startt.Hour.ToString();
+                            x += " : ";
+                            x += i.PHIENTAP_startt.Minute.ToString();
+                            x += " -";
+
+                            switch (i.PHIENTAP_DATE)
+                            {
+                                case 0:
+                                    x += " T2";
+                                    break;
+                                case 1:
+                                    x += " T3";
+                                    break;
+                                case 2:
+                                    x += " T4";
+                                    break;
+                                case 3:
+                                    x += " T5";
+                                    break;
+                                case 4:
+                                    x += " T6";
+                                    break;
+                                case 5:
+                                    x += " T7";
+                                    break;
+                                case 6:
+                                    x += " CN";
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            x += " | ";
+                        }
                     }
+                    @x.Substring(0, (x.Length - 3) > 0 ? (x.Length - 3) : 0)
+                </td>
+                <td>
+                    @*@string.Format("{ dd/MM/YYY }", item.LOP_START)*@
+                    @*@Html.DisplayFor(modelItem => item.LOP_START)*@
+                    @{
+                        string y = string.Format("{0:dd/MM/yyyy}", item.LOP_START);
+                    }
+                    @y
+                </td>
+                <td>
+                    @{
+                        string z = string.Format("{0:dd/MM/yyyy}", item.LOP_END);
+                    }
+                    @z
+                </td>
+                <td>
+                    @{
+                        if (ViewBag.userRole != "0")
+                        {
+                            @Html.ActionLink("List Clients", "ListClient", new { ID_LOP = item.LOP_ID }, new { @class = "btn btn-primary" })
+                            }
+                    }
+                </td>
+                <td>
+                    @{ if (ViewBag.userRole == "2")
+                            {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LOP_ID }, new { @class = "btn btn-primary" })
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.LOP_ID, sub = "AcceptJoin" }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
 
-                    x += "; ";
-                }
-            }
-            @x
-        </td>
-        <td>
-            @*@string.Format("{ dd/MM/YYY }", item.LOP_START)*@
-            @*@Html.DisplayFor(modelItem => item.LOP_START)*@
-            @{ 
-                string y = string.Format("{0:dd/MM/yyyy}", item.LOP_START);
-            }
-            @y
-        </td>
-        <td>
-            @{
-                string z = string.Format("{0:dd/MM/yyyy}", item.LOP_END);
-            }
-            @z
-        </td>
-        <td>
-            @{ 
-                if(ViewBag.userRole != "0")
-                {
-                    @Html.ActionLink("List Clients", "ListClient", new { ID_LOP = item.LOP_ID })
-                }
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit",  new { id = item.LOP_ID, sub = "AcceptJoin" }, new { @class = "btn btn-primary" })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>

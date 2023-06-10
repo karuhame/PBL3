@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<PBL3_2.Models.Lop>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Join Class";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Join class</h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 <table class="table table-bordered">
     <tr>
@@ -57,7 +59,7 @@
                 foreach (PBL3_2.Models.PhienTap i in item.PhienTaps)
                 {
                     x += i.PHIENTAP_startt.Hour.ToString();
-                    x += ":";
+                    x += " : ";
                     x += i.PHIENTAP_startt.Minute.ToString();
                     x += " -";
 
@@ -88,16 +90,10 @@
                             break;
                     }
 
-                    x += "; ";
+                    x += " | ";
                 }
             }
-            @x
-
-        </td>
-        <td>
-            <form action="@Url.Action("Details", new { id = item.LOP_ID })" method="get">
-                <button type="submit" name="sub" value="create" class="btn btn-default">Details</button>
-            </form>
+            @x.Substring(0, (x.Length - 3) > 0 ? (x.Length - 3) : 0)
 
         </td>
         <td>
@@ -120,6 +116,13 @@
 Chọn số buổi 
 Chọn buổi*@
 
-<form action="@Url.Action("Create")" method="get">
+@*<form action="@Url.Action("Create")" method="get">
     <button type="submit" class="btn btn-default">Create</button>
-</form> 
+    <button type="submit" class="btn btn-default">Create without PT</button>
+
+</form>*@
+
+<form action="@Url.Action("ChooseJoin")">
+    <button type="submit" name="sub" value="Create" class="btn btn-default">With PT</button>
+    <button type="submit" name="sub" value="CreateWithoutPT" class="btn btn-default">Without PT </button>
+</form>

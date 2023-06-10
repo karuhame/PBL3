@@ -573,7 +573,7 @@ namespace PBL3_2.Controllers
                         }
                     }
                 }
-                if (accountInfo.ACCOUNT_BIRTHDAY.Value.Date != null &&
+                if (accountInfo.ACCOUNT_BIRTHDAY != null &&
                     accountInfo.ACCOUNT_BIRTHDAY.Value.Date >= DateTime.Now)
                 {
                     ModelState.AddModelError("", "Birthday is invalid");

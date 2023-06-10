@@ -1,19 +1,20 @@
 ﻿@model PBL3_2.Models.LoaiGoi
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Membership";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<div style="margin-bottom: 50px; margin-top: 50px;">
+    <h2 style="color: green;">@ViewBag.Title</h2>
+</div>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>LoaiGoi</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.GOI_TYPE)
+            Membership Type
         </dt>
 
         <dd>
@@ -21,7 +22,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.GOI_FEE)
+            Membership Fee
         </dt>
 
         <dd>

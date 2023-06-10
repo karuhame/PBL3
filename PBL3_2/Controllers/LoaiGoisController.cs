@@ -46,8 +46,15 @@ namespace PBL3_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GOI_ID,GOI_TYPE,GOI_FEE")] LoaiGoi loaiGoi)
+        public ActionResult Create(LoaiGoi loaiGoi)
         {
+
+            if (ModelState.IsValid && loaiGoi.GOI_MAX_CUSTOMER < 1)
+            {
+                ModelState.AddModelError("", "Number of customer greater than 0");
+                ViewBag.loai = new SelectList(db.LoaiGois.ToList(), "GOI_ID", "GOI_TYPE");
+                return View(loaiGoi);
+            }
             if (ModelState.IsValid)
             {
                 db.LoaiGois.Add(loaiGoi);
