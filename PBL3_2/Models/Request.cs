@@ -91,7 +91,7 @@ namespace PBL3_2.Models
                 foreach (Request rq in db.Requests)
                 {
                     Lop temp = db.Lops.Find(rq.LOP_ID);
-                    if (temp.Staff.ACCOUNT_ID == acc_id)
+                    if (temp.Staff != null && temp.Staff.ACCOUNT_ID == acc_id)
                     {
                         requests.Add(rq);
                     }

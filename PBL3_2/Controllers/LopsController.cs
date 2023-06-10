@@ -229,6 +229,8 @@ namespace PBL3_2.Controllers
                 else if (acc.ACCOUNT_ROLE == "1")
                 {
                     lop.Staff = acc;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
                 else if (acc.ACCOUNT_ROLE == "2")
