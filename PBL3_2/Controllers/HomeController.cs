@@ -9,37 +9,31 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-
+using PagedList;
 namespace PBL3_2.Controllers
 {
     public class HomeController : Controller
     {
         private DBGym db = new DBGym();
-
-        public ActionResult Index()
+        public ActionResult Index(string searchType, string searchTitle, int? page)
         {
-            /*var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-            var user = userManager.FindByName("testadmin1");
-
-            if (user != null)
-            {
-                var isOldPasswordCorrect = userManager.CheckPassword(user, "oldpass");
-
-                if (isOldPasswordCorrect)
-                {
-                    userManager.RemovePassword(user.Id);
-                    userManager.AddPassword(user.Id, "newpass");
-                }
-
-
-            }*/
-
             // Kiểm tra lớp hết hạn
-
             Lop.CheckValidClass();
-            var posts = db.Posts.OrderByDescending(p => p.CreatedAt).ToList();
-            return View(posts);
+
+            var allPosts = db.Posts.OrderByDescending(p => p.CreatedAt).ToList();
+            if (!string.IsNullOrEmpty(searchType) && !string.IsNullOrEmpty(searchTitle))
+            {
+                bool isSearchTitle = searchType == "title";
+                bool isSearchContent = searchType == "content";
+                allPosts = allPosts.Where(post => (isSearchTitle && post.Title.Contains(searchTitle))
+                                              || (isSearchContent && post.Content.Contains(searchTitle))).ToList();
+            }
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            var pagedPosts = allPosts.ToPagedList(pageNumber, pageSize);
+            return View(pagedPosts);
         }
+
 
 
         public ActionResult About()

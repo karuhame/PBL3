@@ -1,7 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@model List<PBL3_2.Models.Post>
+
+
+@model PagedList.IPagedList<PBL3_2.Models.Post>
+@using PagedList
+@using PagedList.Mvc
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Microsoft.AspNet.Identity;
@@ -58,9 +62,7 @@
         var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         var currentUser = userManager.FindById(User.Identity.GetUserId());
         currentRole = userManager.GetRoles(currentUser.Id).FirstOrDefault();
-
     }
-
     if (currentRole == "Admin")
     {
         <a href="@Url.Action("Create", "Posts")" class="btn btn-primary">Create Post</a>
@@ -87,29 +89,24 @@
 
 @foreach (var post in Model)
 {
+    <div style="margin-bottom: 50px; margin-top: 50px;">
+        <h3 style="color: blue;">@post.Title</h3>
+        <p style="color: black;">@post.Content</p>
+        <p>
+            <small style="font-size: smaller; font-style: italic;"> Posted at</small>
+            <em style="font-size: smaller; font-style: italic;"> @post.CreatedAt </em>
+        </p>
+        @if (currentRole == "Admin")
+        {
+            @Html.ActionLink("Edit", "Edit", "Posts", new { id = post.ID }, null)
+            @Html.Raw(" | ")
+            @Html.ActionLink("Delete", "Delete", "Posts", new { id = post.ID }, null)
+        }
+    </div>
 
-
-
-
-    bool isSearchTitle = string.IsNullOrEmpty(Request.QueryString["searchType"]) || Request.QueryString["searchType"] == "title";
-    bool isSearchContent = Request.QueryString["searchType"] == "content";
-
-    if ((isSearchTitle && (string.IsNullOrEmpty(Request.QueryString["searchTitle"]) || post.Title.Contains(Request.QueryString["searchTitle"])))
-    || (isSearchContent && (string.IsNullOrEmpty(Request.QueryString["searchTitle"]) || post.Content.Contains(Request.QueryString["searchTitle"]))))
-    {
-        <div style="margin-bottom: 50px; margin-top: 50px;">
-            <h3 style="color: blue;">@post.Title</h3>
-            <p style="color: black;">@post.Content</p>
-            <p>
-                <small style="font-size: smaller; font-style: italic;"> Posted at</small>
-                <em style="font-size: smaller; font-style: italic;"> @post.CreatedAt </em>
-            </p>
-            @if (currentRole == "Admin")
-            {
-                @Html.ActionLink("Edit", "Edit", "Posts", new { id = post.ID }, null)
-                @Html.Raw(" | ")
-                @Html.ActionLink("Delete", "Delete", "Posts", new { id = post.ID }, null)
-            }
-        </div>
-    }
 }
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, searchType = Request.QueryString["searchType"], searchTitle = Request.QueryString["searchTitle"] }))
+
