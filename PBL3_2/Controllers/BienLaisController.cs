@@ -76,7 +76,7 @@ namespace PBL3_2.Controllers
             ViewBag.Cost = QLBL.TotalCost(l);
 
 
-            int pageSize = 3;
+            int pageSize = 5;
             return View(l.ToPagedList(page, pageSize));
         }
 
