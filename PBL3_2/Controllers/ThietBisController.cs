@@ -133,12 +133,22 @@ namespace PBL3_2.Controllers
             // Xu ly exception
             if (ModelState.IsValid && thietBi.THIETBI_STATUS > thietBi.THIETBI_NUM)
             {
-                ModelState.AddModelError("", "So luong thiet bi hong khong duoc vuot qua tong so luong thiet bi");
+                ModelState.AddModelError("", "Warning : Number of broken devices exceed Number of devices");
                 return View(thietBi);
             }
             if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_NUM == null)
             {
-                ModelState.AddModelError("", "So luong thiet bi chua xac dinh");
+                ModelState.AddModelError("", "Warning : Input number of devices");
+                return View(thietBi);
+            }
+            if (ModelState.IsValid && thietBi.THIETBI_NUM != null && thietBi.THIETBI_NUM < 0)
+            {
+                ModelState.AddModelError("", "Warning : Number of devices < 0 ");
+                return View(thietBi);
+            }
+            if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_STATUS < 0)
+            {
+                ModelState.AddModelError("", "Warning : Number of broken device < 0 ");
                 return View(thietBi);
             }
             // 
@@ -178,12 +188,22 @@ namespace PBL3_2.Controllers
             // Xu ly exception
             if (ModelState.IsValid && thietBi.THIETBI_STATUS > thietBi.THIETBI_NUM)
             {
-                ModelState.AddModelError("", "So luong thiet bi hong khong duoc vuot qua tong so luong thiet bi");
+                ModelState.AddModelError("", "Warning : Number of broken devices exceed Number of devices");
                 return View(thietBi);
             }
             if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_NUM == null)
             {
-                ModelState.AddModelError("", "So luong thiet bi chua xac dinh");
+                ModelState.AddModelError("", "Warning : Input number of devices");
+                return View(thietBi);
+            }
+            if (ModelState.IsValid && thietBi.THIETBI_NUM != null && thietBi.THIETBI_NUM < 0)
+            {
+                ModelState.AddModelError("", "Warning : Number of devices < 0 ");
+                return View(thietBi);
+            }
+            if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_STATUS < 0)
+            {
+                ModelState.AddModelError("", "Warning : Number of broken device < 0 ");
                 return View(thietBi);
             }
             //
