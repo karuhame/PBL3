@@ -20,7 +20,7 @@ namespace PBL3_2.Controllers
     {
         private DBGym db = new DBGym();
         // GET: BienLais
-        public ActionResult Index(DateTime ?Batdau,DateTime ?Ketthuc, string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0)
+        public ActionResult Index(DateTime ?Batdau,DateTime ?Ketthuc, string TenNguoiTraTien = "", int SortBy = 0, int SortOrder = 0,int page =1 )
         {
             ViewBag.TenNguoiTraTien = TenNguoiTraTien;
             ViewBag.SortBy = SortBy;
@@ -73,8 +73,11 @@ namespace PBL3_2.Controllers
             // Sort 
             l = QLBL.SortBL(l, SortBy, SortOrder);
 
+            ViewBag.Cost = QLBL.TotalCost(l);
 
-            return View(l);
+
+            int pageSize = 3;
+            return View(l.ToPagedList(page, pageSize));
         }
 
         // GET: BienLais/Details/5

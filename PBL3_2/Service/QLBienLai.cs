@@ -123,5 +123,15 @@ namespace PBL3_2.Service
             return l;
         }
 
+        public int TotalCost(List<BienLai> l)
+        {
+            int total = 0;
+            foreach(var i in l)
+            {
+                total += i.BIENLAI_PAYMENT.Value;
+            }
+            return total;
+        }
+
     }
 }

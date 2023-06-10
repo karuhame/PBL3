@@ -148,7 +148,7 @@ namespace PBL3_2.Controllers
             }
             if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_STATUS < 0)
             {
-                ModelState.AddModelError("", "Warning : Number of broken device < 0 ");
+                ModelState.AddModelError("", "Warning : Number of broken devices < 0 ");
                 return View(thietBi);
             }
             // 
@@ -203,7 +203,7 @@ namespace PBL3_2.Controllers
             }
             if (ModelState.IsValid && thietBi.THIETBI_STATUS != null && thietBi.THIETBI_STATUS < 0)
             {
-                ModelState.AddModelError("", "Warning : Number of broken device < 0 ");
+                ModelState.AddModelError("", "Warning : Number of broken devices < 0 ");
                 return View(thietBi);
             }
             //
