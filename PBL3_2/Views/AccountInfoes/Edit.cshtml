@@ -45,7 +45,7 @@
             @Html.Label("ACCOUNT_BIRTHDAY", "BIRTHDAY", new { @class = "control-label col-md-2" })
             @*@Html.LabelFor(model => model.ACCOUNT_BIRTHDAY, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ACCOUNT_BIRTHDAY, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ACCOUNT_BIRTHDAY, new { htmlAttributes = new { @class = "form-control", @type="date" } })
                 @Html.ValidationMessageFor(model => model.ACCOUNT_BIRTHDAY, "", new { @class = "text-danger" })
             </div>
         </div>
