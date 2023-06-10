@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Ajax.Utilities;
 using System.Web.UI.WebControls;
+using PBL3_2.Attribute;
+using System.Web.Security;
 
 namespace PBL3_2.Controllers
 {
@@ -106,14 +108,9 @@ namespace PBL3_2.Controllers
                 {
                     obj = obj.Where(p => p.ACCOUNT_NAME.Contains(strSearchThietBi)
                                          || p.AccountInfo.USER_NAME.Contains(strSearchThietBi)
-                                         || p.AccountInfo.ACCOUNT_BIRTHDAY.ToString().Contains(strSearchThietBi)
-                                         || p.AccountInfo.ACCOUNT_GENDER.ToString() == strSearchThietBi
-                                         || p.AccountInfo.ACCOUNT_HEIGHT.ToString() == strSearchThietBi
-                                         || p.AccountInfo.ACCOUNT_WEIGHT.ToString() == strSearchThietBi
                                          || p.AccountInfo.ACCOUNT_PHONE.ToString().Contains(strSearchThietBi)
                                          || p.AccountInfo.ACCOUNT_EMAIL.ToString().Contains(strSearchThietBi)
-                                         || p.ACCOUNT_ROLE.ToString().Contains(strSearchThietBi)
-                                         || p.AccountInfo.ACCOUNT_CCCD.ToString().Contains(strSearchThietBi)).ToList();
+                                         || p.ACCOUNT_ROLE.ToString().Contains(strSearchThietBi)).ToList();
                 }
 
                 //Sắp xếp
@@ -294,7 +291,7 @@ namespace PBL3_2.Controllers
 
                 int pageSize = 6;
                 int pageNumber = (page ?? 1);
-                return View(obj.ToPagedList(pageNumber, pageSize));
+                return  View(obj.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -312,91 +309,131 @@ namespace PBL3_2.Controllers
             }
             return View(accountInfo);
         }
+       
+        
 
-        public ActionResult Them()
+        public async Task<bool> createAccountAsync(Account da, AccountInfo dc, string role) 
         {
-            return View();
-        }
-
-        [HttpPost]
-
-        public async Task<ActionResult> Them2(string account_name, string account_password, string Retype_Account_password,
-         DateTime account_birthday, string User_name, string Account_CCCD, Boolean GioiTinh, double Account_Height,
-         double Account_Weight, string Account_phone, string Account_email)
-        {
-            Account da = new Account()
-            {
-                ACCOUNT_NAME = account_name,
-                ACCOUNT_PASSWORD = account_password,
-                ACCOUNT_ROLE = "0"
-            };
-
-            AccountInfo dc = new AccountInfo()
-            {
-                ACCOUNT_CCCD = Account_CCCD,
-                ACCOUNT_BIRTHDAY = account_birthday,
-                ACCOUNT_NAME = account_name,
-                ACCOUNT_EMAIL = Account_email,
-                ACCOUNT_GENDER = GioiTinh,
-                ACCOUNT_HEIGHT = Account_Height,
-                ACCOUNT_PHONE = Account_phone,
-                ACCOUNT_WEIGHT = Account_Weight,
-                USER_NAME = User_name
-            };
-
-            AccounsAccountInfo newAccount = new AccounsAccountInfo();
-            newAccount.Account = da;
-            newAccount.AccountInfo = dc;
-            if (Retype_Account_password != account_password)
-            {
-                ModelState.AddModelError("", "Mật khẩu không khớp");
-                return View("Them");
-            }
-            var user = new ApplicationUser { UserName = account_name, Email = Account_email };
-            var result = await UserManager.CreateAsync(user, account_password);
+            var user = new ApplicationUser { UserName = dc.ACCOUNT_NAME, Email = dc.ACCOUNT_EMAIL };
+            var result = await UserManager.CreateAsync(user, "123456789");
             if (result.Succeeded)
             {
-                await UserManager.AddToRoleAsync(user.Id, "Khach Hang");
+                if (role == "2")
+                {
+                    role = "Admin";
+                }
+                if (role == "1")
+                {
+                    role = "Nhan Vien";
+                }
+                if (role == "0")
+                {
+                    role = "Khach Hang";
+                }
+                await UserManager.AddToRoleAsync(user.Id, role);
                 var Newuser = await UserManager.FindByNameAsync(user.UserName);
-
 
                 db.AccountInfos.Add(dc);
                 db.SaveChanges();
                 da.ACCOUNT_PASSWORD = Newuser.PasswordHash;
                 db.Accounts.Add(da);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return true;
             }
             else
             {
                 //fail
-                ModelState.AddModelError("", "Có lỗi xãy ra");
-                return View("Them");
+                return false;
             }
-
-
         }
 
-
-
-        // GET: AccountInfoes/Create
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            ViewBag.role = null;
             return View();
         }
 
-        // POST: AccountInfoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ACCOUNT_NAME,USER_NAME,ACCOUNT_CCCD,ACCOUNT_BIRTHDAY,ACCOUNT_GENDER,ACCOUNT_HEIGHT,ACCOUNT_WEIGHT,ACCOUNT_PHONE,ACCOUNT_EMAIL")] AccountInfo accountInfo)
+        public async Task<ActionResult> Create([Bind(Include = "ACCOUNT_NAME,USER_NAME,ACCOUNT_CCCD,ACCOUNT_PHONE,ACCOUNT_EMAIL")] AccountInfo accountInfo, string role)
         {
+            ViewBag.role = role;
             if (ModelState.IsValid)
             {
-                db.AccountInfos.Add(accountInfo);
-                db.SaveChanges();
+                if (accountInfo.USER_NAME == null)
+                {
+                    ModelState.AddModelError("", "Full name can not be null");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_NAME == null)
+                {
+                    ModelState.AddModelError("", "User name can not be null");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_EMAIL == null)
+                {
+                    ModelState.AddModelError("", "Email can not be null");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_PHONE == null)
+                {
+                    ModelState.AddModelError("", "Phone can not be null");
+                    return View(accountInfo);
+                }
+                string full_name = (accountInfo.USER_NAME).ToLower();
+
+                for (int i = 0; i < full_name.Length; i++)
+                {
+                    if ((full_name[i] < 'a' || full_name[i] > 'z') && full_name[i] != ' ')
+                    {
+                        ModelState.AddModelError("", "Full name can not have special characters ");
+                        return View(accountInfo);
+
+                    }
+                }
+
+                string cccd = accountInfo.ACCOUNT_CCCD;
+                if (cccd != null)
+                {
+                    for (int i = 0; i < cccd.Length; i++)
+                    {
+                        if (cccd[i] < '0' || cccd[i] > '9')
+                        {
+                            ModelState.AddModelError("", "Identification ID must only have number");
+                            return View(accountInfo);
+                        }
+                    }
+                }
+
+                string sdt = accountInfo.ACCOUNT_PHONE;
+                if (sdt != null)
+                {
+                    for (int i = 0; i < sdt.Length; i++)
+                    {
+                        if (sdt[i] < '0' || sdt[i] > '9')
+                        {
+                            ModelState.AddModelError("", "Phone must only have number");
+                            return View(accountInfo);
+                        }
+                    }
+                }
+            }
+            Account da = new Account()
+            {
+                ACCOUNT_NAME = accountInfo.ACCOUNT_NAME,
+                ACCOUNT_ROLE = role
+            };
+
+            AccountInfo dc = accountInfo;
+            if (await createAccountAsync(da, dc, role) == true)
+            {
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error");
+                return View(accountInfo);
             }
 
             return View(accountInfo);
@@ -456,7 +493,8 @@ namespace PBL3_2.Controllers
             }
 
         }
-        // GET: AccountInfoes/Edit/5
+        
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -472,15 +510,75 @@ namespace PBL3_2.Controllers
             return View(accountInfo);
         }
 
-        // POST: AccountInfoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ACCOUNT_NAME,USER_NAME,ACCOUNT_CCCD,ACCOUNT_BIRTHDAY,ACCOUNT_GENDER,ACCOUNT_HEIGHT,ACCOUNT_WEIGHT,ACCOUNT_PHONE,ACCOUNT_EMAIL")] AccountInfo accountInfo, string role)
         {
+            ViewBag.Role = role;
             if (ModelState.IsValid)
             {
+                if (accountInfo.USER_NAME == null)
+                {
+                    ModelState.AddModelError("", "Full name can not be null");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_PHONE == null)
+                {
+                    ModelState.AddModelError("", "Phone can not be null");
+                    return View(accountInfo);
+                }
+
+                if (accountInfo.ACCOUNT_HEIGHT <= 0)
+                {
+                    ModelState.AddModelError("", "Height invalid");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_WEIGHT <= 0)
+                {
+                    ModelState.AddModelError("", "WEIGHT invalid");
+                    return View(accountInfo);
+                }
+                string full_name = (accountInfo.USER_NAME).ToLower();
+                for (int i = 0; i < full_name.Length; i++)
+                {
+                    if ((full_name[i] < 'a' || full_name[i] > 'z') && full_name[i] != ' ')
+                    {
+                        ModelState.AddModelError("", "Full name can not have special characters ");
+                        return View(accountInfo);
+                    }
+                }
+
+                string cccd = accountInfo.ACCOUNT_CCCD;
+                if (cccd != null)
+                {
+                    for (int i = 0; i < cccd.Length; i++)
+                    {
+                        if (cccd[i] < '0' || cccd[i] > '9')
+                        {
+                            ModelState.AddModelError("", "Identification ID must only have number");
+                            return View(accountInfo);
+                        }
+                    }
+                }
+
+                string sdt = accountInfo.ACCOUNT_PHONE;
+                if (sdt != null)
+                {
+                    for (int i = 0; i < sdt.Length; i++)
+                    {
+                        if (sdt[i] < '0' || sdt[i] > '9')
+                        {
+                            ModelState.AddModelError("", "Phone must only have number");
+                            return View(accountInfo);
+                        }
+                    }
+                }
+                if (accountInfo.ACCOUNT_BIRTHDAY.Value.Date != null &&
+                    accountInfo.ACCOUNT_BIRTHDAY.Value.Date >= DateTime.Now)
+                {
+                    ModelState.AddModelError("", "Birthday is invalid");
+                    return View(accountInfo);
+                }
                 db.Entry(accountInfo).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -511,7 +609,7 @@ namespace PBL3_2.Controllers
             return View(accountInfo);
         }
 
-
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult ChangePassWord(string id)
         {
             if (id == null)
@@ -537,11 +635,25 @@ namespace PBL3_2.Controllers
             ViewBag.username = id;
             if (user != null)
             {
-                if (Account_password == Retype_Account_password && Account_password.Length >= 6)
+                if (ModelState.IsValid)
                 {
-                    userManager.RemovePassword(user.Id);
-                    userManager.AddPassword(user.Id, Account_password);
-                    return RedirectToAction("Index");
+                    if (Account_password != Retype_Account_password)
+                    {
+                        ModelState.AddModelError("", "Password is not the same with Retyped-password");
+                        return View();
+                    }
+                    if (Account_password.Length < 6)
+                    {
+                        ModelState.AddModelError("", "Password's size must be longer than 6");
+                        return View();
+                    }
+                    if (Account_password == Retype_Account_password && Account_password.Length >= 6)
+                    {
+                        userManager.RemovePassword(user.Id);
+                        userManager.AddPassword(user.Id, Account_password);
+                        return RedirectToAction("Index");
+                    }
+                    return View();
                 }
                 else
                 {
@@ -557,7 +669,7 @@ namespace PBL3_2.Controllers
         }
 
 
-        // GET: AccountInfoes/Delete/5
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -648,17 +760,75 @@ namespace PBL3_2.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (accountInfo.USER_NAME == null)
+                {
+                    ModelState.AddModelError("", "Full name can not be null");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_PHONE == null)
+                {
+                    ModelState.AddModelError("", "Phone can not be null");
+                    return View(accountInfo);
+                }
+
+                if (accountInfo.ACCOUNT_HEIGHT <= 0)
+                {
+                    ModelState.AddModelError("", "Height invalid");
+                    return View(accountInfo);
+                }
+                if (accountInfo.ACCOUNT_WEIGHT <= 0 )
+                {
+                    ModelState.AddModelError("", "WEIGHT invalid");
+                    return View(accountInfo);
+                }
+                string full_name = (accountInfo.USER_NAME).ToLower();
+                for (int i = 0; i < full_name.Length; i++)
+                {
+                    if ((full_name[i] < 'a' || full_name[i] > 'z') && full_name[i] != ' ')
+                    {
+                        ModelState.AddModelError("", "Full name can not have special characters ");
+                        return View(accountInfo);
+                    }
+                }
+
+                string cccd = accountInfo.ACCOUNT_CCCD;
+                if (cccd != null)
+                {
+                    for (int i = 0; i < cccd.Length; i++)
+                    {
+                        if (cccd[i] < '0' || cccd[i] > '9')
+                        {
+                            ModelState.AddModelError("", "Identification ID must only have number");
+                            return View(accountInfo);
+                        }
+                    }
+                }
+
+                string sdt = accountInfo.ACCOUNT_PHONE;
+                if (sdt != null)
+                {
+                    for (int i = 0; i < sdt.Length; i++)
+                    {
+                        if (sdt[i] < '0' || sdt[i] > '9')
+                        {
+                            ModelState.AddModelError("", "Phone must only have number");
+                            return View(accountInfo);
+                        }
+                    }
+                }
+                if (accountInfo.ACCOUNT_BIRTHDAY.Value.Date!=null && 
+                    accountInfo.ACCOUNT_BIRTHDAY.Value.Date >= DateTime.Now)
+                {
+                   ModelState.AddModelError("", "Birthday is invalid");
+                   return View(accountInfo);
+                }
+                
                 db.Entry(accountInfo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(accountInfo);
         }
-
-
-
-
-
 
 
         protected override void Dispose(bool disposing)
@@ -670,21 +840,70 @@ namespace PBL3_2.Controllers
             base.Dispose(disposing);
         }
 
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult Them()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult> Them2(string account_name, string account_password, string Retype_Account_password,
+         DateTime account_birthday, string User_name, string Account_CCCD, Boolean GioiTinh, double Account_Height,
+         double Account_Weight, string Account_phone, string Account_email)
+        {
+            Account da = new Account()
+            {
+                ACCOUNT_NAME = account_name,
+                ACCOUNT_PASSWORD = account_password,
+                ACCOUNT_ROLE = "0"
+            };
+
+            AccountInfo dc = new AccountInfo()
+            {
+                ACCOUNT_CCCD = Account_CCCD,
+                ACCOUNT_BIRTHDAY = account_birthday,
+                ACCOUNT_NAME = account_name,
+                ACCOUNT_EMAIL = Account_email,
+                ACCOUNT_GENDER = GioiTinh,
+                ACCOUNT_HEIGHT = Account_Height,
+                ACCOUNT_PHONE = Account_phone,
+                ACCOUNT_WEIGHT = Account_Weight,
+                USER_NAME = User_name
+            };
+
+            AccounsAccountInfo newAccount = new AccounsAccountInfo();
+            newAccount.Account = da;
+            newAccount.AccountInfo = dc;
+            if (Retype_Account_password != account_password)
+            {
+                ModelState.AddModelError("", "Mật khẩu không khớp");
+                return View("Them");
+            }
+            var user = new ApplicationUser { UserName = account_name, Email = Account_email };
+            var result = await UserManager.CreateAsync(user, account_password);
+            if (result.Succeeded)
+            {
+                await UserManager.AddToRoleAsync(user.Id, "Khach Hang");
+                var Newuser = await UserManager.FindByNameAsync(user.UserName);
 
 
+                db.AccountInfos.Add(dc);
+                db.SaveChanges();
+                da.ACCOUNT_PASSWORD = Newuser.PasswordHash;
+                db.Accounts.Add(da);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //fail
+                ModelState.AddModelError("", "Có lỗi xãy ra");
+                return View("Them");
+            }
 
 
-
-
-
-
-
-
-
-
-
-
-
+        }
 
         public ActionResult XemDanhSachThongTinDuaTren_Role(string strSearchThietBi, string SortOrder, string SortBy, int? page)
 
