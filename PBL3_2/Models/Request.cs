@@ -80,6 +80,19 @@ namespace PBL3_2.Models
             db.SaveChanges();
             Request t = db.Requests.Find(rq.REQUEST_ID);
         }
+
+        public static void CreateEditNoPTRequest(int ACCOUNT_ID, int LOP_ID, DateTime start, DateTime end, int query = 2)
+        {
+            DBGym db = new DBGym();
+            Request rq = new Request();
+            rq.ACCOUNT_ID = ACCOUNT_ID;
+            rq.LOP_ID = LOP_ID;
+            rq.query = query;
+            rq.status = false;
+            db.Requests.Add(rq);
+            db.SaveChanges();
+
+        }
         public static List<Request> GetRequestById(int acc_id)
         {
             DBGym db = new DBGym();

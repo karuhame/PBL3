@@ -121,7 +121,7 @@ namespace PBL3_2.Controllers
                 List<Lop> l = Lop.GetLopByIdStaff(user.ACCOUNT_ID);
                 return View(l);
             }
-            return View(db.Lops.ToList());
+            return View(db.Lops.Where(p => p.LOP_STATUS == "Accepted").ToList());
         }
 
         // GET: Lops/Details/5

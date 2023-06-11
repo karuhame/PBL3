@@ -53,16 +53,16 @@
                     @Html.DisplayFor(modelItem => item.LoaiGoi.GOI_FEE)
                 </td>
                 <td>
-                    @{ 
-                        if(item.Staff == null)
-                {
-                    <p>No PT</p>
-                }
+                    @{
+                        if (item.Staff == null)
+                        {
+                            <p>No PT</p>
+                        }
                         else
-                {
-                    @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
+                        {
+                            @Html.DisplayFor(modelItem => item.Staff.AccountInfo.USER_NAME)
 
-                }
+                        }
                     }
                 </td>
 
@@ -144,18 +144,29 @@
                         if (ViewBag.userRole != "0")
                         {
                             @Html.ActionLink("List Clients", "ListClient", new { ID_LOP = item.LOP_ID }, new { @class = "btn btn-primary" })
-                            }
+                        }
                     }
                 </td>
                 <td>
                     @{ if (ViewBag.userRole == "2")
-                            {
+                        {
                             @Html.ActionLink("Delete", "Delete", new { id = item.LOP_ID }, new { @class = "btn btn-primary" })
                         }
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.LOP_ID, sub = "AcceptJoin" }, new { @class = "btn btn-primary" })
+                    @{
+                        if (item.Staff == null)
+                        {
+                            
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LOP_ID, sub = "AcceptJoin" }, new { @class = "btn btn-primary" })
+                        }
+                    }
+                </td>
+                <td>
                 </td>
             </tr>
         }
